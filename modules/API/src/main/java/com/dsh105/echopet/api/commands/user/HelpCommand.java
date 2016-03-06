@@ -40,7 +40,8 @@ import com.dsh105.influx.annotation.Bind;
 import com.dsh105.influx.annotation.Command;
 import com.dsh105.influx.annotation.Verify;
 
-public class HelpCommand implements CommandListener {
+public class HelpCommand implements CommandListener
+{
 
     @Command(
             syntax = "help",
@@ -52,7 +53,8 @@ public class HelpCommand implements CommandListener {
                     "Use \"/pet help <command>\" for more help on a certain command"
             }
     )
-    public boolean help(EchoPetCommandEvent event) {
+    public boolean help(EchoPetCommandEvent event)
+    {
         event.getManager().getHelp().sendPage(event.sender());
         return true;
     }
@@ -67,7 +69,8 @@ public class HelpCommand implements CommandListener {
                     "Use \"/pet help <command>\" for more help on a certain command"
             }
     )
-    public boolean helpPage(EchoPetCommandEvent event, @Bind("index") @Verify("[0-9]+") int index) {
+    public boolean helpPage(EchoPetCommandEvent event, @Bind("index") @Verify("[0-9]+") int index)
+    {
         event.getManager().getHelp().sendPage(event.sender(), index);
         return true;
     }

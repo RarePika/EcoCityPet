@@ -18,14 +18,16 @@
 package com.dsh105.echopet.api.entity.pet.type;
 
 import com.dsh105.echopet.api.entity.entitypet.type.EntitySilverfishPet;
-import com.dsh105.echopet.bridge.entity.type.SilverfishEntityBridge;
 import com.dsh105.echopet.api.entity.pet.AbstractPetBase;
+import com.dsh105.echopet.bridge.entity.type.SilverfishEntityBridge;
 
 import java.util.UUID;
 
-public class EchoSilverfishPet extends AbstractPetBase<SilverfishEntityBridge, EntitySilverfishPet> implements SilverfishPet {
+public class EchoSilverfishPet extends AbstractPetBase<SilverfishEntityBridge, EntitySilverfishPet> implements SilverfishPet
+{
 
-    public EchoSilverfishPet(UUID playerUID) {
+    public EchoSilverfishPet(UUID playerUID)
+    {
         super(playerUID);
     }
 }

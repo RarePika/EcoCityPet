@@ -21,26 +21,32 @@ import com.dsh105.commodus.GeneralUtil;
 import com.dsh105.echopet.api.entity.ai.Behaviour;
 import com.dsh105.echopet.api.entity.ai.BehaviourType;
 
-public class BehaviourFloat extends Behaviour {
+public class BehaviourFloat extends Behaviour
+{
 
     @Override
-    public BehaviourType getType() {
+    public BehaviourType getType()
+    {
         return BehaviourType.FOUR;
     }
 
     @Override
-    public String getDefaultKey() {
+    public String getDefaultKey()
+    {
         return "float";
     }
 
     @Override
-    public boolean shouldStart() {
+    public boolean shouldStart()
+    {
         return getModifier().inWater() || getModifier().inLava();
     }
 
     @Override
-    public void tick() {
-        if (GeneralUtil.random().nextFloat() < 0.8F) {
+    public void tick()
+    {
+        if (GeneralUtil.random().nextFloat() < 0.8F)
+        {
             getModifier().jump();
         }
     }

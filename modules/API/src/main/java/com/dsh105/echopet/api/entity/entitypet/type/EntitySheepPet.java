@@ -24,15 +24,16 @@ import com.dsh105.echopet.api.entity.entitypet.EntityAgeablePet;
 import com.dsh105.echopet.api.entity.pet.type.SheepPet;
 
 @Entity(PetType.SHEEP)
-public interface EntitySheepPet extends EntityAgeablePet<SheepPet> {
+public interface EntitySheepPet extends EntityAgeablePet<SheepPet>
+{
 
-    public static int DATAWATCHER_SKIN = 16;
-
-    void setSheared(boolean flag);
+    int DATAWATCHER_SKIN = 16;
 
     boolean isSheared();
 
-    void setDyeColor(Attributes.Color color);
+    void setSheared(boolean flag);
 
     Attributes.Color getDyeColor();
+
+    void setDyeColor(Attributes.Color color);
 }

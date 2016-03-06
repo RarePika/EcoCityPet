@@ -23,13 +23,14 @@ import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.pet.type.EndermanPet;
 
 @Entity(PetType.ENDERMAN)
-public interface EntityEndermanPet extends EntityPet<EndermanPet> {
+public interface EntityEndermanPet extends EntityPet<EndermanPet>
+{
 
-    public static final int DATAWATCHER_CARRIED_BLOCK = 16;
-    public static final int DATAWATCHER_CARRIED_BLOCK_DATA = 17;
-    public static final int DATAWATCHER_SCREAMING = 18;
-
-    void setScreaming(boolean flag);
+    int DATAWATCHER_CARRIED_BLOCK = 16;
+    int DATAWATCHER_CARRIED_BLOCK_DATA = 17;
+    int DATAWATCHER_SCREAMING = 18;
 
     boolean isScreaming();
+
+    void setScreaming(boolean flag);
 }

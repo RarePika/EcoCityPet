@@ -21,10 +21,12 @@ import com.dsh105.echopet.api.configuration.Lang;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.ConversationPrefix;
 
-public class NameConversationPrefix implements ConversationPrefix {
+public class NameConversationPrefix implements ConversationPrefix
+{
 
     @Override
-    public String getPrefix(ConversationContext conversationContext) {
+    public String getPrefix(ConversationContext conversationContext)
+    {
         return Lang.PREFIX.getValue();
     }
 }

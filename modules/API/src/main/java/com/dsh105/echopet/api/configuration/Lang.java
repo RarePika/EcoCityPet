@@ -22,7 +22,8 @@ import com.dsh105.commodus.configuration.Option;
 import com.dsh105.commodus.configuration.OptionSet;
 import com.dsh105.echopet.api.plugin.EchoPetNucleus;
 
-public class Lang extends OptionSet {
+public class Lang extends OptionSet
+{
 
     public static final LangSetting
             PREFIX = new LangSetting("prefix", EchoPetNucleus.DEFAULT_PREFIX, "Plugin prefix appended to all messages."),
@@ -85,17 +86,23 @@ public class Lang extends OptionSet {
     ADMIN_NAME_PET_PROMPT = new LangSetting("admin_name_pet_prompt", "{c1}What would you like to name {c2}%player%{c1}'s pet?"),
             ADMIN_NAME_PET = new LangSetting("admin_name_pet", "{c2}%player%{c1}'s pet, {c2}%name%{c1}, has been named &r%newname%{c1}.");
 
-    public Lang(Config config) {
+    public Lang(Config config)
+    {
         super(config);
     }
 
     @Override
-    public void setDefaults() {
-        try {
-            for (Option option : getOptions()) {
+    public void setDefaults()
+    {
+        try
+        {
+            for (Option option : getOptions())
+            {
                 setDefault(option);
             }
-        } catch (IllegalAccessException e) {
+        }
+        catch (IllegalAccessException e)
+        {
             throw new RuntimeException("Failed to set configuration defaults", e);
         }
     }

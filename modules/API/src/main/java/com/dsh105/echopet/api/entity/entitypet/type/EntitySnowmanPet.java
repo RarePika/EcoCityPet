@@ -23,6 +23,7 @@ import com.dsh105.echopet.api.entity.entitypet.EntityRangedPet;
 import com.dsh105.echopet.api.entity.pet.type.SnowmanPet;
 
 @Entity(PetType.SNOWMAN)
-public interface EntitySnowmanPet extends EntityRangedPet<SnowmanPet> {
+public interface EntitySnowmanPet extends EntityRangedPet<SnowmanPet>
+{
 
 }

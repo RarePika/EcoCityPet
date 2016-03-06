@@ -2,7 +2,8 @@ package com.dsh105.echopet.bridge;
 
 import java.util.UUID;
 
-public interface IdentBridge extends GenericBridge {
+public interface IdentBridge extends GenericBridge
+{
 
     UUID getUID(Object player);
 

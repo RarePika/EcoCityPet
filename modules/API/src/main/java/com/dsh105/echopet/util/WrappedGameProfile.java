@@ -23,40 +23,51 @@ import com.captainbern.reflection.Reflection;
 
 import java.util.UUID;
 
-public class WrappedGameProfile extends AbstractWrapper {
+public class WrappedGameProfile extends AbstractWrapper
+{
 
     private static ClassTemplate GAME_PROFILE_TEMPLATE = new Reflection().reflect("net.minecraft.util.com.mojang.authlib.GameProfile");
 
-    private WrappedGameProfile(Object ident, String name) {
+    private WrappedGameProfile(Object ident, String name)
+    {
         super(GAME_PROFILE_TEMPLATE.getReflectedClass());
-        if (ident instanceof UUID || ident instanceof String) {
+        if (ident instanceof UUID || ident instanceof String)
+        {
             super.setHandle(GAME_PROFILE_TEMPLATE.getSafeConstructor(ident.getClass(), String.class).getAccessor().invoke(ident, name));
-        } else {
+        }
+        else
+        {
             throw new IllegalArgumentException("Invalid ident entered!");
         }
     }
 
-    public WrappedGameProfile(UUID uuid, String name) {
+    public WrappedGameProfile(UUID uuid, String name)
+    {
         this((Object) uuid, name);
     }
 
-    public WrappedGameProfile(String ident, String name) {
+    public WrappedGameProfile(String ident, String name)
+    {
         this((Object) ident, name);
     }
 
-    public static WrappedGameProfile getNewProfile(WrappedGameProfile old, String newName) {
+    public static WrappedGameProfile getNewProfile(WrappedGameProfile old, String newName)
+    {
         return new WrappedGameProfile(old.getId(), newName);
     }
 
-    public UUID getUniqueId() {
+    public UUID getUniqueId()
+    {
         return getId();
     }
 
-    public String getIdent() {
+    public String getIdent()
+    {
         return getId();
     }
 
-    private <T> T getId() {
+    private <T> T getId()
+    {
         return (T) GAME_PROFILE_TEMPLATE.getSafeMethod("getId").getAccessor().invoke(getHandle());
     }
 }

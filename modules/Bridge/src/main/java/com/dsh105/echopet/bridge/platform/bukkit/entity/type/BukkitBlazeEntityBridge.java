@@ -21,6 +21,7 @@ import com.dsh105.echopet.bridge.entity.type.BlazeEntityBridge;
 import com.dsh105.echopet.bridge.platform.bukkit.entity.BukkitRangedEntityBridge;
 import org.bukkit.entity.Blaze;
 
-public class BukkitBlazeEntityBridge extends BukkitRangedEntityBridge<Blaze> implements BlazeEntityBridge {
+public class BukkitBlazeEntityBridge extends BukkitRangedEntityBridge<Blaze> implements BlazeEntityBridge
+{
 
 }

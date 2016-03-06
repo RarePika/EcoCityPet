@@ -22,6 +22,7 @@ import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.pet.type.ZombiePigmanPet;
 
 @Entity(PetType.ZOMBIE_PIGMAN)
-public interface EntityZombiePigmanPet extends EntityZombiePet<ZombiePigmanPet> {
+public interface EntityZombiePigmanPet extends EntityZombiePet<ZombiePigmanPet>
+{
 
 }

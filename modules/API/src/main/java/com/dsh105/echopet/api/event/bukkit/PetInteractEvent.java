@@ -17,7 +17,7 @@
 
 package com.dsh105.echopet.api.event.bukkit;
 
-import com.dsh105.commodus.IdentUtil;
+
 import com.dsh105.echopet.api.entity.pet.Pet;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -28,7 +28,8 @@ import org.bukkit.event.HandlerList;
  * Called when a Player interacts with a Pet
  */
 
-public class PetInteractEvent extends Event implements Cancellable {
+public class PetInteractEvent extends Event implements Cancellable
+{
 
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled = false;
@@ -37,11 +38,17 @@ public class PetInteractEvent extends Event implements Cancellable {
     private Player player;
     private Action action;
 
-    public PetInteractEvent(Pet pet, Player player, Action action, boolean cancelledByDefault) {
+    public PetInteractEvent(Pet pet, Player player, Action action, boolean cancelledByDefault)
+    {
         this.pet = pet;
         this.action = action;
         this.player = player;
         this.cancelled = cancelledByDefault;
+    }
+
+    public static HandlerList getHandlerList()
+    {
+        return handlers;
     }
 
     /**
@@ -49,7 +56,8 @@ public class PetInteractEvent extends Event implements Cancellable {
      *
      * @return The Pet involved
      */
-    public Pet getPet() {
+    public Pet getPet()
+    {
         return this.pet;
     }
 
@@ -58,7 +66,8 @@ public class PetInteractEvent extends Event implements Cancellable {
      *
      * @return The player that interacted with the Pet
      */
-    public Player getPlayer() {
+    public Player getPlayer()
+    {
         return this.player;
     }
 
@@ -67,7 +76,8 @@ public class PetInteractEvent extends Event implements Cancellable {
      *
      * @return The action executed
      */
-    public Action getAction() {
+    public Action getAction()
+    {
         return this.action;
     }
 
@@ -76,30 +86,31 @@ public class PetInteractEvent extends Event implements Cancellable {
      *
      * @return True if it is the owner
      */
-    public boolean isPlayerOwner() {
-        return IdentUtil.isIdentical(this.player, this.pet.getOwner());
+    public boolean isPlayerOwner()
+    {
+        return this.pet.getOwner().asBukkit().equals(this.player);
     }
 
     @Override
-    public boolean isCancelled() {
+    public boolean isCancelled()
+    {
         return this.cancelled;
     }
 
     @Override
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(boolean cancel)
+    {
         this.cancelled = cancel;
     }
 
     @Override
-    public HandlerList getHandlers() {
+    public HandlerList getHandlers()
+    {
         return handlers;
     }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
-
-    public enum Action {
+    public enum Action
+    {
         /**
          * Represents a left click
          */

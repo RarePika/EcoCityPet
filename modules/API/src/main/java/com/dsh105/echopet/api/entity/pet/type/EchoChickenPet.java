@@ -23,14 +23,17 @@ import com.dsh105.echopet.bridge.entity.type.ChickenEntityBridge;
 
 import java.util.UUID;
 
-public class EchoChickenPet extends EchoAgeablePet<ChickenEntityBridge, EntityChickenPet> implements ChickenPet {
+public class EchoChickenPet extends EchoAgeablePet<ChickenEntityBridge, EntityChickenPet> implements ChickenPet
+{
 
-    public EchoChickenPet(UUID playerUID) {
+    public EchoChickenPet(UUID playerUID)
+    {
         super(playerUID);
     }
 
     @Override
-    public void onLive() {
+    public void onLive()
+    {
         super.onLive();
         getEntity().setEggDropTimer(10);
     }

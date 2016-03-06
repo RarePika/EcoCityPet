@@ -23,19 +23,23 @@ import com.dsh105.echopet.bridge.entity.type.BlazeEntityBridge;
 
 import java.util.UUID;
 
-public class EchoBlazePet extends EchoRangedPet<BlazeEntityBridge, EntityBlazePet> implements BlazePet {
+public class EchoBlazePet extends EchoRangedPet<BlazeEntityBridge, EntityBlazePet> implements BlazePet
+{
 
-    public EchoBlazePet(UUID playerUID) {
+    public EchoBlazePet(UUID playerUID)
+    {
         super(playerUID);
     }
 
     @Override
-    public void setOnFire(boolean flag) {
-        getEntity().setOnFire(flag);
+    public boolean isOnFire()
+    {
+        return getEntity().isOnFire();
     }
 
     @Override
-    public boolean isOnFire() {
-        return getEntity().isOnFire();
+    public void setOnFire(boolean flag)
+    {
+        getEntity().setOnFire(flag);
     }
 }

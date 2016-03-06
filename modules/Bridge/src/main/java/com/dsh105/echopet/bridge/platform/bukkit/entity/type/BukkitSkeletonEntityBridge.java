@@ -21,6 +21,7 @@ import com.dsh105.echopet.bridge.entity.type.SkeletonEntityBridge;
 import com.dsh105.echopet.bridge.platform.bukkit.entity.BukkitEquipableEntityBridge;
 import org.bukkit.entity.Skeleton;
 
-public class BukkitSkeletonEntityBridge extends BukkitEquipableEntityBridge<Skeleton> implements SkeletonEntityBridge {
+public class BukkitSkeletonEntityBridge extends BukkitEquipableEntityBridge<Skeleton> implements SkeletonEntityBridge
+{
 
 }

@@ -19,6 +19,7 @@ package com.dsh105.echopet.bridge.entity.type;
 
 import com.dsh105.echopet.bridge.entity.EquipableEntityBridge;
 
-public interface HumanEntityBridge extends EquipableEntityBridge {
+public interface HumanEntityBridge extends EquipableEntityBridge
+{
 
 }

@@ -25,47 +25,59 @@ import com.dsh105.echopet.bridge.PlayerBridge;
 
 import java.util.List;
 
-public class LangSetting extends Option<String> {
+public class LangSetting extends Option<String>
+{
 
-    public LangSetting(String path, String defaultValue, String... comments) {
+    public LangSetting(String path, String defaultValue, String... comments)
+    {
         super(langConfig(), path, defaultValue, comments);
     }
 
-    public LangSetting(String path, List<String> comments) {
+    public LangSetting(String path, List<String> comments)
+    {
         super(langConfig(), path, comments);
     }
 
-    public LangSetting(String path, String defaultValue, List<String> comments) {
+    public LangSetting(String path, String defaultValue, List<String> comments)
+    {
         super(langConfig(), path, defaultValue, comments);
     }
 
-    private static Config langConfig() {
+    private static Config langConfig()
+    {
         return EchoPet.getOptions(Lang.class).getConfig();
     }
 
     @Override
-    public String getValue(String... pairedReplacements) {
+    public String getValue(String... pairedReplacements)
+    {
         String message = super.getValue();
-        for (int i = 0; i < pairedReplacements.length; i += 2) {
-            if ((i + 1) >= pairedReplacements.length) {
+        for (int i = 0; i < pairedReplacements.length; i += 2)
+        {
+            if ((i + 1) >= pairedReplacements.length)
+            {
                 break;
             }
             message = message.replace("%" + pairedReplacements[i] + "%", pairedReplacements[i + 1]);
         }
 
-        if (message == null || message.isEmpty() || message.equalsIgnoreCase("NONE")) {
+        if (message == null || message.isEmpty() || message.equalsIgnoreCase("NONE"))
+        {
             return null;
         }
         return EchoPet.getBridge(MessageBridge.class).translateChatColours(EchoPet.getCommandManager().getResponder().format("{c1}" + message));
     }
 
-    public void send(PlayerBridge player, String... pairedReplacements) {
+    public void send(PlayerBridge player, String... pairedReplacements)
+    {
         EchoPet.getBridge(MessageBridge.class).send(player, Lang.PREFIX.getValue(), "");
     }
 
-    public void send(Object conversable, String... pairedReplacements) {
+    public void send(Object conversable, String... pairedReplacements)
+    {
         String message = getValue(pairedReplacements);
-        if (message == null) {
+        if (message == null)
+        {
             return;
         }
         EchoPet.getBridge(MessageBridge.class).send(conversable, Lang.PREFIX.getValue(), message);

@@ -24,74 +24,91 @@ import com.dsh105.echopet.api.configuration.PetSettings;
 import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.interact.Interact;
-import com.dsh105.interact.api.CommandIcon;
 import com.dsh105.interact.api.Icon;
 import com.dsh105.interact.api.Inventory;
+import com.dsh105.menuapi.api.CommandIcon;
 
 import java.util.List;
 import java.util.Map;
 
-public final class PetSelector {
+public final class PetSelector
+{
 
     private static Inventory<?> DEFAULT;
     private static Inventory<?> INVENTORY;
-    
-    static {
+
+    static
+    {
         getDefault();
     }
 
-    public static Inventory<?> getDefault() {
-        if (DEFAULT == null) {
+    public static Inventory<?> getDefault()
+    {
+        if (DEFAULT == null)
+        {
             int size = 45;
-            Inventory.Builder builder = Interact.inventory().size(size);
+            Inventory.Builder builder = Interact.inventory();
 
             List<PetType> petTypes = PetType.sortAlphabetically();
-            for (int i = 0; i < petTypes.size(); i++) {
+            for (int i = 0; i < petTypes.size(); i++)
+            {
                 PetType type = petTypes.get(i);
-                builder.at(Interact.position().slot(i).icon(type.getIcon()));
+                builder.at(Interact.position().slot(i).icon((type.getIcon())));
             }
 
             MenuPreset[] presets = {MenuPreset.CLOSE_SELECTOR, MenuPreset.TOGGLE, MenuPreset.CALL, MenuPreset.HAT, MenuPreset.RIDE, MenuPreset.NAME, MenuPreset.MENU};
             int[] diffs = {1, 3, 4, 6, 7, 8, 9};
-            for (int i = 0; i < presets.length; i++) {
+            for (int i = 0; i < presets.length; i++)
+            {
                 builder.at(Interact.position().slot(size - diffs[i]).icon(presets[i].getIcon()));
             }
 
             DEFAULT = builder.build();
         }
-        
+
         return DEFAULT;
     }
-    
-    public static Inventory<?> getInventory() {
-        if (INVENTORY == null) {
-            try {
+
+    public static Inventory<?> getInventory()
+    {
+        if (INVENTORY == null)
+        {
+            try
+            {
                 INVENTORY = Interact.inventory().from((Map<String, Object>) EchoPet.getConfig(ConfigType.MENU).getMapList("selector")).build();
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 // copy it over
                 INVENTORY = getDefault().builder().build();
             }
-            
-            for (Map.Entry<Integer, Icon> entry : INVENTORY.getLayout().getIcons().entrySet()) {
-                if (entry.getValue() instanceof CommandIcon) {
+
+            for (Map.Entry<Integer, Icon> entry : INVENTORY.getLayout().getIcons().entrySet())
+            {
+                if (entry.getValue() instanceof CommandIcon)
+                {
                     CommandIcon cIcon = (CommandIcon) entry.getValue();
-                    if (!MenuSettings.SELECTOR_SHOW_DISABLED_PETS.getValue()) {
+                    if (!MenuSettings.SELECTOR_SHOW_DISABLED_PETS.getValue())
+                    {
                         String[] parts = cIcon.getCommand().split("\\s+");
-                        if (parts.length <= 1 || !GeneralUtil.isEnumType(PetType.class, parts[1])) {
+                        if (parts.length <= 1 || !GeneralUtil.isEnumType(PetType.class, parts[1]))
+                        {
                             continue;
                         }
-                        if (!PetSettings.ENABLE.getValue(GeneralUtil.toEnumType(PetType.class, parts[1]).storageName())) {
+                        if (!PetSettings.ENABLE.getValue(GeneralUtil.toEnumType(PetType.class, parts[1]).storageName()))
+                        {
                             INVENTORY.getLayout().remove(entry.getKey());
                         }
                     }
                 }
             }
         }
-        
+
         return INVENTORY;
     }
-    
-    public static void reset() {
+
+    public static void reset()
+    {
         INVENTORY = null;
         getInventory();
     }

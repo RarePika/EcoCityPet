@@ -26,27 +26,31 @@ import com.dsh105.commodus.Affirm;
 import com.dsh105.commodus.container.PositionContainer;
 import com.dsh105.commodus.container.Vector3dContainer;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityEnderDragonPet;
-import com.dsh105.echopet.bridge.Ident;
-import com.dsh105.echopet.bridge.PlayerBridge;
-import com.dsh105.echopet.bridge.entity.type.EnderDragonEntityBridge;
 import com.dsh105.echopet.api.entity.pet.AbstractPetBase;
+import com.dsh105.echopet.bridge.Ident;
+import com.dsh105.echopet.bridge.entity.type.EnderDragonEntityBridge;
 
 import java.util.UUID;
 
-public class EchoEnderDragonPet extends AbstractPetBase<EnderDragonEntityBridge, EntityEnderDragonPet> implements EnderDragonPet {
+public class EchoEnderDragonPet extends AbstractPetBase<EnderDragonEntityBridge, EntityEnderDragonPet> implements EnderDragonPet
+{
 
-    public EchoEnderDragonPet(UUID playerUID) {
+    public EchoEnderDragonPet(UUID playerUID)
+    {
         super(playerUID);
     }
 
     @Override
-    public void onLive() {
-        if (isStationary()) {
+    public void onLive()
+    {
+        if (isStationary())
+        {
             return;
         }
 
         Object passenger = getModifier().getPassenger();
-        if (passenger != null && passenger instanceof org.bukkit.entity.Player && Ident.get().areIdentical(passenger, getOwner().get())) {
+        if (passenger != null && passenger instanceof org.bukkit.entity.Player && Ident.get().areIdentical(passenger, getOwner().get()))
+        {
             onRide(0F, 0F);
             return;
         }
@@ -60,14 +64,17 @@ public class EchoEnderDragonPet extends AbstractPetBase<EnderDragonEntityBridge,
 
         getEntity().tickMovement();
 
-        if (target) {
+        if (target)
+        {
             getEntity().target();
         }
     }
 
     @Override
-    public void onRide(float sideMotion, float forwardMotion) {
-        if (getModifier().getPassenger() == null || !getModifier().getPassenger().equals(getOwner().get())) {
+    public void onRide(float sideMotion, float forwardMotion)
+    {
+        if (getModifier().getPassenger() == null || !getModifier().getPassenger().equals(getOwner().get()))
+        {
             getEntity().updateMotion(sideMotion, forwardMotion);
             getModifier().setStepHeight(0.5F);
             return;
@@ -83,21 +90,26 @@ public class EchoEnderDragonPet extends AbstractPetBase<EnderDragonEntityBridge,
         forwardMotion = getModifier().getPassengerForwardMotion();
 
         // Apply changes
-        if (sideMotion != 0.0F) {
+        if (sideMotion != 0.0F)
+        {
             position.setXRotation(passengerLocation.getXRotation() + (sideMotion > 0F ? 90 : -90));
             motion.add(position.toVector().normalize().multiply(-0.5D));
         }
 
-        if (forwardMotion != 0.0F) {
+        if (forwardMotion != 0.0F)
+        {
             position.setXRotation(passengerLocation.getXRotation());
             motion.add(position.toVector().normalize().multiply(0.5D));
         }
 
         getModifier().applyPitchAndYawChanges(passengerLocation.getYRotation() * 0.5F, passengerLocation.getXRotation() - 180);
 
-        if (JUMP_FIELD != null) {
-            if (JUMP_FIELD.getAccessor().get(getModifier().getPassenger())) {
-                if (getOwner().isFlying()) {
+        if (JUMP_FIELD != null)
+        {
+            if (JUMP_FIELD.getAccessor().get(getModifier().getPassenger()))
+            {
+                if (getOwner().isFlying())
+                {
                     getOwner().setFlying(false);
                 }
 
@@ -110,7 +122,8 @@ public class EchoEnderDragonPet extends AbstractPetBase<EnderDragonEntityBridge,
     }
 
     @Override
-    public void setTarget(Object entity) {
+    public void setTarget(Object entity)
+    {
         Affirm.checkInstanceOf(Entity.class, entity, true);
         // FIXME: not Sponge compatible AT ALL
         // messy :\

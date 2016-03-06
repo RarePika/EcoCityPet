@@ -29,11 +29,12 @@ import com.dsh105.echopet.api.entity.pet.Hostility;
 import com.dsh105.echopet.bridge.entity.type.OcelotEntityBridge;
 
 @Traits(type = PetType.OCELOT, hositility = Hostility.PASSIVE, width = 0.6F, height = 0.8F, health = 10.0D, attackDamage = 4.0D)
-public interface OcelotPet extends AgeablePet<OcelotEntityBridge, EntityOcelotPet> {
-
-    @GroupAttributeSetter(AttributeType.OCELOT_TYPE)
-    void setCatType(Attributes.OcelotType type);
+public interface OcelotPet extends AgeablePet<OcelotEntityBridge, EntityOcelotPet>
+{
 
     @GroupAttributeGetter(AttributeType.OCELOT_TYPE)
     Attributes.OcelotType getCatType();
+
+    @GroupAttributeSetter(AttributeType.OCELOT_TYPE)
+    void setCatType(Attributes.OcelotType type);
 }

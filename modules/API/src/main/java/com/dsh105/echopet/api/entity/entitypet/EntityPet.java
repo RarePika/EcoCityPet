@@ -19,7 +19,8 @@ package com.dsh105.echopet.api.entity.entitypet;
 
 import com.dsh105.echopet.api.entity.pet.Pet;
 
-public interface EntityPet<T extends Pet> {
+public interface EntityPet<T extends Pet>
+{
 
     T getPet();
 
@@ -47,9 +48,9 @@ public interface EntityPet<T extends Pet> {
 
     void modifyBoundingBox(float f, float f1);
 
-    void setFireProof(boolean flag);
-
     boolean isFireProof();
+
+    void setFireProof(boolean flag);
 
     boolean isInvulnerable();
 

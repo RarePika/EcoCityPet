@@ -21,6 +21,7 @@ import com.dsh105.echopet.bridge.entity.type.BatEntityBridge;
 import com.dsh105.echopet.bridge.platform.bukkit.entity.BukkitLivingEntityBridge;
 import org.bukkit.entity.Bat;
 
-public class BukkitBatEntityBridge extends BukkitLivingEntityBridge<Bat> implements BatEntityBridge {
+public class BukkitBatEntityBridge extends BukkitLivingEntityBridge<Bat> implements BatEntityBridge
+{
 
 }

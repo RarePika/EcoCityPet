@@ -22,6 +22,7 @@ import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.pet.type.MagmaCubePet;
 
 @Entity(PetType.MAGMA_CUBE)
-public interface EntityMagmaCubePet extends EntitySlimePet<MagmaCubePet> {
+public interface EntityMagmaCubePet extends EntitySlimePet<MagmaCubePet>
+{
 
 }

@@ -26,15 +26,18 @@ import com.dsh105.echopet.bridge.entity.LivingEntityBridge;
 
 import java.util.UUID;
 
-public class PetRegistrationEntry {
+public class PetRegistrationEntry
+{
 
     private String name;
     private int registrationId;
     private Class<? extends Pet> petClass;
     private Class<? extends EntityPet> entityClass;
 
-    public PetRegistrationEntry(String name, int registrationId, Class<? extends Pet> petClass, Class<? extends EntityPet> entityClass) {
-        if (this.entityClass == null) {
+    public PetRegistrationEntry(String name, int registrationId, Class<? extends Pet> petClass, Class<? extends EntityPet> entityClass)
+    {
+        if (this.entityClass == null)
+        {
             throw new PetRegistrationException("Entity class not available");
         }
         this.name = name;
@@ -43,32 +46,39 @@ public class PetRegistrationEntry {
         this.petClass = petClass;
     }
 
-    public String getName() {
+    public static PetRegistrationEntry create(PetType petType)
+    {
+        return new PetRegistrationEntry(petType.humanName() + "-Pet", petType.getRegistrationId(), petType.getPetClass(), petType.getEntityClass());
+    }
+
+    public String getName()
+    {
         return name;
     }
 
-    public int getRegistrationId() {
+    public int getRegistrationId()
+    {
         return registrationId;
     }
 
-    public Class<? extends Pet> getPetClass() {
+    public Class<? extends Pet> getPetClass()
+    {
         return petClass;
     }
 
-    public Class<? extends EntityPet> getEntityClass() {
+    public Class<? extends EntityPet> getEntityClass()
+    {
         return entityClass;
     }
 
-    public Pet createFor(UUID playerUID) {
+    public Pet createFor(UUID playerUID)
+    {
         return new Reflection().reflect(this.petClass).getSafeConstructor(UUID.class).getAccessor().invoke(playerUID);
     }
 
     // FIXME: support Sponge/Forge
-    public <T extends LivingEntityBridge, S extends EntityPet> S createEntityPet(Object nmsWorld, Pet<T, S> pet) {
+    public <T extends LivingEntityBridge, S extends EntityPet> S createEntityPet(Object nmsWorld, Pet<T, S> pet)
+    {
         return (S) new Reflection().reflect(this.entityClass).getSafeConstructor(MinecraftReflection.getMinecraftClass("World"), this.petClass.getInterfaces()[0]).getAccessor().invoke(nmsWorld, pet);
-    }
-
-    public static PetRegistrationEntry create(PetType petType) {
-        return new PetRegistrationEntry(petType.humanName() + "-Pet", petType.getRegistrationId(), petType.getPetClass(), petType.getEntityClass());
     }
 }

@@ -24,7 +24,8 @@ import com.dsh105.echopet.api.entity.pet.Pet;
 import java.util.List;
 import java.util.UUID;
 
-public interface SQLPetManager extends PetManager {
+public interface SQLPetManager extends PetManager
+{
 
     void save(Pet pet, boolean isRider);
 

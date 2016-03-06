@@ -24,7 +24,8 @@ import com.dsh105.influx.annotation.Command;
 import com.dsh105.influx.dispatch.CommandContext;
 import com.dsh105.influx.response.ResponseLevel;
 
-public class IncompatiblePluginCommand implements CommandListener {
+public class IncompatiblePluginCommand implements CommandListener
+{
 
     @Command(
             syntax = "pet [args...]",
@@ -32,7 +33,8 @@ public class IncompatiblePluginCommand implements CommandListener {
             usage = "Use \"/pet help\" for help."
     )
     @Authorize(Perm.PET)
-    public boolean pet(CommandContext context) {
+    public boolean pet(CommandContext context)
+    {
         context.respond("EchoPet is not compatible with this server version. Please upgrade/downgrade to the appropriate version.", ResponseLevel.SEVERE);
         return true;
     }
@@ -43,7 +45,8 @@ public class IncompatiblePluginCommand implements CommandListener {
             usage = "Use \"/petadmin help\" for help."
     )
     @Authorize(Perm.PETADMIN)
-    public boolean petadmin(CommandContext context) {
+    public boolean petadmin(CommandContext context)
+    {
         context.respond("EchoPet is not compatible with this server version. Please upgrade/downgrade to the appropriate version.", ResponseLevel.SEVERE);
         return true;
     }

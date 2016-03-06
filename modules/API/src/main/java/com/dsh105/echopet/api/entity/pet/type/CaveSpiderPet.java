@@ -27,6 +27,7 @@ import com.dsh105.echopet.bridge.entity.type.CaveSpiderEntityBridge;
 
 @Traits(type = PetType.CAVE_SPIDER, hositility = Hostility.AGGRESSIVE, width = 0.7F, height = 0.5F, health = 12.0D, attackDamage = 5.0D)
 @Size(SizeCategory.REGULAR)
-public interface CaveSpiderPet extends SpiderPet<CaveSpiderEntityBridge, EntityCaveSpiderPet> {
+public interface CaveSpiderPet extends SpiderPet<CaveSpiderEntityBridge, EntityCaveSpiderPet>
+{
 
 }

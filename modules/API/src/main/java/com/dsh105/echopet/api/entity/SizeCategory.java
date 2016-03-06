@@ -19,7 +19,8 @@ package com.dsh105.echopet.api.entity;
 
 import com.dsh105.echopet.api.configuration.PetSettings;
 
-public enum SizeCategory {
+public enum SizeCategory
+{
 
     TINY(1),
     REGULAR(1),
@@ -29,19 +30,23 @@ public enum SizeCategory {
 
     private int modifier;
 
-    SizeCategory(int modifier) {
+    SizeCategory(int modifier)
+    {
         this.modifier = modifier;
     }
 
-    public double startFollowDistance(PetType petType) {
+    public double startFollowDistance(PetType petType)
+    {
         return (PetSettings.START_FOLLOW_DISTANCE.getValue(petType.storageName()) * this.modifier) / 2D;
     }
 
-    public double stopFollowDistance(PetType petType) {
+    public double stopFollowDistance(PetType petType)
+    {
         return (PetSettings.STOP_FOLLOW_DISTANCE.getValue(petType.storageName()) * this.modifier) / 2D;
     }
 
-    public double teleportDistance(PetType petType) {
+    public double teleportDistance(PetType petType)
+    {
         return (PetSettings.TELEPORT_DISTANCE.getValue(petType.storageName()) * this.modifier) / 2D;
     }
 }

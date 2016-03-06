@@ -28,7 +28,8 @@ import org.bukkit.event.HandlerList;
  * appended automatically.
  */
 
-public class EchoPetSendMessageEvent extends Event implements Cancellable {
+public class EchoPetSendMessageEvent extends Event implements Cancellable
+{
 
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled = false;
@@ -37,10 +38,16 @@ public class EchoPetSendMessageEvent extends Event implements Cancellable {
     private CommandSender recipient;
     private LangSetting langSetting;
 
-    public EchoPetSendMessageEvent(String messageToSend, LangSetting langSetting, CommandSender recipient) {
+    public EchoPetSendMessageEvent(String messageToSend, LangSetting langSetting, CommandSender recipient)
+    {
         this.messageToSend = messageToSend;
         this.recipient = recipient;
         this.langSetting = langSetting;
+    }
+
+    public static HandlerList getHandlerList()
+    {
+        return handlers;
     }
 
     /**
@@ -48,7 +55,8 @@ public class EchoPetSendMessageEvent extends Event implements Cancellable {
      *
      * @return Setting representing the message being sent
      */
-    public LangSetting getLangSetting() {
+    public LangSetting getLangSetting()
+    {
         return langSetting;
     }
 
@@ -57,7 +65,8 @@ public class EchoPetSendMessageEvent extends Event implements Cancellable {
      *
      * @return Message to be sent
      */
-    public String getMessageToSend() {
+    public String getMessageToSend()
+    {
         return messageToSend;
     }
 
@@ -66,7 +75,8 @@ public class EchoPetSendMessageEvent extends Event implements Cancellable {
      *
      * @param messageToSend New message to be sent
      */
-    public void setMessageToSend(String messageToSend) {
+    public void setMessageToSend(String messageToSend)
+    {
         this.messageToSend = messageToSend;
     }
 
@@ -75,7 +85,8 @@ public class EchoPetSendMessageEvent extends Event implements Cancellable {
      *
      * @return Recipient of the message
      */
-    public CommandSender getRecipient() {
+    public CommandSender getRecipient()
+    {
         return recipient;
     }
 
@@ -84,26 +95,26 @@ public class EchoPetSendMessageEvent extends Event implements Cancellable {
      *
      * @param recipient {@link org.bukkit.command.CommandSender} who will receive the message
      */
-    public void setRecipient(CommandSender recipient) {
+    public void setRecipient(CommandSender recipient)
+    {
         this.recipient = recipient;
     }
 
     @Override
-    public boolean isCancelled() {
+    public boolean isCancelled()
+    {
         return cancelled;
     }
 
     @Override
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(boolean cancel)
+    {
         this.cancelled = cancel;
     }
 
     @Override
-    public HandlerList getHandlers() {
-        return this.handlers;
-    }
-
-    public static HandlerList getHandlerList() {
+    public HandlerList getHandlers()
+    {
         return handlers;
     }
 }

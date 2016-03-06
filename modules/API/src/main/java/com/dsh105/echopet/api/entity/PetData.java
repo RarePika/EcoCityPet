@@ -26,7 +26,8 @@ import com.google.common.collect.ImmutableList;
 import java.util.*;
 
 @Deprecated // only here for legacy support
-public enum PetData {
+public enum PetData
+{
 
     /*
      * Some of these don't really 'convert' to attributes as they cover more than one type of attribute
@@ -94,7 +95,8 @@ public enum PetData {
 
     private static PetData[] VALUES;
 
-    static {
+    static
+    {
         ArrayList<PetData> valid = new ArrayList<>(Arrays.asList(PetData.values()));
         valid.remove(PetData.DEFAULT);
         VALUES = valid.toArray(new PetData[0]);
@@ -105,24 +107,30 @@ public enum PetData {
     private List<Type> validTypes;
     private HashMap<Type, Object> typeToObjectMap;
 
-    PetData() {
+    PetData()
+    {
 
     }
 
-    PetData(String storageName, Type... validTypes) {
+    PetData(String storageName, Type... validTypes)
+    {
         this(null, storageName, validTypes);
     }
 
-    PetData(EntityAttribute attribute, String storageName, Type... validTypes) {
+    PetData(EntityAttribute attribute, String storageName, Type... validTypes)
+    {
         this.attribute = attribute;
         this.storageName = storageName;
         this.validTypes = ImmutableList.copyOf(validTypes);
     }
 
-    public static List<PetData> allOfType(Type type) {
+    public static List<PetData> allOfType(Type type)
+    {
         List<PetData> dataOfType = new ArrayList<>();
-        for (PetData data : PetData.valid()) {
-            if (data.isType(type)) {
+        for (PetData data : PetData.valid())
+        {
+            if (data.isType(type))
+            {
                 dataOfType.add(data);
             }
         }
@@ -130,101 +138,128 @@ public enum PetData {
     }
 
     // This isn't pretty, but it can allow us to workaround other things
-    public static PetData[] valid() {
+    public static PetData[] valid()
+    {
         return VALUES;
     }
 
-    public EntityAttribute getCorrespondingAttribute() {
+    public EntityAttribute getCorrespondingAttribute()
+    {
         return attribute;
     }
 
-    public Map<Type, Object> getTypeToObjectMap() {
-        if (typeToObjectMap == null) {
+    public Map<Type, Object> getTypeToObjectMap()
+    {
+        if (typeToObjectMap == null)
+        {
             typeToObjectMap = new HashMap<>();
 
             // Setup any default values (etc.) for each data type
-            for (Type type : getTypes()) {
+            for (Type type : getTypes())
+            {
                 type.setup(this);
             }
         }
         return Collections.unmodifiableMap(typeToObjectMap);
     }
 
-    public String storageName() {
+    public String storageName()
+    {
         return this.storageName;
     }
 
-    public String humanName() {
+    public String humanName()
+    {
         return StringUtil.capitalise(name().replace("_", " "));
     }
 
-    public List<Type> getTypes() {
+    public List<Type> getTypes()
+    {
         return Collections.unmodifiableList(this.validTypes);
     }
 
-    public boolean isType(Type t) {
+    public boolean isType(Type t)
+    {
         return this.getTypes().contains(t);
     }
 
-    public enum Type {
+    public enum Type
+    {
         BOOLEAN,
 
-        COLOUR {
-            @Override
-            public void setup(PetData petData) {
-                petData.typeToObjectMap.put(this, Attributes.Color.valueOf(petData.toString()));
-            }
-        },
+        COLOUR
+                {
+                    @Override
+                    public void setup(PetData petData)
+                    {
+                        petData.typeToObjectMap.put(this, Attributes.Color.valueOf(petData.toString()));
+                    }
+                },
 
-        CAT_TYPE {
-            @Override
-            public void setup(PetData petData) {
-                petData.typeToObjectMap.put(this, Attributes.OcelotType.valueOf(petData.toString() + (petData == PetData.WILD ? "_OCELOT" : "_CAT")));
-            }
-        },
+        CAT_TYPE
+                {
+                    @Override
+                    public void setup(PetData petData)
+                    {
+                        petData.typeToObjectMap.put(this, Attributes.OcelotType.valueOf(petData.toString() + (petData == PetData.WILD ? "_OCELOT" : "_CAT")));
+                    }
+                },
 
-        SLIME_SIZE {
-            @Override
-            public void setup(PetData petData) {
-                petData.typeToObjectMap.put(this, petData == LARGE ? 4 : (petData == PetData.MEDIUM ? 2 : 1));
-            }
-        },
-        VILLAGER_PROFESSION {
-            @Override
-            public void setup(PetData petData) {
-                petData.typeToObjectMap.put(this, Attributes.VillagerProfession.valueOf(petData.toString()));
-            }
-        },
+        SLIME_SIZE
+                {
+                    @Override
+                    public void setup(PetData petData)
+                    {
+                        petData.typeToObjectMap.put(this, petData == LARGE ? 4 : (petData == PetData.MEDIUM ? 2 : 1));
+                    }
+                },
+        VILLAGER_PROFESSION
+                {
+                    @Override
+                    public void setup(PetData petData)
+                    {
+                        petData.typeToObjectMap.put(this, Attributes.VillagerProfession.valueOf(petData.toString()));
+                    }
+                },
 
-        VARIANT {
-            @Override
-            public void setup(PetData petData) {
-                petData.typeToObjectMap.put(this, (petData == SKELETON_HORSE ? Attributes.HorseVariant.SKELETON : Attributes.HorseVariant.valueOf(petData.name())));
-            }
-        },
+        VARIANT
+                {
+                    @Override
+                    public void setup(PetData petData)
+                    {
+                        petData.typeToObjectMap.put(this, (petData == SKELETON_HORSE ? Attributes.HorseVariant.SKELETON : Attributes.HorseVariant.valueOf(petData.name())));
+                    }
+                },
 
-        HORSE_COLOUR {
-            @Override
-            public void setup(PetData petData) {
-                petData.typeToObjectMap.put(this, Attributes.HorseColor.valueOf(petData.name()));
-            }
-        },
+        HORSE_COLOUR
+                {
+                    @Override
+                    public void setup(PetData petData)
+                    {
+                        petData.typeToObjectMap.put(this, Attributes.HorseColor.valueOf(petData.name()));
+                    }
+                },
 
-        HORSE_STYLE {
-            @Override
-            public void setup(PetData petData) {
-                petData.typeToObjectMap.put(this, petData == SOCKS ? Attributes.HorseStyle.WHITE : Attributes.HorseStyle.valueOf(petData.name()));
-            }
-        },
+        HORSE_STYLE
+                {
+                    @Override
+                    public void setup(PetData petData)
+                    {
+                        petData.typeToObjectMap.put(this, petData == SOCKS ? Attributes.HorseStyle.WHITE : Attributes.HorseStyle.valueOf(petData.name()));
+                    }
+                },
 
-        HORSE_ARMOUR {
-            @Override
-            public void setup(PetData petData) {
-                petData.typeToObjectMap.put(this, petData == NO_ARMOUR ? HorseArmour.NONE : HorseArmour.valueOf(petData.toString()));
-            }
-        };
+        HORSE_ARMOUR
+                {
+                    @Override
+                    public void setup(PetData petData)
+                    {
+                        petData.typeToObjectMap.put(this, petData == NO_ARMOUR ? HorseArmour.NONE : HorseArmour.valueOf(petData.toString()));
+                    }
+                };
 
-        protected void setup(PetData petData) {
+        protected void setup(PetData petData)
+        {
             // do nothing
         }
     }

@@ -31,7 +31,8 @@ import com.dsh105.influx.annotation.Convert;
 import com.dsh105.powermessage.core.PowerMessage;
 import org.bukkit.ChatColor;
 
-public class InfoCommand implements CommandListener {
+public class InfoCommand implements CommandListener
+{
 
     @Command(
             syntax = "info",
@@ -39,15 +40,17 @@ public class InfoCommand implements CommandListener {
             help = {"Use \"/pet view\" to select a pet to edit.", "If you only have one pet, there is no need to select one to edit."}
     )
     @Authorize(Perm.INFO)
-    public boolean infoForPet(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Convert(PetConverters.Selected.class) Pet pet) {
-        if (pet == null) {
+    public boolean infoForPet(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Convert(PetConverters.Selected.class) Pet pet)
+    {
+        if (pet == null)
+        {
             return true;
         }
 
         // TODO
         new PowerMessage(ChatColor.WHITE + "• {c1}" + pet.getType().humanName() + " ({c2}" + pet.getName() + "{c1})")
                 .tooltip(ViewMenu.getHoverInfo(pet))
-                .send(event.sender());
+                .send(event.sender().asBukkit());
         event.respond(Lang.HOVER_TIP.getValue());
         return true;
     }

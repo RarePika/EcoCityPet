@@ -28,7 +28,8 @@ import com.dsh105.influx.annotation.Authorize;
 import com.dsh105.influx.annotation.Command;
 import com.dsh105.influx.annotation.Convert;
 
-public class NameCommand implements CommandListener {
+public class NameCommand implements CommandListener
+{
 
     @Command(
             syntax = "name [name]",
@@ -36,16 +37,21 @@ public class NameCommand implements CommandListener {
             help = {"Use \"/pet view\" to select a pet to edit.", "If you only have one pet, there is no need to select one to edit.", "If a name is not provided in the command, you will be asked to enter a name separately", "Names can be more than one word if enclosed in single or double quotations e.g. sheep \"name:My cool pet\""}
     )
     @Authorize(Perm.NAME)
-    public boolean name(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Convert(PetConverters.Selected.class) Pet pet) {
-        if (pet == null) {
+    public boolean name(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Convert(PetConverters.Selected.class) Pet pet)
+    {
+        if (pet == null)
+        {
             return true;
         }
 
         String name = event.var("name");
-        if (name == null) {
+        if (name == null)
+        {
             // TODO: ask for name input
             //NameFactory.askForName(event.sender(), pet, false);
-        } else {
+        }
+        else
+        {
             pet.setName(name, true);
             event.respond(Lang.NAME_PET.getValue("name", pet.getName(), "newname", name));
         }

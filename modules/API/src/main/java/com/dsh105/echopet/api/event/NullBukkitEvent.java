@@ -19,6 +19,7 @@ package com.dsh105.echopet.api.event;
 
 import org.bukkit.event.Event;
 
-public interface NullBukkitEvent extends Event {
+public interface NullBukkitEvent extends Event
+{
 
 }

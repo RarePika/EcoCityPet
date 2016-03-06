@@ -34,7 +34,8 @@ import org.bukkit.entity.Player;
 import java.util.UUID;
 
 // TODO: fix this
-public class EchoHumanPet extends EchoEquipablePet<HumanEntityBridge, EntityHumanPet> implements HumanPet {
+public class EchoHumanPet extends EchoEquipablePet<HumanEntityBridge, EntityHumanPet> implements HumanPet
+{
 
     private static final byte ENTITY_STATUS_INVISIBLE = 32;
     private static final byte ENTITY_STATUS_SPRINTING = 8;
@@ -48,32 +49,42 @@ public class EchoHumanPet extends EchoEquipablePet<HumanEntityBridge, EntityHuma
     private UUID profileUuid;
     private WrappedGameProfile gameProfile;
 
-    public EchoHumanPet(UUID playerUID) {
+    public EchoHumanPet(UUID playerUID)
+    {
         super(playerUID);
 
         this.id = hashCode();
-        if (Settings.FIX_HUMAN_SKINS.getValue()) {
-            try {
+        if (Settings.FIX_HUMAN_SKINS.getValue())
+        {
+            try
+            {
                 this.profileUuid = UUIDFetcher.getUUIDOf(getName());
-            } catch (Exception ignored) {
+            }
+            catch (Exception ignored)
+            {
             }
         }
-        if (this.profileUuid == null) {
+        if (this.profileUuid == null)
+        {
             this.profileUuid = UUID.randomUUID();
         }
         this.gameProfile = new WrappedGameProfile(this.profileUuid, getName());
     }
 
     @Override
-    public boolean setName(String name, boolean sendFailMessage) {
+    public boolean setName(String name, boolean sendFailMessage)
+    {
         name = name.length() > 16 ? name.substring(0, 16) : name;
         boolean success = super.setName(name, sendFailMessage);
-        if (success) {
-            if (initiated) {
+        if (success)
+        {
+            if (initiated)
+            {
                 updatePosition();
             }
 
-            if (gameProfile != null) {
+            if (gameProfile != null)
+            {
                 gameProfile = WrappedGameProfile.getNewProfile(gameProfile, name);
             }
         }
@@ -81,59 +92,76 @@ public class EchoHumanPet extends EchoEquipablePet<HumanEntityBridge, EntityHuma
     }
 
     @Override
-    public boolean teleport(Location to) {
+    public boolean teleport(Location to)
+    {
         boolean success = super.move(to);
-        if (initiated) {
+        if (initiated)
+        {
             updatePosition();
         }
         return success;
     }
 
     @Override
-    public WrappedDataWatcher getDataWatcher() {
+    public WrappedDataWatcher getDataWatcher()
+    {
         return dataWatcher;
     }
 
     @Override
-    public byte getEntityStatus() {
+    public byte getEntityStatus()
+    {
         return entityStatus;
     }
 
     @Override
-    public boolean isInitiated() {
+    public boolean isInitiated()
+    {
         return initiated;
     }
 
     @Override
-    public int getId() {
+    public int getId()
+    {
         return id;
     }
 
     @Override
-    public UUID getProfileUuid() {
+    public UUID getProfileUuid()
+    {
         return profileUuid;
     }
 
     @Override
-    public WrappedGameProfile getGameProfile() {
+    public WrappedGameProfile getGameProfile()
+    {
         return gameProfile;
     }
 
     @Override
-    public void onLive() {
+    public void onLive()
+    {
         super.onLive();
 
-        if (getModifier().isInvisible()) {
+        if (getModifier().isInvisible())
+        {
             this.entityStatus = ENTITY_STATUS_INVISIBLE;
-        } else if (getModifier().isSneaking()) {
+        }
+        else if (getModifier().isSneaking())
+        {
             this.entityStatus = ENTITY_STATUS_SNEAKING;
-        } else if (getModifier().isSprinting()) {
+        }
+        else if (getModifier().isSprinting())
+        {
             this.entityStatus = ENTITY_STATUS_SPRINTING;
-        } else {
+        }
+        else
+        {
             this.entityStatus = ENTITY_STATUS_DEFAULT;
         }
 
-        if (!this.initiated) {
+        if (!this.initiated)
+        {
             this.initialiseDataWatcher();
             this.updatePosition();
             this.initiated = true;
@@ -141,7 +169,8 @@ public class EchoHumanPet extends EchoEquipablePet<HumanEntityBridge, EntityHuma
         this.updateDataWatcher();
     }
 
-    private void initialiseDataWatcher() {
+    private void initialiseDataWatcher()
+    {
         this.dataWatcher = new WrappedDataWatcher();
         this.dataWatcher.setObject(0, this.entityStatus);
         this.dataWatcher.setObject(1, 0);
@@ -150,7 +179,8 @@ public class EchoHumanPet extends EchoEquipablePet<HumanEntityBridge, EntityHuma
     }
 
     @Override
-    public void updatePosition() {
+    public void updatePosition()
+    {
         WrappedPacket spawn = new WrappedPacket(PacketType.Play.Server.NAMED_ENTITY_SPAWN);
         spawn.getIntegers().write(0, this.id);
         spawn.getIntegers().write(1, (int) (getLocation().getX() * 32.0D));
@@ -160,20 +190,23 @@ public class EchoHumanPet extends EchoEquipablePet<HumanEntityBridge, EntityHuma
         spawn.getBytes().write(1, (byte) (getLocation().getPitch() * 256.0F / 360.0F));
         spawn.getIntegers().write(4, getWeapon().getType().getId());
         spawn.getDataWatchers().write(0, this.dataWatcher);
-        for (Player player : GeometryUtil.getNearbyPlayers(getLocation(), -1)) {
+        for (Player player : GeometryUtil.getNearbyPlayers(getLocation(), -1))
+        {
             MinecraftMethods.sendPacket(player, spawn.getHandle());
         }
     }
 
     @Override
-    public void updateDataWatcher() {
+    public void updateDataWatcher()
+    {
         this.dataWatcher.setObject(0, this.entityStatus);
         this.dataWatcher.setObject(10, getName());
 
         WrappedPacket meta = new WrappedPacket(PacketType.Play.Server.ENTITY_METADATA);
         meta.getIntegers().write(0, this.id);
         meta.getWatchableObjectLists().write(0, this.dataWatcher.getWatchableObjects());
-        for (Player player : GeometryUtil.getNearbyPlayers(getLocation(), -1)) {
+        for (Player player : GeometryUtil.getNearbyPlayers(getLocation(), -1))
+        {
             MinecraftMethods.sendPacket(player, meta.getHandle());
         }
     }

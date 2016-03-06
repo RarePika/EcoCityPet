@@ -24,9 +24,8 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface Listen {
+public @interface Listen
+{
 
     Class<? extends org.bukkit.event.Event>[] bukkit();
-
-    Class<? extends org.spongepowered.api.util.event.Event>[] sponge();
 }

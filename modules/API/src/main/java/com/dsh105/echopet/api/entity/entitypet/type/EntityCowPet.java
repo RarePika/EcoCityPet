@@ -23,6 +23,7 @@ import com.dsh105.echopet.api.entity.entitypet.EntityAgeablePet;
 import com.dsh105.echopet.api.entity.pet.type.CowPet;
 
 @Entity(PetType.COW)
-public interface EntityCowPet<T extends CowPet> extends EntityAgeablePet<T> {
+public interface EntityCowPet<T extends CowPet> extends EntityAgeablePet<T>
+{
 
 }

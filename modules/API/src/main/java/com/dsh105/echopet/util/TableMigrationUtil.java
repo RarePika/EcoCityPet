@@ -38,19 +38,23 @@ import java.util.UUID;
  * Table migration strategies are intended to be incremental: if a user has a table two-versions-old,
  * the table will be migrated twice (once for each version).
  */
-public class TableMigrationUtil {
+public class TableMigrationUtil
+{
 
     public static final String LATEST_TABLE = "EchoPet_version4";
     private static final List<MigrationStrategy> tableMigrationStrategies = new ArrayList<MigrationStrategy>();
 
     // TODO: auto-incrementing IDs
     // TODO: Perhaps migration strategies should be moved to their own classes.
-    static {
+    static
+    {
         // Pets -> EchoPet
         // Migrates UUIDs as necessary
-        tableMigrationStrategies.add(new MigrationStrategy("Pets") {
+        tableMigrationStrategies.add(new MigrationStrategy("Pets")
+        {
             @Override
-            public String getMigratedTableSchema() {
+            public String getMigratedTableSchema()
+            {
                 return "EchoPet ("
                         + "    OwnerName varchar(255),"
                         + "    PetType varchar(255),"
@@ -63,7 +67,8 @@ public class TableMigrationUtil {
             }
 
             @Override
-            public void migrate(Connection conn) throws SQLException {
+            public void migrate(Connection conn) throws SQLException
+            {
                 // Copy all of our data over to the new table
                 PreparedStatement copyStatement = conn.prepareStatement("INSERT INTO EchoPet SELECT * FROM Pets");
                 copyStatement.executeUpdate();
@@ -74,23 +79,31 @@ public class TableMigrationUtil {
 
                 PreparedStatement updateNameStatement = conn.prepareStatement("UPDATE EchoPet SET OwnerName = ? WHERE OwnerName = ?");
                 ResultSet resultSet = getOwnerStatement.executeQuery();
-                while (resultSet.next()) {
+                while (resultSet.next())
+                {
                     String ownerName = resultSet.getString("OwnerName");
 
-                    try {
+                    try
+                    {
                         UUID.fromString(ownerName);
                         continue; // This name is already a UUID.
-                    } catch (IllegalArgumentException ignored) {
+                    }
+                    catch (IllegalArgumentException ignored)
+                    {
                     }
 
                     UUID playerUUID;
-                    try {
+                    try
+                    {
                         playerUUID = UUIDFetcher.getUUIDOf(ownerName);
-                    } catch (Exception e) {
+                    }
+                    catch (Exception e)
+                    {
                         continue;
                     }
 
-                    if (playerUUID == null) {
+                    if (playerUUID == null)
+                    {
                         continue;
                     }
 
@@ -103,10 +116,12 @@ public class TableMigrationUtil {
             }
 
             // Implementation-compatible with old SQLUtil::serialise
-            private String serialise(PetData[] data, boolean isRider) {
+            private String serialise(PetData[] data, boolean isRider)
+            {
                 String serialized = (isRider ? "Rider" : "") + data[0].toString() + " varchar(255)";
 
-                for (int i = 1; i < data.length; i++) {
+                for (int i = 1; i < data.length; i++)
+                {
                     serialized += ", " + (isRider ? "Rider" : "") + data[i].toString() + " varchar(255)";
                 }
 
@@ -116,9 +131,11 @@ public class TableMigrationUtil {
 
         // EchoPet -> EchoPet_version3
         // Reduction in columns -- no longer has a column (varchar 255) per PetData
-        tableMigrationStrategies.add(new MigrationStrategy("EchoPet") {
+        tableMigrationStrategies.add(new MigrationStrategy("EchoPet")
+        {
             @Override
-            public String getMigratedTableSchema() {
+            public String getMigratedTableSchema()
+            {
                 return "EchoPet_version3 ("
                         + "    OwnerName varchar(36),"
                         + "    PetType varchar(255),"
@@ -132,22 +149,26 @@ public class TableMigrationUtil {
             }
 
             @Override
-            public void migrate(Connection conn) throws SQLException {
+            public void migrate(Connection conn) throws SQLException
+            {
                 PreparedStatement selectAll = conn.prepareStatement("SELECT * FROM EchoPet");
                 ResultSet resultSet = selectAll.executeQuery();
 
                 PreparedStatement statement = conn.prepareStatement("INSERT INTO EchoPet_version3 (OwnerName, PetType, PetName, PetData, RiderPetType, RiderPetName, RiderPetData) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                while (resultSet.next()) {
+                while (resultSet.next())
+                {
 
                     statement.setString(1, resultSet.getString("OwnerName"));
                     statement.setString(2, resultSet.getString("PetType"));
                     statement.setString(3, resultSet.getString("PetName"));
 
                     List<PetData> dataList = new ArrayList<PetData>();
-                    for (PetData data : PetData.valid()) {
+                    for (PetData data : PetData.valid())
+                    {
                         String dataValue = resultSet.getString(data.toString());
 
-                        if (dataValue != null && Boolean.valueOf(dataValue)) {
+                        if (dataValue != null && Boolean.valueOf(dataValue))
+                        {
                             dataList.add(data);
                         }
                     }
@@ -158,10 +179,12 @@ public class TableMigrationUtil {
                     statement.setString(6, resultSet.getString("RiderPetName"));
 
                     List<PetData> riderDataList = new ArrayList<PetData>();
-                    for (PetData data : PetData.valid()) {
+                    for (PetData data : PetData.valid())
+                    {
                         String dataValue = resultSet.getString("Rider" + data.toString());
 
-                        if (dataValue != null && Boolean.valueOf(dataValue)) {
+                        if (dataValue != null && Boolean.valueOf(dataValue))
+                        {
                             riderDataList.add(data);
                         }
                     }
@@ -175,9 +198,11 @@ public class TableMigrationUtil {
 
         // EchoPet_version3 -> EchoPet_version4
         // Pets are now referenced by a UUID to implement support for multiple pets per player
-        tableMigrationStrategies.add(new MigrationStrategy("EchoPet_version3") {
+        tableMigrationStrategies.add(new MigrationStrategy("EchoPet_version3")
+        {
             @Override
-            public String getMigratedTableSchema() {
+            public String getMigratedTableSchema()
+            {
                 return "EchoPet_version4 ("
                         + "    PetId varchar(36) NOT NULL,"
                         + "    OwnerId varchar(36) NOT NULL,"
@@ -192,12 +217,14 @@ public class TableMigrationUtil {
             }
 
             @Override
-            public void migrate(Connection conn) throws SQLException {
+            public void migrate(Connection conn) throws SQLException
+            {
                 PreparedStatement selectAll = conn.prepareStatement("SELECT * FROM EchoPet_version3");
                 ResultSet resultSet = selectAll.executeQuery();
 
                 PreparedStatement statement = conn.prepareStatement("INSERT INTO EchoPet_version4 (PetId, OwnerId, PetType, PetName, Attributes, RiderType, RiderName, RiderAttributes) SELECT ?, OwnerName, PetType, PetName, ?, RiderPetType, RiderPetName, ? FROM EchoPet_version3 WHERE OwnerName = ?");
-                while (resultSet.next()) {
+                while (resultSet.next())
+                {
                     statement.setString(1, UUID.randomUUID().toString());
                     statement.setString(2, resultSet.getString("OwnerName"));
                     statement.setLong(3, migrate(resultSet.getLong("PetData")));
@@ -211,14 +238,18 @@ public class TableMigrationUtil {
              * Migrates PetData into EntityAttributes
              */
 
-            private long migrate(long petDataBitmask) {
+            private long migrate(long petDataBitmask)
+            {
                 return SQLUtil.serializeAttributes(migrate(SQLUtil.deserializeData(petDataBitmask)));
             }
 
-            private List<EntityAttribute> migrate(List<PetData> petData) {
-                return GeneralUtil.transform(petData, new Transformer<PetData, EntityAttribute>() {
+            private List<EntityAttribute> migrate(List<PetData> petData)
+            {
+                return GeneralUtil.transform(petData, new Transformer<PetData, EntityAttribute>()
+                {
                     @Override
-                    public EntityAttribute transform(PetData transmutable) {
+                    public EntityAttribute transform(PetData transmutable)
+                    {
                         return transmutable.getCorrespondingAttribute();
                     }
                 });
@@ -231,27 +262,39 @@ public class TableMigrationUtil {
      * <p/>
      * In the process of migration, old tables will be dropped
      */
-    public static void migrateTables() {
+    public static void migrateTables()
+    {
         Connection conn = null;
 
-        try {
+        try
+        {
             conn = EchoPet.getNucleus().getDbPool().getConnection();
-            for (MigrationStrategy strategy : tableMigrationStrategies) {
-                if (conn.getMetaData().getTables(null, null, strategy.getTableName(), null).next()) {
+            for (MigrationStrategy strategy : tableMigrationStrategies)
+            {
+                if (conn.getMetaData().getTables(null, null, strategy.getTableName(), null).next())
+                {
                     strategy.createTargetTable(conn);
                     strategy.migrate(conn);
                     strategy.dropOldTable(conn);
                 }
             }
 
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             EchoPet.log().console("Failed migrate old SQL table(s)");
             e.printStackTrace();
-        } finally {
-            if (conn != null) {
-                try {
+        }
+        finally
+        {
+            if (conn != null)
+            {
+                try
+                {
                     conn.close();
-                } catch (SQLException ignored) {
+                }
+                catch (SQLException ignored)
+                {
                 }
             }
         }
@@ -260,24 +303,35 @@ public class TableMigrationUtil {
     /**
      * Creates the newest table registered to TableMigrationUtil
      */
-    public static void createNewestTable() {
+    public static void createNewestTable()
+    {
         Connection conn = null;
 
-        try {
+        try
+        {
             conn = EchoPet.getNucleus().getDbPool().getConnection();
 
-            if (tableMigrationStrategies.size() > 0) {
+            if (tableMigrationStrategies.size() > 0)
+            {
                 MigrationStrategy strategy = tableMigrationStrategies.get(tableMigrationStrategies.size() - 1);
                 strategy.createTargetTable(conn);
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             EchoPet.log().console("Failed to create latest table");
             e.printStackTrace();
-        } finally {
-            if (conn != null) {
-                try {
+        }
+        finally
+        {
+            if (conn != null)
+            {
+                try
+                {
                     conn.close();
-                } catch (SQLException ignored) {
+                }
+                catch (SQLException ignored)
+                {
                 }
             }
         }
@@ -286,21 +340,24 @@ public class TableMigrationUtil {
     /**
      * Represents a table schema transition
      */
-    abstract static class MigrationStrategy {
+    abstract static class MigrationStrategy
+    {
 
         private final String tableName;
 
         /**
          * @param tableName The name of the table that, if present, will be migrated.
          */
-        public MigrationStrategy(String tableName) {
+        public MigrationStrategy(String tableName)
+        {
             this.tableName = tableName;
         }
 
         /**
          * @return The name of the table that, if present, will be migrated.
          */
-        public String getTableName() {
+        public String getTableName()
+        {
             return tableName;
         }
 
@@ -327,7 +384,8 @@ public class TableMigrationUtil {
          * @param conn The connection that will be used to drop the table
          * @throws java.sql.SQLException
          */
-        public void dropOldTable(Connection conn) throws SQLException {
+        public void dropOldTable(Connection conn) throws SQLException
+        {
             conn.prepareStatement("DROP TABLE " + tableName).executeUpdate();
         }
 
@@ -337,7 +395,8 @@ public class TableMigrationUtil {
          * @param conn The connection that will be used to create the table
          * @throws java.sql.SQLException
          */
-        public void createTargetTable(Connection conn) throws SQLException {
+        public void createTargetTable(Connection conn) throws SQLException
+        {
             conn.prepareStatement("CREATE TABLE IF NOT EXISTS " + getMigratedTableSchema()).executeUpdate();
         }
     }

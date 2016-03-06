@@ -23,23 +23,27 @@ import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.Prompt;
 import org.bukkit.conversations.StringPrompt;
 
-public class NamePrompt extends StringPrompt {
+public class NamePrompt extends StringPrompt
+{
 
     private Pet pet;
     private boolean admin;
 
-    public NamePrompt(Pet pet, boolean admin) {
+    public NamePrompt(Pet pet, boolean admin)
+    {
         this.pet = pet;
         this.admin = admin;
     }
 
     @Override
-    public String getPromptText(ConversationContext conversationContext) {
+    public String getPromptText(ConversationContext conversationContext)
+    {
         return this.admin ? Lang.ADMIN_NAME_PET_PROMPT.getValue("player", pet.getOwnerName()) : Lang.NAME_PET_PROMPT.getValue();
     }
 
     @Override
-    public Prompt acceptInput(ConversationContext conversationContext, String s) {
+    public Prompt acceptInput(ConversationContext conversationContext, String s)
+    {
         conversationContext.setSessionData("name", s);
         return new NameSuccessPrompt(this.pet, this.admin);
     }

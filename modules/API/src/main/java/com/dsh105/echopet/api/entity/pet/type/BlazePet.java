@@ -31,11 +31,12 @@ import com.dsh105.echopet.bridge.entity.type.BlazeEntityBridge;
 
 @Traits(type = PetType.BLAZE, hositility = Hostility.AGGRESSIVE, width = 0.6F, height = 1.7F, health = 20.0D, attackDamage = 6.0D)
 @Size(SizeCategory.REGULAR)
-public interface BlazePet extends RangedPet<BlazeEntityBridge, EntityBlazePet> {
-
-    @AttributeSetter(Attributes.Attribute.FIRE)
-    void setOnFire(boolean flag);
+public interface BlazePet extends RangedPet<BlazeEntityBridge, EntityBlazePet>
+{
 
     @AttributeGetter(Attributes.Attribute.FIRE)
     boolean isOnFire();
+
+    @AttributeSetter(Attributes.Attribute.FIRE)
+    void setOnFire(boolean flag);
 }

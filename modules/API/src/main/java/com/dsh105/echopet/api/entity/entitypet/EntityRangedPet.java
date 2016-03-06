@@ -19,7 +19,8 @@ package com.dsh105.echopet.api.entity.entitypet;
 
 import com.dsh105.echopet.api.entity.pet.RangedPet;
 
-public interface EntityRangedPet<T extends RangedPet> extends EntityPet<T> {
+public interface EntityRangedPet<T extends RangedPet> extends EntityPet<T>
+{
 
-    public void rangedAttack(Object entity, float speed);
+    void rangedAttack(Object entity, float speed);
 }

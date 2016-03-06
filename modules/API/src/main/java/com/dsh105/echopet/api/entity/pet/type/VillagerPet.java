@@ -29,17 +29,18 @@ import com.dsh105.echopet.api.entity.pet.Hostility;
 import com.dsh105.echopet.bridge.entity.type.VillagerEntityBridge;
 
 @Traits(type = PetType.VILLAGER, hositility = Hostility.PASSIVE, width = 0.6F, height = 1.8F, health = 20.0D, attackDamage = 4.0D)
-public interface VillagerPet extends AgeablePet<VillagerEntityBridge, EntityVillagerPet> {
-
-    @GroupAttributeSetter(AttributeType.PROFESSION)
-    void setProfession(Attributes.VillagerProfession profession);
+public interface VillagerPet extends AgeablePet<VillagerEntityBridge, EntityVillagerPet>
+{
 
     @GroupAttributeGetter(AttributeType.PROFESSION)
     Attributes.VillagerProfession getProfession();
 
-    @GroupAttributeSetter(AttributeType.CAREER)
-    void setCareer(Attributes.VillagerCareer career);
+    @GroupAttributeSetter(AttributeType.PROFESSION)
+    void setProfession(Attributes.VillagerProfession profession);
 
     @GroupAttributeGetter(AttributeType.CAREER)
     Attributes.VillagerCareer getCareer();
+
+    @GroupAttributeSetter(AttributeType.CAREER)
+    void setCareer(Attributes.VillagerCareer career);
 }

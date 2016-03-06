@@ -21,15 +21,18 @@ import com.dsh105.echopet.bridge.entity.type.SlimeEntityBridge;
 import com.dsh105.echopet.bridge.platform.bukkit.entity.BukkitLivingEntityBridge;
 import org.bukkit.entity.Slime;
 
-public class BukkitSlimeEntityBridge<E extends Slime> extends BukkitLivingEntityBridge<E> implements SlimeEntityBridge {
+public class BukkitSlimeEntityBridge<E extends Slime> extends BukkitLivingEntityBridge<E> implements SlimeEntityBridge
+{
 
     @Override
-    public void setSize(int size) {
-        getBukkitEntity().setSize(size);
+    public int getSize()
+    {
+        return getBukkitEntity().getSize();
     }
 
     @Override
-    public int getSize() {
-        return getBukkitEntity().getSize();
+    public void setSize(int size)
+    {
+        getBukkitEntity().setSize(size);
     }
 }

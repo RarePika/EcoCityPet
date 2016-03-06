@@ -23,9 +23,11 @@ import org.bukkit.conversations.Conversable;
 import org.bukkit.conversations.ConversationFactory;
 import org.bukkit.plugin.Plugin;
 
-public class NameFactory {
+public class NameFactory
+{
 
-    public static void askForName(Conversable whom, Pet pet, boolean admin) {
+    public static void askForName(Conversable whom, Pet pet, boolean admin)
+    {
         new ConversationFactory((Plugin) EchoPet.getCore())
                 .withModality(true)
                 .withLocalEcho(false)

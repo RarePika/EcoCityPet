@@ -18,14 +18,16 @@
 package com.dsh105.echopet.api.entity.pet.type;
 
 import com.dsh105.echopet.api.entity.entitypet.type.EntityGiantPet;
-import com.dsh105.echopet.bridge.entity.type.GiantEntityBridge;
 import com.dsh105.echopet.api.entity.pet.AbstractPetBase;
+import com.dsh105.echopet.bridge.entity.type.GiantEntityBridge;
 
 import java.util.UUID;
 
-public class EchoGiantPet extends AbstractPetBase<GiantEntityBridge, EntityGiantPet> implements GiantPet {
+public class EchoGiantPet extends AbstractPetBase<GiantEntityBridge, EntityGiantPet> implements GiantPet
+{
 
-    public EchoGiantPet(UUID playerUID) {
+    public EchoGiantPet(UUID playerUID)
+    {
         super(playerUID);
     }
 }

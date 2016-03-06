@@ -29,12 +29,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class EntityAIModifier {
+public class EntityAIModifier
+{
 
     private static final List<FieldAccessor<?>> GOAL_SELECTORS;
     private static final List<FieldAccessor<List>> GOAL_LISTS;
 
-    static {
+    static
+    {
         List<FieldAccessor<?>> selectors = new ArrayList<>();
         List<FieldAccessor<List>> goalLists = new ArrayList<>();
 
@@ -42,12 +44,14 @@ public class EntityAIModifier {
         ClassTemplate<?> entityInsentient = new Reflection().reflect(MinecraftReflection.getMinecraftClass("EntityInsentient"));
 
         List<SafeField<?>> goalSelectors = entityInsentient.getSafeFields(Matchers.withExactType(pathfinderGoalSelector.getReflectedClass()));
-        for (SafeField<?> goalSelector : goalSelectors) {
+        for (SafeField<?> goalSelector : goalSelectors)
+        {
             selectors.add(goalSelector.getAccessor());
         }
 
         List<SafeField<?>> goalListFields = pathfinderGoalSelector.getSafeFields(Matchers.withExactType(List.class));
-        for (SafeField<?> goalListField : goalListFields) {
+        for (SafeField<?> goalListField : goalListFields)
+        {
             goalLists.add(((SafeField<List>) goalListField).getAccessor());
         }
 
@@ -57,17 +61,23 @@ public class EntityAIModifier {
 
     private List<List> goalLists = new ArrayList<>();
 
-    public EntityAIModifier(Pet pet) {
-        for (FieldAccessor<?> goalSelector : GOAL_SELECTORS) {
-            for (FieldAccessor<List> goalList : GOAL_LISTS) {
+    public EntityAIModifier(Pet pet)
+    {
+        for (FieldAccessor<?> goalSelector : GOAL_SELECTORS)
+        {
+            for (FieldAccessor<List> goalList : GOAL_LISTS)
+            {
                 goalLists.add(goalList.get(goalSelector.get(pet.getEntity())));
             }
         }
     }
 
-    public void update() {
-        for (List goalList : goalLists) {
-            if (!goalList.isEmpty()) {
+    public void update()
+    {
+        for (List goalList : goalLists)
+        {
+            if (!goalList.isEmpty())
+            {
                 goalList.clear();
             }
         }

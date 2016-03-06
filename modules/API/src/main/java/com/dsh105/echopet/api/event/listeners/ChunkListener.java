@@ -25,14 +25,18 @@ import com.dsh105.echopet.bridge.container.EventContainer;
 
 import java.util.List;
 
-public class ChunkListener {
+public class ChunkListener
+{
 
     @Listen(bukkit = org.bukkit.event.world.ChunkUnloadEvent.class, sponge = org.spongepowered.api.event.world.ChunkUnloadEvent.class)
-    public void onChunkUnload(EventContainer event) {
+    public void onChunkUnload(EventContainer event)
+    {
         List<?> entities = event.get(List.class);
-        for (Object entity : entities) {
+        for (Object entity : entities)
+        {
             Object entityHandle = BukkitUnwrapper.getInstance().unwrap(entity);
-            if (entityHandle instanceof EntityPet) {
+            if (entityHandle instanceof EntityPet)
+            {
                 Pet pet = ((EntityPet) entityHandle).getPet();
                 pet.moveToOwner();
                 event.setCancelled(true);

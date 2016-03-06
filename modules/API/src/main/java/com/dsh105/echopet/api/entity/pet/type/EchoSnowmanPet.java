@@ -23,9 +23,11 @@ import com.dsh105.echopet.bridge.entity.type.SnowmanEntityBridge;
 
 import java.util.UUID;
 
-public class EchoSnowmanPet extends EchoRangedPet<SnowmanEntityBridge, EntitySnowmanPet> implements SnowmanPet {
+public class EchoSnowmanPet extends EchoRangedPet<SnowmanEntityBridge, EntitySnowmanPet> implements SnowmanPet
+{
 
-    public EchoSnowmanPet(UUID playerUID) {
+    public EchoSnowmanPet(UUID playerUID)
+    {
         super(playerUID);
     }
 }

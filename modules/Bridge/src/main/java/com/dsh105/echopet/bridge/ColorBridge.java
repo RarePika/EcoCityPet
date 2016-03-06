@@ -19,11 +19,11 @@ package com.dsh105.echopet.bridge;
 
 import com.dsh105.commodus.ServerUtil;
 import org.bukkit.ChatColor;
-import org.spongepowered.api.text.format.TextColors;
 
 import java.lang.reflect.Field;
 
-public final class ColorBridge {
+public final class ColorBridge
+{
 
     private static Object BLACK;
     private static Object DARK_BLUE;
@@ -41,24 +41,27 @@ public final class ColorBridge {
     private static Object LIGHT_PURPLE;
     private static Object YELLOW;
     private static Object WHITE;
-    
-    static {
-        for (Field field : ColorBridge.class.getFields()) {
+
+    static
+    {
+        for (Field field : ColorBridge.class.getFields())
+        {
             Object value = null;
-            switch (ServerUtil.getServerBrand().getCapsule()) {
+            switch (ServerUtil.getServerBrand().getCapsule())
+            {
                 case BUKKIT:
                     value = ChatColor.valueOf(field.getName());
                     break;
-                case SPONGE:
-                    value = TextColors.valueOf(field.getName());
-                    break;
             }
-            try {
+            try
+            {
                 field.set(null, value);
-            } catch (IllegalAccessException e) {
+            }
+            catch (IllegalAccessException e)
+            {
                 throw new RuntimeException("Failed to provide text color bridge: " + field.getName(), e);
             }
         }
-        
+
     }
 }

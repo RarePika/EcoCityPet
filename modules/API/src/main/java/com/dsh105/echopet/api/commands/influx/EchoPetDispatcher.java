@@ -21,24 +21,25 @@ import com.dsh105.echopet.bridge.container.CommandSourceContainer;
 import com.dsh105.influx.Controller;
 import com.dsh105.influx.InfluxManager;
 import com.dsh105.influx.dispatch.Dispatcher;
-import com.dsh105.influx.dispatch.SpongeCommandDispatcher;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.spongepowered.api.util.command.CommandSource;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class EchoPetDispatcher extends Dispatcher<CommandSourceContainer> implements CommandExecutor, SpongeCommandDispatcher {
+public class EchoPetDispatcher extends Dispatcher<CommandSourceContainer> implements CommandExecutor
+{
 
-    public EchoPetDispatcher(InfluxManager<CommandSourceContainer> manager) {
+    public EchoPetDispatcher(InfluxManager<CommandSourceContainer> manager)
+    {
         super(manager);
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
+    {
         List<String> arguments = new ArrayList<>();
         Collections.addAll(arguments, args);
         arguments.add(0, command.getLabel());
@@ -46,12 +47,8 @@ public class EchoPetDispatcher extends Dispatcher<CommandSourceContainer> implem
     }
 
     @Override
-    public boolean dispatch(CommandSource source, String arguments) {
-        return dispatch(CommandSourceContainer.from(source), arguments.split("\\s+"));
-    }
-
-    @Override
-    public <T extends CommandSourceContainer> boolean preDispatch(T sender, Controller controller, String input) {
+    public <T extends CommandSourceContainer> boolean preDispatch(T sender, Controller controller, String input)
+    {
         return dispatch(new EchoPetCommandEvent<>(getManager(), controller, sender, consumedArgumentSets.get(input).get(controller)));
     }
 }

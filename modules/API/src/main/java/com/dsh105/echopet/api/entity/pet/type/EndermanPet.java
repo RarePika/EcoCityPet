@@ -31,11 +31,12 @@ import com.dsh105.echopet.bridge.entity.type.EndermanEntityBridge;
 
 @Traits(type = PetType.ENDERMAN, hositility = Hostility.NEUTRAL, width = 0.6F, height = 2.9F, health = 40.0D, attackDamage = 6.0D)
 @Size(SizeCategory.REGULAR)
-public interface EndermanPet extends Pet<EndermanEntityBridge, EntityEndermanPet> {
-
-    @AttributeSetter(Attributes.Attribute.SCREAMING)
-    void setScreaming(boolean flag);
+public interface EndermanPet extends Pet<EndermanEntityBridge, EntityEndermanPet>
+{
 
     @AttributeGetter(Attributes.Attribute.SCREAMING)
     boolean isScreaming();
+
+    @AttributeSetter(Attributes.Attribute.SCREAMING)
+    void setScreaming(boolean flag);
 }

@@ -19,13 +19,14 @@ package com.dsh105.echopet.api.entity.entitypet;
 
 import com.dsh105.echopet.api.entity.pet.AgeablePet;
 
-public interface EntityAgeablePet<T extends AgeablePet> extends EntityPet<T> {
+public interface EntityAgeablePet<T extends AgeablePet> extends EntityPet<T>
+{
 
-    public static final int DATAWATCHER_BABY = 12;
-
-    void setBaby(boolean flag);
+    int DATAWATCHER_BABY = 12;
 
     boolean isBaby();
+
+    void setBaby(boolean flag);
 
     void resetLove();
 }

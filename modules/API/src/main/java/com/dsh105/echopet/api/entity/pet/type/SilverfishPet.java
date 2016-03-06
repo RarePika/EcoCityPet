@@ -28,6 +28,7 @@ import com.dsh105.echopet.bridge.entity.type.SilverfishEntityBridge;
 
 @Traits(type = PetType.SILVERFISH, hositility = Hostility.AGGRESSIVE, width = 0.3F, height = 0.7F, health = 8.0D, attackDamage = 4.0D)
 @Size(SizeCategory.TINY)
-public interface SilverfishPet extends Pet<SilverfishEntityBridge, EntitySilverfishPet> {
+public interface SilverfishPet extends Pet<SilverfishEntityBridge, EntitySilverfishPet>
+{
 
 }

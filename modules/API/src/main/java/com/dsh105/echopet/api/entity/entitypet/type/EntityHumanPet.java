@@ -23,6 +23,7 @@ import com.dsh105.echopet.api.entity.entitypet.EntityEquipablePet;
 import com.dsh105.echopet.api.entity.pet.type.HumanPet;
 
 @Entity(PetType.HUMAN)
-public interface EntityHumanPet extends EntityEquipablePet<HumanPet> {
+public interface EntityHumanPet extends EntityEquipablePet<HumanPet>
+{
 
 }

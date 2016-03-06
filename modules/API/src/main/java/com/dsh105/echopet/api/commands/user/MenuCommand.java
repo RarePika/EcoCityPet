@@ -27,7 +27,8 @@ import com.dsh105.influx.annotation.Authorize;
 import com.dsh105.influx.annotation.Command;
 import com.dsh105.influx.annotation.Convert;
 
-public class MenuCommand implements CommandListener {
+public class MenuCommand implements CommandListener
+{
 
     @Command(
             syntax = "menu",
@@ -35,8 +36,10 @@ public class MenuCommand implements CommandListener {
             help = {"Use \"/pet view\" to select a pet to edit.", "If you only have one pet, there is no need to select one to edit."}
     )
     @Authorize(Perm.MENU)
-    public boolean menu(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Convert(PetConverters.Selected.class) Pet pet) {
-        if (pet == null) {
+    public boolean menu(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Convert(PetConverters.Selected.class) Pet pet)
+    {
+        if (pet == null)
+        {
             return true;
         }
         pet.onInteract(event.sender().get());

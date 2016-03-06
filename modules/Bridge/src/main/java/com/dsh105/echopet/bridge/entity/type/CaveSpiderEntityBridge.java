@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.bridge.entity.type;
 
-public interface CaveSpiderEntityBridge extends SpiderEntityBridge {
+public interface CaveSpiderEntityBridge extends SpiderEntityBridge
+{
 
 }

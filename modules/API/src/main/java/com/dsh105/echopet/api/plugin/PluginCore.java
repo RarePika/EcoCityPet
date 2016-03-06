@@ -19,9 +19,9 @@ package com.dsh105.echopet.api.plugin;
 
 import com.dsh105.commodus.ServerBrand;
 import com.dsh105.commodus.configuration.ConfigManager;
-import com.dsh105.influx.InfluxManager;
 
-public interface PluginCore {
+public interface PluginCore
+{
 
     ServerBrand getServerBrand();
 

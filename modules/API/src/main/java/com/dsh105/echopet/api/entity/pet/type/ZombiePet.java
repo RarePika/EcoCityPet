@@ -32,11 +32,12 @@ import com.dsh105.echopet.bridge.entity.type.ZombieEntityBridge;
 
 @Traits(type = PetType.ZOMBIE, hositility = Hostility.AGGRESSIVE, width = 0.6F, height = 1.8F, health = 20.0D, attackDamage = 5.0D)
 @Size(SizeCategory.REGULAR)
-public interface ZombiePet<T extends ZombieEntityBridge, S extends EntityZombiePet> extends EquipablePet<T, S>, AgeablePet<T, S> {
-
-    @AttributeSetter(Attributes.Attribute.VILLAGER)
-    void setVillager(boolean flag);
+public interface ZombiePet<T extends ZombieEntityBridge, S extends EntityZombiePet> extends EquipablePet<T, S>, AgeablePet<T, S>
+{
 
     @AttributeGetter(Attributes.Attribute.VILLAGER)
     boolean isVillager();
+
+    @AttributeSetter(Attributes.Attribute.VILLAGER)
+    void setVillager(boolean flag);
 }

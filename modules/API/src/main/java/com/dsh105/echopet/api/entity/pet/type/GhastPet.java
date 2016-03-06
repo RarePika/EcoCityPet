@@ -28,6 +28,7 @@ import com.dsh105.echopet.bridge.entity.type.GhastEntityBridge;
 
 @Traits(type = PetType.GHAST, hositility = Hostility.AGGRESSIVE, width = 4.0F, height = 4.0F, health = 10.0D, attackDamage = 7.0D)
 @Size(SizeCategory.OVERSIZE)
-public interface GhastPet extends Pet<GhastEntityBridge, EntityGhastPet> {
+public interface GhastPet extends Pet<GhastEntityBridge, EntityGhastPet>
+{
 
 }

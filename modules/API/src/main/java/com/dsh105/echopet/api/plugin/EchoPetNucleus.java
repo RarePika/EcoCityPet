@@ -23,6 +23,7 @@ import com.dsh105.commodus.configuration.Config;
 import com.dsh105.commodus.configuration.ConfigManager;
 import com.dsh105.commodus.configuration.OptionSet;
 import com.dsh105.commodus.logging.Level;
+import com.dsh105.echopet.api.commands.IncompatiblePluginCommand;
 import com.dsh105.echopet.api.commands.admin.PetAdminCommand;
 import com.dsh105.echopet.api.commands.influx.EchoPetCommandManager;
 import com.dsh105.echopet.api.commands.user.PetCommand;
@@ -34,13 +35,10 @@ import com.dsh105.echopet.api.event.listeners.PetListener;
 import com.dsh105.echopet.api.event.listeners.PlayerListener;
 import com.dsh105.echopet.api.registration.PetRegistry;
 import com.dsh105.echopet.bridge.BridgeManager;
-import com.dsh105.echopet.api.commands.IncompatiblePluginCommand;
 import com.dsh105.echopet.util.Perm;
 import com.dsh105.echopet.util.TableMigrationUtil;
 import com.dsh105.echopet.util.UUIDMigration;
 import com.dsh105.influx.CommandListener;
-import com.dsh105.influx.Controller;
-import com.dsh105.influx.InfluxManager;
 import com.dsh105.influx.annotation.Authorize;
 import com.dsh105.influx.annotation.Command;
 import com.dsh105.influx.annotation.Nest;
@@ -59,7 +57,8 @@ import java.util.Map;
 
 @Nest(nests = {"echopet", "ep"})
 @Authorize(Perm.ECHOPET)
-public class EchoPetNucleus implements PluginNucleus, CommandListener {
+public class EchoPetNucleus implements PluginNucleus, CommandListener
+{
 
     public static final String DEFAULT_PREFIX = "&4[&cEchoPet&4]&r ";
     protected ConfigManager<?> configManager;
@@ -75,25 +74,34 @@ public class EchoPetNucleus implements PluginNucleus, CommandListener {
     private HashMap<ConfigType, OptionSet> settings = new HashMap<>();
     private List<PluginDependency<?, ?>> dependencies = new ArrayList<>();
 
-    public EchoPetNucleus(PluginCore pluginCore) {
+    public EchoPetNucleus(PluginCore pluginCore)
+    {
         this.pluginCore = pluginCore;
     }
 
-    public void preEnable() {
+    public void preEnable()
+    {
         EchoPet.setCore(pluginCore);
-        try {
+        try
+        {
             pluginVersion = ManifestUtil.getAttribute("Plugin-Version");
-        } catch (URISyntaxException | IOException e) {
+        }
+        catch (URISyntaxException | IOException e)
+        {
             throw new IllegalStateException("Failed to retrieve plugin version.", e);
         }
         bridgeManager = new BridgeManager(this, pluginCore.getServerBrand());
         commandManager = new EchoPetCommandManager();
     }
 
-    public void enable() {
-        try {
+    public void enable()
+    {
+        try
+        {
             Class.forName(EchoPet.INTERNAL_NMS_PATH + ".entity.EchoEntityPetBase");
-        } catch (ClassNotFoundException e) {
+        }
+        catch (ClassNotFoundException e)
+        {
             // Make sure the server owner is aware
             EchoPet.log().console(Level.WARNING, "+----------------------+");
             EchoPet.log().console(Level.WARNING, "EchoPet is not compatible with this server version");
@@ -107,14 +115,15 @@ public class EchoPetNucleus implements PluginNucleus, CommandListener {
 
         loadConfiguration();
 
-        if (Settings.SQL_ENABLE.getValue()) {
+        if (Settings.SQL_ENABLE.getValue())
+        {
             prepareSqlDatabase();
         }
 
         manager = getDbPool() == null ? new PetManagerImpl() : new SQLPetManagerImpl();
 
         commandManager.register(this);
-        
+
         // Register commands (done inside these two classes)
         new PetCommand();
         new PetAdminCommand();
@@ -134,23 +143,28 @@ public class EchoPetNucleus implements PluginNucleus, CommandListener {
         pluginCore.checkForUpdates();
     }
 
-    public void disable() {
-        if (manager != null) {
+    public void disable()
+    {
+        if (manager != null)
+        {
             manager.removeAllPets();
         }
 
         pluginCore.cancelTasks();
         petRegistry.shutdown();
 
-        if (dbPool != null) {
+        if (dbPool != null)
+        {
             dbPool.shutdown();
         }
     }
 
-    private void loadConfiguration() {
+    private void loadConfiguration()
+    {
         configManager = pluginCore.prepareConfigManager();
 
-        for (ConfigType configType : ConfigType.values()) {
+        for (ConfigType configType : ConfigType.values())
+        {
             Config config = configManager.prepareConfig(configType.getPath(), configType.getHeader());
             configFiles.put(configType, config);
         }
@@ -161,13 +175,15 @@ public class EchoPetNucleus implements PluginNucleus, CommandListener {
         settings.put(ConfigType.MESSAGES, new Lang(configFiles.get(ConfigType.MESSAGES)));
         settings.put(ConfigType.MENU, new MenuSettings(configFiles.get(ConfigType.MENU)));
 
-        for (Config config : configFiles.values()) {
+        for (Config config : configFiles.values())
+        {
             config.reload();
         }
 
         // Handle any UUID conversion
         // previously if (IdentUtil.supportsUuid() && ...) - EchoPet 3.x only supports 1.8+
-        if (Settings.CONVERT_DATA_FILE_TO_UUID.getValue()) {
+        if (Settings.CONVERT_DATA_FILE_TO_UUID.getValue())
+        {
             EchoPet.log().console("Ensuring data files are converted to UUID system...");
             UUIDMigration.migrateConfig(getConfig(ConfigType.DATA));
             Settings.CONVERT_DATA_FILE_TO_UUID.setValue(false);
@@ -176,7 +192,8 @@ public class EchoPetNucleus implements PluginNucleus, CommandListener {
         pluginCore.applyPrefixSettings();
     }
 
-    private void prepareSqlDatabase() {
+    private void prepareSqlDatabase()
+    {
         BoneCPConfig bcc = new BoneCPConfig();
         bcc.setJdbcUrl("jdbc:mysql://" + Settings.SQL_HOST.getValue() + ":" + Settings.SQL_PORT.getValue() + "/" + Settings.SQL_DATABASE.getValue());
         bcc.setUsername(Settings.SQL_USERNAME.getValue());
@@ -185,53 +202,67 @@ public class EchoPetNucleus implements PluginNucleus, CommandListener {
         bcc.setMinConnectionsPerPartition(3);
         bcc.setMaxConnectionsPerPartition(7);
         bcc.setConnectionTestStatement("SELECT 1");
-        try {
+        try
+        {
             dbPool = new BoneCP(bcc);
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             EchoPet.log().console(Level.WARNING, "Failed to connect to MySQL DataBase.");
             e.printStackTrace();
         }
-        if (dbPool != null) {
+        if (dbPool != null)
+        {
             TableMigrationUtil.migrateTables();
             TableMigrationUtil.createNewestTable();
         }
     }
 
-    public void addDependency(PluginDependency<?, ?> dependencyProvider) {
-        if (dependencyProvider != null) {
+    public void addDependency(PluginDependency<?, ?> dependencyProvider)
+    {
+        if (dependencyProvider != null)
+        {
             dependencies.add(dependencyProvider);
         }
     }
 
     @Override
-    public BridgeManager getBridgeManager() {
+    public BridgeManager getBridgeManager()
+    {
         return bridgeManager;
     }
 
     @Override
-    public EchoPetCommandManager getCommandManager() {
+    public EchoPetCommandManager getCommandManager()
+    {
         return commandManager;
     }
 
     @Override
-    public EventManager getEventManager() {
+    public EventManager getEventManager()
+    {
         return eventManager;
     }
 
     @Override
-    public PetManager getPetManager() {
+    public PetManager getPetManager()
+    {
         return manager;
     }
 
     @Override
-    public PetRegistry getPetRegistry() {
+    public PetRegistry getPetRegistry()
+    {
         return petRegistry;
     }
 
     @Override
-    public <T extends PluginDependency<?, ?>> T getDependency(Class<T> dependencyType) {
-        for (PluginDependency<?, ?> provider : dependencies) {
-            if (dependencyType.isAssignableFrom(provider.getClass())) {
+    public <T extends PluginDependency<?, ?>> T getDependency(Class<T> dependencyType)
+    {
+        for (PluginDependency<?, ?> provider : dependencies)
+        {
+            if (dependencyType.isAssignableFrom(provider.getClass()))
+            {
                 return (T) provider;
             }
         }
@@ -239,14 +270,18 @@ public class EchoPetNucleus implements PluginNucleus, CommandListener {
     }
 
     @Override
-    public BoneCP getDbPool() {
+    public BoneCP getDbPool()
+    {
         return dbPool;
     }
 
     @Override
-    public <T extends OptionSet> T getOptions(Class<T> optionsType) {
-        for (OptionSet options : settings.values()) {
-            if (optionsType.isAssignableFrom(options.getClass())) {
+    public <T extends OptionSet> T getOptions(Class<T> optionsType)
+    {
+        for (OptionSet options : settings.values())
+        {
+            if (optionsType.isAssignableFrom(options.getClass()))
+            {
                 return (T) options;
             }
         }
@@ -254,9 +289,12 @@ public class EchoPetNucleus implements PluginNucleus, CommandListener {
     }
 
     @Override
-    public OptionSet getOptions(ConfigType configType) {
-        for (Map.Entry<ConfigType, OptionSet> entry : settings.entrySet()) {
-            if (entry.getKey() == configType) {
+    public OptionSet getOptions(ConfigType configType)
+    {
+        for (Map.Entry<ConfigType, OptionSet> entry : settings.entrySet())
+        {
+            if (entry.getKey() == configType)
+            {
                 return entry.getValue();
             }
         }
@@ -264,12 +302,14 @@ public class EchoPetNucleus implements PluginNucleus, CommandListener {
     }
 
     @Override
-    public Config getConfig(ConfigType configType) {
+    public Config getConfig(ConfigType configType)
+    {
         return configFiles.get(configType);
     }
 
     @Override
-    public String getPluginVersion() {
+    public String getPluginVersion()
+    {
         return pluginVersion;
     }
 
@@ -277,7 +317,8 @@ public class EchoPetNucleus implements PluginNucleus, CommandListener {
             syntax = "",
             desc = "EchoPet: custom entities at your control"
     )
-    public boolean onCommand(CommandContext context) {
+    public boolean onCommand(CommandContext context)
+    {
         context.respond(Lang.PLUGIN_INFORMATION.getValue("version", pluginVersion));
         return true;
     }
@@ -288,10 +329,14 @@ public class EchoPetNucleus implements PluginNucleus, CommandListener {
     )
     @Authorize(Perm.UPDATE)
     @Nested
-    public boolean onUpdateCommand(CommandContext context) {
-        if (pluginCore.isUpdateChecked()) {
+    public boolean onUpdateCommand(CommandContext context)
+    {
+        if (pluginCore.isUpdateChecked())
+        {
             pluginCore.performUpdate();
-        } else {
+        }
+        else
+        {
             context.respond(Lang.UPDATE_NOT_AVAILABLE.getValue());
         }
         return true;

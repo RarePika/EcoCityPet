@@ -29,41 +29,42 @@ import com.dsh105.echopet.bridge.entity.type.HorseEntityBridge;
 
 @Traits(type = PetType.HORSE, hositility = Hostility.PASSIVE, width = 1.4F, height = 1.6F, health = 30.0D, attackDamage = 4.0D)
 @Size(SizeCategory.REGULAR)
-public interface HorsePet extends AgeablePet<HorseEntityBridge, EntityHorsePet> {
-
-    @GroupAttributeSetter(AttributeType.HORSE_VARIANT)
-    void setVariant(Attributes.HorseVariant variant);
+public interface HorsePet extends AgeablePet<HorseEntityBridge, EntityHorsePet>
+{
 
     @GroupAttributeGetter(AttributeType.HORSE_VARIANT)
     Attributes.HorseVariant getVariant();
 
-    @GroupAttributeSetter(AttributeType.HORSE_COLOUR)
-    void setColor(Attributes.HorseColor color);
+    @GroupAttributeSetter(AttributeType.HORSE_VARIANT)
+    void setVariant(Attributes.HorseVariant variant);
 
     @GroupAttributeGetter(AttributeType.HORSE_COLOUR)
     Attributes.HorseColor getColor();
 
-    @GroupAttributeSetter(AttributeType.HORSE_STYLE)
-    void setStyle(Attributes.HorseStyle style);
+    @GroupAttributeSetter(AttributeType.HORSE_COLOUR)
+    void setColor(Attributes.HorseColor color);
 
     @GroupAttributeGetter(AttributeType.HORSE_STYLE)
     Attributes.HorseStyle getStyle();
 
-    @GroupAttributeSetter(AttributeType.HORSE_ARMOUR)
-    void setArmour(Attributes.HorseArmour armour);
+    @GroupAttributeSetter(AttributeType.HORSE_STYLE)
+    void setStyle(Attributes.HorseStyle style);
 
     @GroupAttributeGetter(AttributeType.HORSE_ARMOUR)
     Attributes.HorseArmour getArmour();
 
-    @AttributeSetter(Attributes.Attribute.SADDLE)
-    void setSaddled(boolean flag);
+    @GroupAttributeSetter(AttributeType.HORSE_ARMOUR)
+    void setArmour(Attributes.HorseArmour armour);
 
     @AttributeGetter(Attributes.Attribute.SADDLE)
     boolean isSaddled();
 
-    @AttributeSetter(Attributes.Attribute.CHESTED)
-    void setChested(boolean flag);
+    @AttributeSetter(Attributes.Attribute.SADDLE)
+    void setSaddled(boolean flag);
 
     @AttributeGetter(Attributes.Attribute.CHESTED)
     boolean isChested();
+
+    @AttributeSetter(Attributes.Attribute.CHESTED)
+    void setChested(boolean flag);
 }

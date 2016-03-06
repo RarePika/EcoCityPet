@@ -28,6 +28,7 @@ import com.dsh105.echopet.bridge.entity.type.WitchEntityBridge;
 
 @Traits(type = PetType.WITCH, hositility = Hostility.AGGRESSIVE, width = 0.6F, height = 1.9F, health = 26.0D, attackDamage = 5.0D)
 @Size(SizeCategory.REGULAR)
-public interface WitchPet extends RangedPet<WitchEntityBridge, EntityWitchPet> {
+public interface WitchPet extends RangedPet<WitchEntityBridge, EntityWitchPet>
+{
 
 }

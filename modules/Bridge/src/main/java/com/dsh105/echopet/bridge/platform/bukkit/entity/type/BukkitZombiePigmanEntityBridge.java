@@ -20,6 +20,7 @@ package com.dsh105.echopet.bridge.platform.bukkit.entity.type;
 import com.dsh105.echopet.bridge.entity.type.ZombiePigmanEntityBridge;
 import org.bukkit.entity.PigZombie;
 
-public class BukkitZombiePigmanEntityBridge extends BukkitZombieEntityBridge<PigZombie> implements ZombiePigmanEntityBridge {
+public class BukkitZombiePigmanEntityBridge extends BukkitZombieEntityBridge<PigZombie> implements ZombiePigmanEntityBridge
+{
 
 }

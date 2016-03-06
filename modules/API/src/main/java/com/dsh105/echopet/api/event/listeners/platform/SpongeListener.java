@@ -37,14 +37,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SpongeListener {
+public class SpongeListener
+{
 
     /*
      * Chunk listeners
      */
 
     @Subscribe(order = Order.POST)
-    public void onChunkUnload(ChunkUnloadEvent event) {
+    public void onChunkUnload(ChunkUnloadEvent event)
+    {
         EchoPet.getEventManager().post(
                 EventContainer.from(event)
                         .put(List.class, Arrays.asList(event.getChunk().getEntities()))
@@ -56,7 +58,8 @@ public class SpongeListener {
      */
 
     @Subscribe(order = Order.POST)
-    public void onJoin(PlayerJoinEvent event) {
+    public void onJoin(PlayerJoinEvent event)
+    {
         // TODO: Port to Sponge inventory API (not yet complete)
         /*PlayerBridge player = PlayerBridge.of(event.getPlayer());
         Inventory inventory = event.getPlayer().getInventory();
@@ -78,7 +81,7 @@ public class SpongeListener {
                 }
             }
         }*/
-        
+
         EchoPet.getEventManager().post(
                 EventContainer.from(event)
                         .put(PlayerBridge.class, PlayerBridge.of(event.getPlayer()))
@@ -86,7 +89,8 @@ public class SpongeListener {
     }
 
     @Subscribe(order = Order.POST)
-    public void onQuit(PlayerQuitEvent event) {
+    public void onQuit(PlayerQuitEvent event)
+    {
         EchoPet.getEventManager().post(
                 EventContainer.from(event)
                         .put(PlayerBridge.class, PlayerBridge.of(event.getPlayer()))
@@ -94,17 +98,19 @@ public class SpongeListener {
     }
 
     @Subscribe(order = Order.POST)
-    public void onDeath(PlayerDeathEvent event) {
+    public void onDeath(PlayerDeathEvent event)
+    {
         EchoPet.getEventManager().post(
                 EventContainer.from(event)
                         .put(PlayerBridge.class, PlayerBridge.of(event.getPlayer()))
         );
     }
-    
+
     // TODO: respawn
 
     @Subscribe(order = Order.POST)
-    public void onWorldChange(PlayerChangeWorldEvent event) {
+    public void onWorldChange(PlayerChangeWorldEvent event)
+    {
         EchoPet.getEventManager().post(
                 EventContainer.from(event)
                         .put(PlayerBridge.class, PlayerBridge.of(event.getPlayer()))
@@ -112,11 +118,15 @@ public class SpongeListener {
     }
 
     @Subscribe(order = Order.LAST)
-    public void onPlayerDamage(EntityChangeHealthEvent event) {
-        if (event.getEntity() instanceof Player) {
+    public void onPlayerDamage(EntityChangeHealthEvent event)
+    {
+        if (event.getEntity() instanceof Player)
+        {
             boolean fallDamage = false;
-            if (event.getCause().isPresent()) {
-                if (event.getCause().get().getReason().isPresent()) {
+            if (event.getCause().isPresent())
+            {
+                if (event.getCause().get().getReason().isPresent())
+                {
                     fallDamage = false; // FIXME
                 }
             }
@@ -129,8 +139,10 @@ public class SpongeListener {
     }
 
     @Subscribe(order = Order.LAST)
-    public void onInteract(PlayerInteractEntityEvent event) {
-        if (event.getInteractionType() == EntityInteractionType.RIGHT_CLICK) {
+    public void onInteract(PlayerInteractEntityEvent event)
+    {
+        if (event.getInteractionType() == EntityInteractionType.RIGHT_CLICK)
+        {
             EchoPet.getEventManager().post(
                     EventContainer.from(event)
                             .put(PlayerBridge.class, PlayerBridge.of(event.getPlayer()))
@@ -141,13 +153,16 @@ public class SpongeListener {
     }
 
     @Subscribe
-    public void onDropItem(PlayerDropItemEvent event) {
+    public void onDropItem(PlayerDropItemEvent event)
+    {
         EchoPet.getEventManager().post(
                 EventContainer.from(event)
                         .put(PlayerBridge.class, PlayerBridge.of(event.getPlayer()))
-                        .put(List.class, GeneralUtil.transform(new ArrayList<>(event.getDroppedStacks()), new Transformer<ItemStack, ItemStackContainer>() {
+                        .put(List.class, GeneralUtil.transform(new ArrayList<>(event.getDroppedStacks()), new Transformer<ItemStack, ItemStackContainer>()
+                        {
                             @Override
-                            public ItemStackContainer transform(ItemStack transmutable) {
+                            public ItemStackContainer transform(ItemStack transmutable)
+                            {
                                 return ItemStackContainer.of(transmutable);
                             }
                         }))
@@ -160,17 +175,20 @@ public class SpongeListener {
 
 
     @Subscribe(order = Order.FIRST)
-    public void blockSpawn(EntitySpawnEvent event) {
+    public void blockSpawn(EntitySpawnEvent event)
+    {
         EchoPet.getEventManager().post(EventContainer.from(event).put("entity", event.getEntity()));
     }
 
     @Subscribe(order = Order.LAST)
-    public void allowSpawn(EntitySpawnEvent event) {
+    public void allowSpawn(EntitySpawnEvent event)
+    {
         EchoPet.getEventManager().post(EventContainer.from(event).put("entity", event.getEntity()));
     }
 
     @Subscribe(order = Order.POST)
-    public void onDismount(EntityDismountEvent event) {
+    public void onDismount(EntityDismountEvent event)
+    {
         EchoPet.getEventManager().post(EventContainer.from(event).put("entity", event.getDismounted()));
     }
 
@@ -181,7 +199,8 @@ public class SpongeListener {
     // TODO: EntityInteractEvent
 
     @Subscribe(order = Order.LAST)
-    public void onChangeBlock(EntityChangeBlockEvent event) {
+    public void onChangeBlock(EntityChangeBlockEvent event)
+    {
         EchoPet.getEventManager().post(EventContainer.from(event).put("entity", event.getEntity()));
     }
 
@@ -192,12 +211,14 @@ public class SpongeListener {
     // TODO: SlimeSplitEvent
 
     @Subscribe(order = Order.LAST)
-    public void onTame(EntityTameEvent event) {
+    public void onTame(EntityTameEvent event)
+    {
         EchoPet.getEventManager().post(EventContainer.from(event).put("entity", event.getEntity()));
     }
 
     @Subscribe(order = Order.LAST)
-    public void onChangeHealth(EntityChangeHealthEvent event) {
+    public void onChangeHealth(EntityChangeHealthEvent event)
+    {
         EchoPet.getEventManager().post(
                 EventContainer.from(event)
                         .put("entity", event.getEntity())
@@ -206,10 +227,12 @@ public class SpongeListener {
     }
 
     // TODO: Registered via SpongeWorldGuardDependency
-    public static class RegionListener {
+    public static class RegionListener
+    {
 
         @Subscribe(order = Order.POST)
-        public void onPlayerMove(PlayerMoveEvent event) {
+        public void onPlayerMove(PlayerMoveEvent event)
+        {
             EchoPet.getEventManager().post(
                     EventContainer.from(event)
                             .put(PlayerBridge.class, PlayerBridge.of(event.getPlayer()))

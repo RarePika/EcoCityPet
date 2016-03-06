@@ -42,14 +42,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-public class BukkitListener implements Listener {
+public class BukkitListener implements Listener
+{
 
     /*
      * Chunk listeners
      */
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onChunkUnload(ChunkUnloadEvent event) {
+    public void onChunkUnload(ChunkUnloadEvent event)
+    {
         EchoPet.getEventManager().post(EventContainer.from(event).put(List.class, Arrays.asList(event.getChunk().getEntities())));
     }
 
@@ -58,28 +60,35 @@ public class BukkitListener implements Listener {
      */
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onJoin(PlayerJoinEvent event) {
+    public void onJoin(PlayerJoinEvent event)
+    {
         PlayerBridge player = PlayerBridge.of(event.getPlayer());
         Inventory inventory = event.getPlayer().getInventory();
 
         ItemStack selector = PetSelector.getInventory().getInteractIcon().asBukkit();
-        if (MenuSettings.SELECTOR_ONJOIN_CLEAR.getValue()) {
+        if (MenuSettings.SELECTOR_ONJOIN_CLEAR.getValue())
+        {
             inventory.clear();
-        } else if (inventory.contains(selector)) {
+        }
+        else if (inventory.contains(selector))
+        {
             inventory.remove(selector);
         }
 
-        if (inventory.getContents().length < inventory.getSize()) {
-            if (MenuSettings.SELECTOR_ONJOIN_ENABLE.getValue() && (!MenuSettings.SELECTOR_ONJOIN_USE_PERM.getValue() || player.isPermitted(MenuSettings.SELECTOR_ONJOIN_PERM.getValue()))) {
+        if (inventory.getContents().length < inventory.getSize())
+        {
+            if (MenuSettings.SELECTOR_ONJOIN_ENABLE.getValue() && (!MenuSettings.SELECTOR_ONJOIN_USE_PERM.getValue() || player.isPermitted(MenuSettings.SELECTOR_ONJOIN_PERM.getValue())))
+            {
                 int slot = MenuSettings.SELECTOR_ONJOIN_SLOT.getValue();
                 ItemStack existing = inventory.getItem(slot);
                 inventory.setItem(slot, selector);
-                if (existing != null) {
+                if (existing != null)
+                {
                     inventory.addItem(existing);
                 }
             }
         }
-        
+
         EchoPet.getEventManager().post(
                 EventContainer.from(event)
                         .put(PlayerBridge.class, player)
@@ -87,7 +96,8 @@ public class BukkitListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onQuit(PlayerQuitEvent event) {
+    public void onQuit(PlayerQuitEvent event)
+    {
         EchoPet.getEventManager().post(
                 EventContainer.from(event)
                         .put(PlayerBridge.class, PlayerBridge.of(event.getPlayer()))
@@ -95,7 +105,8 @@ public class BukkitListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onDeath(PlayerDeathEvent event) {
+    public void onDeath(PlayerDeathEvent event)
+    {
         EchoPet.getEventManager().post(
                 EventContainer.from(event)
                         .put(PlayerBridge.class, PlayerBridge.of(event.getEntity()))
@@ -103,7 +114,8 @@ public class BukkitListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onRespawn(PlayerRespawnEvent event) {
+    public void onRespawn(PlayerRespawnEvent event)
+    {
         EchoPet.getEventManager().post(
                 EventContainer.from(event)
                         .put(PlayerBridge.class, PlayerBridge.of(event.getPlayer()))
@@ -111,7 +123,8 @@ public class BukkitListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onWorldChange(PlayerChangedWorldEvent event) {
+    public void onWorldChange(PlayerChangedWorldEvent event)
+    {
         EchoPet.getEventManager().post(
                 EventContainer.from(event)
                         .put(PlayerBridge.class, PlayerBridge.of(event.getPlayer()))
@@ -119,8 +132,10 @@ public class BukkitListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onPlayerDamage(EntityDamageEvent event) {
-        if (event.getEntity() instanceof Player) {
+    public void onPlayerDamage(EntityDamageEvent event)
+    {
+        if (event.getEntity() instanceof Player)
+        {
             EchoPet.getEventManager().post(
                     EventContainer.from(event)
                             .put(PlayerBridge.class, PlayerBridge.of((Player) event.getEntity()))
@@ -130,7 +145,8 @@ public class BukkitListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onInteract(PlayerInteractEntityEvent event) {
+    public void onInteract(PlayerInteractEntityEvent event)
+    {
         EchoPet.getEventManager().post(
                 EventContainer.from(event)
                         .put(PlayerBridge.class, PlayerBridge.of(event.getPlayer()))
@@ -140,7 +156,8 @@ public class BukkitListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
-    public void onDropItem(PlayerDropItemEvent event) {
+    public void onDropItem(PlayerDropItemEvent event)
+    {
         EchoPet.getEventManager().post(
                 EventContainer.from(event)
                         .put(PlayerBridge.class, PlayerBridge.of(event.getPlayer()))
@@ -153,72 +170,86 @@ public class BukkitListener implements Listener {
      */
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = false)
-    public void blockSpawn(CreatureSpawnEvent event) {
+    public void blockSpawn(CreatureSpawnEvent event)
+    {
         EchoPet.getEventManager().post(EventContainer.from(event).put("entity", event.getEntity()));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
-    public void allowSpawn(CreatureSpawnEvent event) {
+    public void allowSpawn(CreatureSpawnEvent event)
+    {
         EchoPet.getEventManager().post(EventContainer.from(event).put("entity", event.getEntity()));
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onDismount(VehicleExitEvent event) {
+    public void onDismount(VehicleExitEvent event)
+    {
         EchoPet.getEventManager().post(EventContainer.from(event).put("entity", event.getExited()));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onDamage(EntityDamageByEntityEvent event) {
+    public void onDamage(EntityDamageByEntityEvent event)
+    {
         EchoPet.getEventManager().post(EventContainer.from(event).put("entity", event.getEntity()));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onExplode(EntityExplodeEvent event) {
+    public void onExplode(EntityExplodeEvent event)
+    {
         EchoPet.getEventManager().post(EventContainer.from(event).put("entity", event.getEntity()));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onPortal(EntityPortalEnterEvent event) {
+    public void onPortal(EntityPortalEnterEvent event)
+    {
         EchoPet.getEventManager().post(EventContainer.from(event).put("entity", event.getEntity()));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onInteract(EntityInteractEvent event) {
+    public void onInteract(EntityInteractEvent event)
+    {
         EchoPet.getEventManager().post(EventContainer.from(event).put("entity", event.getEntity()));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onChangeBlock(EntityChangeBlockEvent event) {
+    public void onChangeBlock(EntityChangeBlockEvent event)
+    {
         EchoPet.getEventManager().post(EventContainer.from(event).put("entity", event.getEntity()));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onBlockForm(EntityBlockFormEvent event) {
+    public void onBlockForm(EntityBlockFormEvent event)
+    {
         EchoPet.getEventManager().post(EventContainer.from(event).put("entity", event.getEntity()));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onTarget(EntityTargetEvent event) {
+    public void onTarget(EntityTargetEvent event)
+    {
         EchoPet.getEventManager().post(EventContainer.from(event).put("entity", event.getEntity()));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onExplosionPrime(ExplosionPrimeEvent event) {
+    public void onExplosionPrime(ExplosionPrimeEvent event)
+    {
         EchoPet.getEventManager().post(EventContainer.from(event).put("entity", event.getEntity()));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onSlimeSplit(SlimeSplitEvent event) {
+    public void onSlimeSplit(SlimeSplitEvent event)
+    {
         EchoPet.getEventManager().post(EventContainer.from(event).put("entity", event.getEntity()));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onTame(EntityTameEvent event) {
+    public void onTame(EntityTameEvent event)
+    {
         EchoPet.getEventManager().post(EventContainer.from(event).put("entity", event.getEntity()));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onRegainHealth(EntityRegainHealthEvent event) {
+    public void onRegainHealth(EntityRegainHealthEvent event)
+    {
         EchoPet.getEventManager().post(
                 EventContainer.from(event)
                         .put("entity", event.getEntity())
@@ -232,10 +263,12 @@ public class BukkitListener implements Listener {
      */
 
     // Registered via BukkitWorldGuardDependency
-    public static class RegionListener implements Listener {
+    public static class RegionListener implements Listener
+    {
 
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-        public void onPlayerMove(PlayerMoveEvent event) {
+        public void onPlayerMove(PlayerMoveEvent event)
+        {
             EchoPet.getEventManager().post(
                     EventContainer.from(event)
                             .put(PlayerBridge.class, PlayerBridge.of(event.getPlayer()))
@@ -245,10 +278,12 @@ public class BukkitListener implements Listener {
     }
 
     // Registered via BukkitVanishNoPacketDependency
-    public static class VanishListener implements Listener {
+    public static class VanishListener implements Listener
+    {
 
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-        public void onVanish(VanishStatusChangeEvent event) {
+        public void onVanish(VanishStatusChangeEvent event)
+        {
             EchoPet.getEventManager().post(
                     EventContainer.from(event)
                             .put(UUID.class, Ident.get().getUID(event.getPlayer()))

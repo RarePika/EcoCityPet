@@ -17,39 +17,43 @@
 
 package com.dsh105.echopet.api.configuration;
 
-public enum ConfigType {
+public enum ConfigType
+{
 
     GENERAL("config/config.yml",
-            "EchoPet By DSH105",
+            "EcoCityPet By JamieSinn",
+            "Based on EchoPet by DSH105",
             "---------------------",
-            "Configuration for EchoPet 3.x",
-            "See the EchoPet Wiki before editing this file",
-            "https://github.com/DSH105/EchoPet/wiki/"),
+            "Configuration for EchoPet 3.x"),
 
     PETS("config/pets-config.yml"),
 
     DATA("data/pet-data.yml"),
 
     MESSAGES("config/messages.yml",
-             "EchoPet By DSH105",
-             "---------------------",
-             "Language Configuration File"),
+            "EcoCityPet By JamieSinn",
+            "Based on EchoPet by DSH105",
+            "---------------------",
+            "Language Configuration File"),
 
     MENU("config/menu-config.yml");
 
     private String path;
     private String[] header;
 
-    ConfigType(String path, String... header) {
+    ConfigType(String path, String... header)
+    {
         this.path = path;
         this.header = header;
     }
 
-    public String getPath() {
+    public String getPath()
+    {
         return path;
     }
 
-    public String[] getHeader() {
+    public String[] getHeader()
+    {
         return header;
     }
 }

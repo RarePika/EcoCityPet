@@ -21,6 +21,7 @@ import com.dsh105.echopet.bridge.entity.type.IronGolemEntityBridge;
 import com.dsh105.echopet.bridge.platform.bukkit.entity.BukkitLivingEntityBridge;
 import org.bukkit.entity.IronGolem;
 
-public class BukkitIronGolemEntityBridge extends BukkitLivingEntityBridge<IronGolem> implements IronGolemEntityBridge {
+public class BukkitIronGolemEntityBridge extends BukkitLivingEntityBridge<IronGolem> implements IronGolemEntityBridge
+{
 
 }

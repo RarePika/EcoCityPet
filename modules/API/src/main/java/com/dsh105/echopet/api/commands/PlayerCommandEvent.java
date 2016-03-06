@@ -25,38 +25,44 @@ import com.dsh105.influx.dispatch.CommandContext;
 import com.dsh105.influx.response.ResponseLevel;
 import com.dsh105.influx.syntax.ConsumedArgumentSet;
 
-public class PlayerCommandEvent extends CommandContext {
-    
-    private PlayerCommandEvent(Controller controller, PlayerBridge sender, ConsumedArgumentSet consumedArgumentSet) {
+public class PlayerCommandEvent extends CommandContext
+{
+
+    private PlayerCommandEvent(Controller controller, PlayerBridge sender, ConsumedArgumentSet consumedArgumentSet)
+    {
         super(null, controller, sender, consumedArgumentSet);
     }
-    
-    public static PlayerCommandEvent of(CommandContext<?> context) {
-        if (context.sender() instanceof org.bukkit.entity.Player) {
+
+    public static PlayerCommandEvent of(CommandContext<?> context)
+    {
+        if (context.sender() instanceof org.bukkit.entity.Player)
+        {
             return new PlayerCommandEvent(context.getController(), PlayerBridge.of((org.bukkit.entity.Player) context.sender()), context.getConsumedArgumentSet());
-        } else if (context.sender() instanceof org.spongepowered.api.entity.player.Player) {
-            return new PlayerCommandEvent(context.getController(), PlayerBridge.of((org.spongepowered.api.entity.player.Player) context.sender()), context.getConsumedArgumentSet());
         }
         throw new IllegalArgumentException("Sender is not a player.");
     }
 
     @Override
-    public InfluxManager getManager() {
+    public InfluxManager getManager()
+    {
         return EchoPet.getCommandManager();
     }
 
     @Override
-    public void respond(String response, ResponseLevel level) {
+    public void respond(String response, ResponseLevel level)
+    {
         getManager().respond(sender().get(), response, level);
     }
 
     @Override
-    public void respondAnonymously(String response, ResponseLevel level) {
+    public void respondAnonymously(String response, ResponseLevel level)
+    {
         getManager().respondAnonymously(sender().get(), response, level);
     }
-    
+
     @Override
-    public PlayerBridge sender() {
+    public PlayerBridge sender()
+    {
         return (PlayerBridge) super.sender();
     }
 }

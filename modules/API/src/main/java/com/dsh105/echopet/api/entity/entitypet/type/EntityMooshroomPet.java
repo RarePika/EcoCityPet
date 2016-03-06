@@ -22,6 +22,7 @@ import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.pet.type.MooshroomPet;
 
 @Entity(PetType.MOOSHROOM)
-public interface EntityMooshroomPet extends EntityCowPet<MooshroomPet> {
+public interface EntityMooshroomPet extends EntityCowPet<MooshroomPet>
+{
 
 }

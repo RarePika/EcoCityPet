@@ -28,6 +28,7 @@ import com.dsh105.echopet.bridge.entity.type.SquidEntityBridge;
 
 @Traits(type = PetType.SQUID, hositility = Hostility.PASSIVE, width = 0.95F, height = 0.95F, health = 10.0D, attackDamage = 4.0D)
 @Size(SizeCategory.REGULAR)
-public interface SquidPet extends Pet<SquidEntityBridge, EntitySquidPet> {
+public interface SquidPet extends Pet<SquidEntityBridge, EntitySquidPet>
+{
 
 }

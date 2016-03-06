@@ -31,11 +31,12 @@ import com.dsh105.echopet.bridge.entity.type.BatEntityBridge;
 
 @Traits(type = PetType.BAT, hositility = Hostility.PASSIVE, width = 0.5F, height = 0.9F, health = 6.0D, attackDamage = 3.0D)
 @Size(SizeCategory.TINY)
-public interface BatPet extends Pet<BatEntityBridge, EntityBatPet> {
-
-    @AttributeSetter(Attributes.Attribute.ASLEEP)
-    void setAsleep(boolean flag);
+public interface BatPet extends Pet<BatEntityBridge, EntityBatPet>
+{
 
     @AttributeGetter(Attributes.Attribute.ASLEEP)
     boolean isAsleep();
+
+    @AttributeSetter(Attributes.Attribute.ASLEEP)
+    void setAsleep(boolean flag);
 }

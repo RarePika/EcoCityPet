@@ -18,29 +18,34 @@
 package com.dsh105.echopet.api.entity.pet.type;
 
 import com.dsh105.echopet.api.entity.entitypet.type.EntitySquidPet;
-import com.dsh105.echopet.bridge.entity.type.SquidEntityBridge;
 import com.dsh105.echopet.api.entity.pet.AbstractPetBase;
+import com.dsh105.echopet.bridge.entity.type.SquidEntityBridge;
 
 import java.util.UUID;
 
-public class EchoSquidPet extends AbstractPetBase<SquidEntityBridge, EntitySquidPet> implements SquidPet {
+public class EchoSquidPet extends AbstractPetBase<SquidEntityBridge, EntitySquidPet> implements SquidPet
+{
 
-    public EchoSquidPet(UUID playerUID) {
+    public EchoSquidPet(UUID playerUID)
+    {
         super(playerUID);
     }
 
     @Override
-    public String getIdleSound() {
+    public String getIdleSound()
+    {
         return "";
     }
 
     @Override
-    public String getDeathSound() {
+    public String getDeathSound()
+    {
         return "";
     }
 
     @Override
-    public void onLive() {
+    public void onLive()
+    {
         super.onLive();
         getEntity().incrementAge();
         getEntity().checkDespawn();

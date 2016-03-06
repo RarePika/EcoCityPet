@@ -26,25 +26,32 @@ import com.dsh105.interact.api.Inventory;
 
 import java.util.List;
 
-public final class ViewMenu {
+public final class ViewMenu
+{
 
-    public static Inventory<?> getInventory(List<Pet> pets) {
+    public static Inventory<?> getInventory(List<Pet> pets)
+    {
         Inventory.Builder inventory = Interact.inventory().size(pets.size());
-        
+
         int slot = 0;
-        for (Pet pet : pets) {
+        for (Pet pet : pets)
+        {
             inventory.at(Interact.position().slot(slot++).icon(pet.getType().getIcon().builder().command("pet uuid " + pet.getPetId().toString()).lore(getHoverInfo(pet).split("\\n"))));
         }
         return inventory.build();
     }
-    
-    public static String getHoverInfo(Pet pet) {
+
+    public static String getHoverInfo(Pet pet)
+    {
         StringBuilder dataBuilder = new StringBuilder();
         List<EntityAttribute> activeData = AttributeManager.getModifier(pet).getValidAttributes();
-        if (!activeData.isEmpty()) {
+        if (!activeData.isEmpty())
+        {
             dataBuilder.append("{c1}Valid data types: ");
-            for (EntityAttribute attribute : activeData) {
-                if (dataBuilder.length() >= 35) {
+            for (EntityAttribute attribute : activeData)
+            {
+                if (dataBuilder.length() >= 35)
+                {
                     dataBuilder.append("\n");
                 }
                 dataBuilder.append("{c2}").append(StringForm.create(attribute).getCaptalisedName()).append("{c1}, ");

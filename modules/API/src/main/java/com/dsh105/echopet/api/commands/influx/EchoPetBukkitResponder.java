@@ -23,22 +23,26 @@ import com.dsh105.influx.response.Responder;
 import com.dsh105.influx.response.ResponseLevel;
 import org.bukkit.command.CommandSender;
 
-public class EchoPetBukkitResponder extends Responder<CommandSourceContainer> {
+public class EchoPetBukkitResponder extends Responder<CommandSourceContainer>
+{
 
     private BukkitResponder responder;
-    
-    public EchoPetBukkitResponder(String responsePrefix) {
+
+    public EchoPetBukkitResponder(String responsePrefix)
+    {
         super(responsePrefix);
         responder = new BukkitResponder(responsePrefix);
     }
 
     @Override
-    public String getFormat(int index, ResponseLevel level) {
+    public String getFormat(int index, ResponseLevel level)
+    {
         return responder.getFormat(index, level);
     }
 
     @Override
-    public void handleResponse(CommandSourceContainer sender, String message, ResponseLevel level) {
+    public void handleResponse(CommandSourceContainer sender, String message, ResponseLevel level)
+    {
         responder.handleResponse((CommandSender) sender.get(), message, level);
     }
 }

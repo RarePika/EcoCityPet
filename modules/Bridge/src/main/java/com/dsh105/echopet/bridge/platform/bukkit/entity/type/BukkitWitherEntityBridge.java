@@ -21,6 +21,7 @@ import com.dsh105.echopet.bridge.entity.type.WitherEntityBridge;
 import com.dsh105.echopet.bridge.platform.bukkit.entity.BukkitRangedEntityBridge;
 import org.bukkit.entity.Wither;
 
-public class BukkitWitherEntityBridge extends BukkitRangedEntityBridge<Wither> implements WitherEntityBridge {
+public class BukkitWitherEntityBridge extends BukkitRangedEntityBridge<Wither> implements WitherEntityBridge
+{
 
 }

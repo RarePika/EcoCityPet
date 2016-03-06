@@ -19,39 +19,51 @@ package com.dsh105.echopet.api.entity.attribute;
 
 import com.dsh105.echopet.util.StringForm;
 
-public class AttributeValue {
+public class AttributeValue
+{
 
     private EntityAttribute value;
 
-    public AttributeValue(EntityAttribute value) {
+    public AttributeValue(EntityAttribute value)
+    {
         this.value = value;
     }
 
-    public EntityAttribute getValue() {
+    public EntityAttribute getValue()
+    {
         return value;
     }
 
-    public int ordinal() {
-        if (value instanceof AttributeEnumBridge) {
+    public int ordinal()
+    {
+        if (value instanceof AttributeEnumBridge)
+        {
             return ((AttributeEnumBridge) value).ordinal();
-        } else if (value instanceof Enum) {
+        }
+        else if (value instanceof Enum)
+        {
             return ((Enum) value).ordinal();
         }
         // should never happen
         throw new IllegalStateException("Illegal attribute class type provided.");
     }
 
-    public String name() {
-        if (value instanceof AttributeEnumBridge) {
+    public String name()
+    {
+        if (value instanceof AttributeEnumBridge)
+        {
             return ((AttributeEnumBridge) value).name();
-        } else if (value instanceof Enum) {
+        }
+        else if (value instanceof Enum)
+        {
             return ((Enum) value).name();
         }
         // should never happen
         throw new IllegalStateException("Illegal attribute class type provided.");
     }
 
-    public String getConfigName() {
+    public String getConfigName()
+    {
         return StringForm.create(this).getConfigName();
     }
 }

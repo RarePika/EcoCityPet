@@ -7,36 +7,39 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public abstract class PlayerBridge extends PlayerContainer implements PlatformBridge {
+public abstract class PlayerBridge extends PlayerContainer implements PlatformBridge
+{
 
     private static final Map<UUID, PlayerBridge> PLAYER_BRIDGES = new HashMap<>();
 
-    public PlayerBridge(UUID playerUID) {
+    public PlayerBridge(UUID playerUID)
+    {
         super(playerUID);
     }
 
-    public static PlayerBridge of(UUID playerUID) {
+    public static PlayerBridge of(UUID playerUID)
+    {
         PlayerBridge bridge = PLAYER_BRIDGES.get(playerUID);
-        if (bridge == null) {
+        if (bridge == null)
+        {
             bridge = BridgeManager.getBridgeManager().create(PlayerBridge.class);
             PLAYER_BRIDGES.put(playerUID, bridge);
         }
         return bridge;
     }
 
-    public static PlayerBridge of(org.bukkit.entity.Player playerUID) {
+    public static PlayerBridge of(org.bukkit.entity.Player playerUID)
+    {
         return of(Ident.get().getUID(playerUID));
     }
 
-    public static PlayerBridge of(org.spongepowered.api.entity.player.Player spongePlayer) {
-        return of(Ident.get().getUID(spongePlayer));
-    }
-
-    public void sendMessage(String message) {
+    public void sendMessage(String message)
+    {
         BridgeManager.getBridgeManager().getGenericBridge(MessageBridge.class).send(this, message);
     }
-    
-    public boolean isPermitted(String permission) {
+
+    public boolean isPermitted(String permission)
+    {
         return BridgeManager.getBridgeManager().getGenericBridge(MessageBridge.class).isPermitted(get(), permission);
     }
 

@@ -27,7 +27,8 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
  * Called when a Pet damages another Entity
  */
 
-public class PetDamageEvent extends Event implements Cancellable {
+public class PetDamageEvent extends Event implements Cancellable
+{
 
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled = true; // cancelled by default
@@ -36,10 +37,16 @@ public class PetDamageEvent extends Event implements Cancellable {
     private double damage;
     private DamageCause damageCause;
 
-    public PetDamageEvent(Pet pet, DamageCause damageCause, final double damage) {
+    public PetDamageEvent(Pet pet, DamageCause damageCause, final double damage)
+    {
         this.pet = pet;
         this.damage = damage;
         this.damageCause = damageCause;
+    }
+
+    public static HandlerList getHandlerList()
+    {
+        return handlers;
     }
 
     /**
@@ -47,7 +54,8 @@ public class PetDamageEvent extends Event implements Cancellable {
      *
      * @return damage dealt
      */
-    public double getDamage() {
+    public double getDamage()
+    {
         return this.damage;
     }
 
@@ -56,7 +64,8 @@ public class PetDamageEvent extends Event implements Cancellable {
      *
      * @param damage amount of health to take off
      */
-    public void setDamage(double damage) {
+    public void setDamage(double damage)
+    {
         this.damage = damage;
     }
 
@@ -65,11 +74,13 @@ public class PetDamageEvent extends Event implements Cancellable {
      *
      * @return the Pet involved
      */
-    public Pet getPet() {
+    public Pet getPet()
+    {
         return this.pet;
     }
 
-    public DamageCause getDamageCause() {
+    public DamageCause getDamageCause()
+    {
         return this.damageCause;
     }
 
@@ -80,7 +91,8 @@ public class PetDamageEvent extends Event implements Cancellable {
      * @return true if this event is cancelled
      */
     @Override
-    public boolean isCancelled() {
+    public boolean isCancelled()
+    {
         return cancelled;
     }
 
@@ -91,16 +103,14 @@ public class PetDamageEvent extends Event implements Cancellable {
      * @param cancel true if you wish to cancel this event
      */
     @Override
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(boolean cancel)
+    {
         this.cancelled = cancel;
     }
 
     @Override
-    public HandlerList getHandlers() {
-        return this.handlers;
-    }
-
-    public static HandlerList getHandlerList() {
+    public HandlerList getHandlers()
+    {
         return handlers;
     }
 }

@@ -15,24 +15,24 @@
   ~ along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>EchoPet-Bukkit</artifactId>
-    <name>EchoPet</name>
+    <artifactId>EcoCityPet-Bukkit</artifactId>
+    <name>EcoCityPet</name>
     <version>${plugin.version}</version>
     <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <buildName>EchoPet-Bukkit</buildName>
-        <pluginId>echopet</pluginId>
+        <pluginId>ecocitypet</pluginId>
     </properties>
 
     <parent>
         <groupId>com.dsh105</groupId>
-        <artifactId>EchoPet-Parent</artifactId>
+        <artifactId>EcoCityPet-Parent</artifactId>
         <version>v3</version>
         <relativePath>../../</relativePath>
     </parent>
@@ -41,14 +41,14 @@
         <!-- API Module -->
         <dependency>
             <groupId>com.dsh105</groupId>
-            <artifactId>EchoPet-API</artifactId>
+            <artifactId>EcoCityPet-API</artifactId>
             <version>${plugin.version}</version>
         </dependency>
 
         <!-- v1_9_R1 NMS Module -->
         <dependency>
             <groupId>com.dsh105</groupId>
-            <artifactId>EchoPet-v1_9_R1</artifactId>
+            <artifactId>EcoCityPet-v1_9_R1</artifactId>
             <version>${plugin.version}</version>
             <optional>true</optional>
             <exclusions>
@@ -61,6 +61,11 @@
                     <artifactId>craftbukkit</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.dsh105</groupId>
+            <artifactId>EcoCityPet-API</artifactId>
+            <version>${plugin.version}</version>
         </dependency>
     </dependencies>
 

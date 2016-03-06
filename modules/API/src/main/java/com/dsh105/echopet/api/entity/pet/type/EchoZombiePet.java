@@ -20,34 +20,38 @@ package com.dsh105.echopet.api.entity.pet.type;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityZombiePet;
 import com.dsh105.echopet.api.entity.pet.EchoEquipablePet;
 import com.dsh105.echopet.bridge.entity.type.ZombieEntityBridge;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
-public class EchoZombiePet<T extends ZombieEntityBridge, S extends EntityZombiePet> extends EchoEquipablePet<T, S> implements ZombiePet<T, S> {
+public class EchoZombiePet<T extends ZombieEntityBridge, S extends EntityZombiePet> extends EchoEquipablePet<T, S> implements ZombiePet<T, S>
+{
 
-    public EchoZombiePet(UUID playerUID) {
+    public EchoZombiePet(UUID playerUID)
+    {
         super(playerUID);
     }
 
     @Override
-    public void setVillager(boolean flag) {
-        getBridgeEntity().setVillager(flag);
-    }
-
-    @Override
-    public boolean isVillager() {
+    public boolean isVillager()
+    {
         return getBridgeEntity().isVillager();
     }
 
     @Override
-    public void setBaby(boolean flag) {
-        getBridgeEntity().setAdult(!flag);
+    public void setVillager(boolean flag)
+    {
+        getBridgeEntity().setVillager(flag);
     }
 
     @Override
-    public boolean isBaby() {
+    public boolean isBaby()
+    {
         return !getBridgeEntity().isAdult();
+    }
+
+    @Override
+    public void setBaby(boolean flag)
+    {
+        getBridgeEntity().setAdult(!flag);
     }
 }

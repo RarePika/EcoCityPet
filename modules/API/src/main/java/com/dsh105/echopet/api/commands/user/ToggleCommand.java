@@ -30,7 +30,8 @@ import com.dsh105.influx.annotation.Authorize;
 import com.dsh105.influx.annotation.Command;
 import com.dsh105.influx.annotation.Convert;
 
-public class ToggleCommand implements CommandListener {
+public class ToggleCommand implements CommandListener
+{
 
     /*@Command(
             syntax = "toggle",
@@ -86,9 +87,11 @@ public class ToggleCommand implements CommandListener {
             help = {"Use \"/pet view\" to select a pet to edit.", "If you only have one pet, there is no need to select one to edit."}
     )
     @Authorize(Perm.TOGGLE)
-    public boolean togglePet(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Convert(PetConverters.Selected.class) Pet pet) {
+    public boolean togglePet(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Convert(PetConverters.Selected.class) Pet pet)
+    {
         // Does it exist?
-        if (pet != null) {
+        if (pet != null)
+        {
             EchoPet.getManager().save(pet);
             EchoPet.getManager().removePet(pet);
             event.respond(Lang.PET_HIDDEN.getValue("name", pet.getName()));
@@ -97,8 +100,10 @@ public class ToggleCommand implements CommandListener {
 
         // TODO: lol..
         // TODO: open up a selection menu?
-        pet = EchoPet.getManager().load(event.sender().get().getUID(), EchoPet.getManager().getPetNameMapFor(Ident.get().getUID(event.sender())).get(event.var("pet_name")).toString());
-        if (pet == null) {
+        pet = EchoPet.getManager().load(event.sender().get().getUID(),
+                EchoPet.getManager().getPetNameMapFor(Ident.get().getUID(event.sender())).get(event.var("pet_name")));
+        if (pet == null)
+        {
             // Error shown through above messages
             return true;
         }

@@ -27,7 +27,8 @@ import org.bukkit.event.HandlerList;
  * Called when a Pet moves
  */
 
-public class PetMoveEvent extends Event implements Cancellable {
+public class PetMoveEvent extends Event implements Cancellable
+{
 
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled = false;
@@ -36,10 +37,16 @@ public class PetMoveEvent extends Event implements Cancellable {
     private Location from;
     private Location to;
 
-    public PetMoveEvent(Pet pet, Location from, Location to) {
+    public PetMoveEvent(Pet pet, Location from, Location to)
+    {
         this.pet = pet;
         this.from = from;
         this.to = to;
+    }
+
+    public static HandlerList getHandlerList()
+    {
+        return handlers;
     }
 
     /**
@@ -47,17 +54,9 @@ public class PetMoveEvent extends Event implements Cancellable {
      *
      * @return Location moved to
      */
-    public Location getTo() {
+    public Location getTo()
+    {
         return this.to;
-    }
-
-    /**
-     * Gets the Location this Pet moved from
-     *
-     * @return Location moved from
-     */
-    public Location getFrom() {
-        return this.from;
     }
 
     /**
@@ -65,8 +64,19 @@ public class PetMoveEvent extends Event implements Cancellable {
      *
      * @param to New Location this Pet will move to
      */
-    public void setTo(Location to) {
+    public void setTo(Location to)
+    {
         this.to = to;
+    }
+
+    /**
+     * Gets the Location this Pet moved from
+     *
+     * @return Location moved from
+     */
+    public Location getFrom()
+    {
+        return this.from;
     }
 
     /**
@@ -74,26 +84,26 @@ public class PetMoveEvent extends Event implements Cancellable {
      *
      * @return Pet involved
      */
-    public Pet getPet() {
+    public Pet getPet()
+    {
         return this.pet;
     }
 
     @Override
-    public boolean isCancelled() {
+    public boolean isCancelled()
+    {
         return cancelled;
     }
 
     @Override
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(boolean cancel)
+    {
         this.cancelled = cancel;
     }
 
     @Override
-    public HandlerList getHandlers() {
-        return this.handlers;
-    }
-
-    public static HandlerList getHandlerList() {
+    public HandlerList getHandlers()
+    {
         return handlers;
     }
 }

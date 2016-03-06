@@ -21,6 +21,7 @@ import com.dsh105.echopet.bridge.entity.type.GiantEntityBridge;
 import com.dsh105.echopet.bridge.platform.bukkit.entity.BukkitLivingEntityBridge;
 import org.bukkit.entity.Giant;
 
-public class BukkitGiantEntityBridge extends BukkitLivingEntityBridge<Giant> implements GiantEntityBridge {
+public class BukkitGiantEntityBridge extends BukkitLivingEntityBridge<Giant> implements GiantEntityBridge
+{
 
 }

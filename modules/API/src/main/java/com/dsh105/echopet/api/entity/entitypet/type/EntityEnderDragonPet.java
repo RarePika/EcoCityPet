@@ -23,7 +23,8 @@ import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.pet.type.EnderDragonPet;
 
 @Entity(PetType.ENDER_DRAGON)
-public interface EntityEnderDragonPet extends EntityPet<EnderDragonPet> {
+public interface EntityEnderDragonPet extends EntityPet<EnderDragonPet>
+{
 
     void updatePosition(double x, double y, double z);
 

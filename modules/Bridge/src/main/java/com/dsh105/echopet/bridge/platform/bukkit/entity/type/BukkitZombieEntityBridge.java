@@ -21,25 +21,30 @@ import com.dsh105.echopet.bridge.entity.type.ZombieEntityBridge;
 import com.dsh105.echopet.bridge.platform.bukkit.entity.BukkitEquipableEntityBridge;
 import org.bukkit.entity.Zombie;
 
-public class BukkitZombieEntityBridge<E extends Zombie> extends BukkitEquipableEntityBridge<E> implements ZombieEntityBridge {
+public class BukkitZombieEntityBridge<E extends Zombie> extends BukkitEquipableEntityBridge<E> implements ZombieEntityBridge
+{
 
     @Override
-    public void setVillager(boolean flag) {
-        getBukkitEntity().setVillager(flag);
-    }
-
-    @Override
-    public boolean isVillager() {
+    public boolean isVillager()
+    {
         return getBukkitEntity().isVillager();
     }
 
     @Override
-    public void setAdult(boolean flag) {
-        getBukkitEntity().setBaby(!flag);
+    public void setVillager(boolean flag)
+    {
+        getBukkitEntity().setVillager(flag);
     }
 
     @Override
-    public boolean isAdult() {
+    public boolean isAdult()
+    {
         return !getBukkitEntity().isBaby();
+    }
+
+    @Override
+    public void setAdult(boolean flag)
+    {
+        getBukkitEntity().setBaby(!flag);
     }
 }

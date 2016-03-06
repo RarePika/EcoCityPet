@@ -23,20 +23,24 @@ import com.dsh105.echopet.bridge.entity.EquipableEntityBridge;
 
 import java.util.UUID;
 
-public abstract class EchoEquipablePet<T extends EquipableEntityBridge, S extends EntityEquipablePet> extends AbstractPetBase<T, S> implements EquipablePet<T, S> {
+public abstract class EchoEquipablePet<T extends EquipableEntityBridge, S extends EntityEquipablePet> extends AbstractPetBase<T, S> implements EquipablePet<T, S>
+{
 
-    protected EchoEquipablePet(UUID playerUID) {
+    protected EchoEquipablePet(UUID playerUID)
+    {
         super(playerUID);
         getEntity().applyDefaultItems();
     }
 
     @Override
-    public void setWeapon(ItemStackContainer itemStack) {
-        getBridgeEntity().setWeapon(itemStack);
+    public ItemStackContainer getWeapon()
+    {
+        return getBridgeEntity().getWeapon();
     }
 
     @Override
-    public ItemStackContainer getWeapon() {
-        return getBridgeEntity().getWeapon();
+    public void setWeapon(ItemStackContainer itemStack)
+    {
+        getBridgeEntity().setWeapon(itemStack);
     }
 }

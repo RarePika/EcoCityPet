@@ -22,9 +22,11 @@ import com.dsh105.echopet.bridge.entity.type.ZombiePigmanEntityBridge;
 
 import java.util.UUID;
 
-public class EchoZombiePigmanPet extends EchoZombiePet<ZombiePigmanEntityBridge, EntityZombiePigmanPet> implements ZombiePigmanPet {
+public class EchoZombiePigmanPet extends EchoZombiePet<ZombiePigmanEntityBridge, EntityZombiePigmanPet> implements ZombiePigmanPet
+{
 
-    public EchoZombiePigmanPet(UUID playerUID) {
+    public EchoZombiePigmanPet(UUID playerUID)
+    {
         super(playerUID);
     }
 }

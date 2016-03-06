@@ -32,11 +32,12 @@ import com.dsh105.echopet.bridge.entity.type.SlimeEntityBridge;
 
 @Traits(type = PetType.SLIME, hositility = Hostility.AGGRESSIVE, width = 0.6F, height = 0.6F, health = 20.0D, attackDamage = 4.0D)
 @Size(SizeCategory.REGULAR)
-public interface SlimePet<T extends SlimeEntityBridge, S extends EntitySlimePet> extends Pet<T, S> {
-
-    @GroupAttributeSetter(AttributeType.SLIME_SIZE)
-    void setSize(Attributes.SlimeSize size);
+public interface SlimePet<T extends SlimeEntityBridge, S extends EntitySlimePet> extends Pet<T, S>
+{
 
     @GroupAttributeGetter(AttributeType.SLIME_SIZE)
     Attributes.SlimeSize getSize();
+
+    @GroupAttributeSetter(AttributeType.SLIME_SIZE)
+    void setSize(Attributes.SlimeSize size);
 }

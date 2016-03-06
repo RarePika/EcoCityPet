@@ -20,7 +20,8 @@ package com.dsh105.echopet.api.entity.entitypet;
 import com.dsh105.commodus.container.PositionContainer;
 import com.dsh105.echopet.api.entity.pet.Pet;
 
-public interface EntityPetModifier<T extends Pet> {
+public interface EntityPetModifier<T extends Pet>
+{
 
     T getPet();
 
@@ -35,17 +36,17 @@ public interface EntityPetModifier<T extends Pet> {
 
     Object getBukkitEntity();
 
-    void setMotionX(double motX);
-
-    void setMotionY(double motY);
-
-    void setMotionZ(double motZ);
-
     double getMotionX();
+
+    void setMotionX(double motX);
 
     double getMotionY();
 
+    void setMotionY(double motY);
+
     double getMotionZ();
+
+    void setMotionZ(double motZ);
 
     boolean canSee(Object entity);
 
@@ -57,11 +58,11 @@ public interface EntityPetModifier<T extends Pet> {
 
     boolean isWet();
 
-    public void setNoClipEnabled(boolean flag);
-
-    void setTarget(Object livingEntity);
+    void setNoClipEnabled(boolean flag);
 
     Object getTarget();
+
+    void setTarget(Object livingEntity);
 
     boolean attack(Object livingEntity);
 
@@ -89,13 +90,13 @@ public interface EntityPetModifier<T extends Pet> {
 
     double getLocX();
 
-    double getLocY();
-
-    double getLocZ();
-
     void setLocX(double value);
 
+    double getLocY();
+
     void setLocY(double value);
+
+    double getLocZ();
 
     void setLocZ(double value);
 
@@ -135,13 +136,13 @@ public interface EntityPetModifier<T extends Pet> {
 
     boolean isNavigating();
 
-    void setAvoidsWater(boolean flag);
-
     boolean getAvoidsWater();
 
-    void setBreakDoors(boolean flag);
+    void setAvoidsWater(boolean flag);
 
     boolean getBreakDoors();
+
+    void setBreakDoors(boolean flag);
 
     void setEnterDoors(boolean flag);
 
@@ -151,15 +152,15 @@ public interface EntityPetModifier<T extends Pet> {
 
     int getMaxHeadRotation();
 
-    void setInvisible(boolean flag);
-
     boolean isInvisible();
 
-    void setSneaking(boolean flag);
+    void setInvisible(boolean flag);
 
     boolean isSneaking();
 
-    void setSprinting(boolean flag);
+    void setSneaking(boolean flag);
 
     boolean isSprinting();
+
+    void setSprinting(boolean flag);
 }

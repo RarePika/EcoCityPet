@@ -26,7 +26,8 @@ import java.util.*;
  * Also means I coded it <3
  */
 
-public class PetMind implements Mind {
+public class PetMind implements Mind
+{
 
     private Pet pet;
     private int delay = 0;
@@ -37,20 +38,24 @@ public class PetMind implements Mind {
     private List<BehaviourContainer> goals = new ArrayList<>();
     private List<BehaviourContainer> activeGoals = new ArrayList<>();
 
-    public PetMind(Pet pet) {
+    public PetMind(Pet pet)
+    {
         this.pet = pet;
         this.aiModifier = new EntityAIModifier(pet);
     }
 
     @Override
-    public void addGoal(Behaviour behaviour, int priority) {
+    public void addGoal(Behaviour behaviour, int priority)
+    {
         this.addGoal(behaviour.getDefaultKey(), behaviour, priority);
     }
 
     @Override
-    public void addGoal(String key, Behaviour behaviour, int priority) {
+    public void addGoal(String key, Behaviour behaviour, int priority)
+    {
         BehaviourContainer goalItem = new BehaviourContainer(priority, behaviour);
-        if (this.goalMap.containsKey(key)) {
+        if (this.goalMap.containsKey(key))
+        {
             return;
         }
         this.goalMap.put(key, goalItem);
@@ -59,23 +64,29 @@ public class PetMind implements Mind {
     }
 
     @Override
-    public void addAndReplaceGoal(String key, Behaviour behaviour, int priority) {
-        if (this.goalMap.containsKey(key)) {
+    public void addAndReplaceGoal(String key, Behaviour behaviour, int priority)
+    {
+        if (this.goalMap.containsKey(key))
+        {
             this.removeGoal(key);
         }
         this.addGoal(key, behaviour, priority);
     }
 
     @Override
-    public void removeGoal(Behaviour behaviour) {
+    public void removeGoal(Behaviour behaviour)
+    {
         Iterator<BehaviourContainer> iterator = this.goals.iterator();
 
-        while (iterator.hasNext()) {
+        while (iterator.hasNext())
+        {
             BehaviourContainer goalItem = iterator.next();
             Behaviour behaviour1 = goalItem.getBehaviour();
 
-            if (behaviour1 == behaviour) {
-                if (this.activeGoals.contains(goalItem)) {
+            if (behaviour1 == behaviour)
+            {
+                if (this.activeGoals.contains(goalItem))
+                {
                     behaviour1.finish();
                     this.activeGoals.remove(goalItem);
                 }
@@ -87,20 +98,25 @@ public class PetMind implements Mind {
     }
 
     @Override
-    public void removeGoal(String key) {
+    public void removeGoal(String key)
+    {
         Iterator<Map.Entry<String, BehaviourContainer>> iterator = this.goalMap.entrySet().iterator();
 
-        while (iterator.hasNext()) {
+        while (iterator.hasNext())
+        {
             Map.Entry<String, BehaviourContainer> entry = iterator.next();
             BehaviourContainer goalItem = entry.getValue();
             Behaviour behaviour1 = goalItem.getBehaviour();
 
-            if (key.equals(entry.getKey())) {
-                if (this.activeGoals.contains(goalItem)) {
+            if (key.equals(entry.getKey()))
+            {
+                if (this.activeGoals.contains(goalItem))
+                {
                     behaviour1.finish();
                     this.activeGoals.remove(goalItem);
                 }
-                if (this.goals.contains(goalItem)) {
+                if (this.goals.contains(goalItem))
+                {
                     this.goals.remove(goalItem);
                 }
 
@@ -111,13 +127,15 @@ public class PetMind implements Mind {
     }
 
     @Override
-    public void clearGoals(String key) {
+    public void clearGoals(String key)
+    {
         this.goalMap.clear();
         this.goals.clear();
 
         Iterator<BehaviourContainer> iterator = this.activeGoals.iterator();
 
-        while (iterator.hasNext()) {
+        while (iterator.hasNext())
+        {
             BehaviourContainer goalItem = iterator.next();
             goalItem.getBehaviour().finish();
             goalItem.getBehaviour().setPet(null);
@@ -127,15 +145,18 @@ public class PetMind implements Mind {
     }
 
     @Override
-    public Behaviour getGoal(String key) {
+    public Behaviour getGoal(String key)
+    {
         Iterator<Map.Entry<String, BehaviourContainer>> iterator = this.goalMap.entrySet().iterator();
 
-        while (iterator.hasNext()) {
+        while (iterator.hasNext())
+        {
             Map.Entry<String, BehaviourContainer> entry = iterator.next();
             BehaviourContainer goalItem = entry.getValue();
             Behaviour behaviour = goalItem.getBehaviour();
 
-            if (key.equals(entry.getKey())) {
+            if (key.equals(entry.getKey()))
+            {
                 return behaviour;
             }
         }
@@ -143,24 +164,32 @@ public class PetMind implements Mind {
     }
 
     @Override
-    public void updateGoals() {
+    public void updateGoals()
+    {
         this.aiModifier.update();
 
         Iterator<BehaviourContainer> iterator;
-        if (this.delay++ % 3 == 0) {
+        if (this.delay++ % 3 == 0)
+        {
 
             iterator = this.goals.iterator();
 
-            while (iterator.hasNext()) {
+            while (iterator.hasNext())
+            {
                 BehaviourContainer goalItem = iterator.next();
-                if (this.activeGoals.contains(goalItem)) {
-                    if (this.canUse(goalItem) && goalItem.getBehaviour().shouldContinue()) {
+                if (this.activeGoals.contains(goalItem))
+                {
+                    if (this.canUse(goalItem) && goalItem.getBehaviour().shouldContinue())
+                    {
                         continue;
                     }
                     goalItem.getBehaviour().finish();
                     this.activeGoals.remove(goalItem);
-                } else {
-                    if (this.canUse(goalItem) && goalItem.getBehaviour().shouldStart()) {
+                }
+                else
+                {
+                    if (this.canUse(goalItem) && goalItem.getBehaviour().shouldStart())
+                    {
                         goalItem.getBehaviour().start();
                         this.activeGoals.add(goalItem);
                     }
@@ -169,12 +198,16 @@ public class PetMind implements Mind {
             }
 
             this.delay = 0;
-        } else {
+        }
+        else
+        {
             iterator = this.activeGoals.iterator();
 
-            while (iterator.hasNext()) {
+            while (iterator.hasNext())
+            {
                 BehaviourContainer goalItem = iterator.next();
-                if (!goalItem.getBehaviour().shouldContinue()) {
+                if (!goalItem.getBehaviour().shouldContinue())
+                {
                     goalItem.getBehaviour().finish();
                     iterator.remove();
                 }
@@ -183,24 +216,32 @@ public class PetMind implements Mind {
 
         iterator = this.activeGoals.iterator();
 
-        while (iterator.hasNext()) {
+        while (iterator.hasNext())
+        {
             BehaviourContainer goalItem = iterator.next();
             goalItem.getBehaviour().tick();
         }
     }
 
-    private boolean canUse(BehaviourContainer goalItem) {
+    private boolean canUse(BehaviourContainer goalItem)
+    {
         Iterator<BehaviourContainer> iterator = this.goals.iterator();
 
-        while (iterator.hasNext()) {
+        while (iterator.hasNext())
+        {
             BehaviourContainer goalItem1 = iterator.next();
-            if (goalItem1 != goalItem) {
-                if (goalItem.getPriority() > goalItem1.getPriority()) {
-                    if (!this.areCompatible(goalItem, goalItem1) && this.activeGoals.contains(goalItem1)) {
+            if (goalItem1 != goalItem)
+            {
+                if (goalItem.getPriority() > goalItem1.getPriority())
+                {
+                    if (!this.areCompatible(goalItem, goalItem1) && this.activeGoals.contains(goalItem1))
+                    {
                         return false;
                     }
                     //goal.i() -> isContinuous
-                } else if (!goalItem1.getBehaviour().isContinuous() && this.activeGoals.contains(goalItem1)) {
+                }
+                else if (!goalItem1.getBehaviour().isContinuous() && this.activeGoals.contains(goalItem1))
+                {
                     return false;
                 }
             }
@@ -208,7 +249,8 @@ public class PetMind implements Mind {
         return true;
     }
 
-    protected boolean areCompatible(BehaviourContainer goalItem, BehaviourContainer goalItem1) {
+    protected boolean areCompatible(BehaviourContainer goalItem, BehaviourContainer goalItem1)
+    {
         return goalItem.getBehaviour().getType().isCompatibleWith(goalItem1.getBehaviour().getType());
     }
 }

@@ -4,7 +4,8 @@ import com.dsh105.echopet.bridge.platform.TaskId;
 
 import java.util.concurrent.TimeUnit;
 
-public interface SchedulerBridge extends GenericBridge {
+public interface SchedulerBridge extends GenericBridge
+{
 
     TaskId run(boolean asynchronous, Runnable task);
 

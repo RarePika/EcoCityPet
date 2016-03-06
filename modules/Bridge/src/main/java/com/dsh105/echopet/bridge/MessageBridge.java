@@ -1,6 +1,7 @@
 package com.dsh105.echopet.bridge;
 
-public interface MessageBridge extends GenericBridge {
+public interface MessageBridge extends GenericBridge
+{
 
     String translateChatColours(String message);
 

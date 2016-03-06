@@ -33,7 +33,8 @@ import com.dsh105.echopet.bridge.entity.LivingEntityBridge;
 import java.util.List;
 import java.util.UUID;
 
-public interface Pet<T extends LivingEntityBridge, S extends EntityPet> {
+public interface Pet<T extends LivingEntityBridge, S extends EntityPet>
+{
 
     T getBridgeEntity();
 
@@ -127,13 +128,13 @@ public interface Pet<T extends LivingEntityBridge, S extends EntityPet> {
 
     boolean isOwnerRiding();
 
-    boolean isOwnerInMountingProcess();
-
     void setOwnerRiding(boolean flag);
 
-    void setHat(boolean flag);
+    boolean isOwnerInMountingProcess();
 
     boolean isHat();
+
+    void setHat(boolean flag);
 
     void onError(Throwable e);
 

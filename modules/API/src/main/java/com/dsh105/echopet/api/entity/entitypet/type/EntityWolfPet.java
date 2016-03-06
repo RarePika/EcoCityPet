@@ -24,25 +24,26 @@ import com.dsh105.echopet.api.entity.entitypet.EntityAgeablePet;
 import com.dsh105.echopet.api.entity.pet.type.WolfPet;
 
 @Entity(PetType.WOLF)
-public interface EntityWolfPet extends EntityAgeablePet<WolfPet> {
+public interface EntityWolfPet extends EntityAgeablePet<WolfPet>
+{
 
-    public static int DATAWATCHER_ENTITY_STATUS = 16;
-    public static int DATAWATCHER_OWNER_NAME = 17;
-    public static int DATAWATCHER_HEALTH = 18;
-    public static int DATAWATCHER_BEGGING = 19;
-    public static int DATAWATCHER_COLLAR_COLOUR = 20;
-
-    void setWolfCollarColor(Attributes.Color color);
+    int DATAWATCHER_ENTITY_STATUS = 16;
+    int DATAWATCHER_OWNER_NAME = 17;
+    int DATAWATCHER_HEALTH = 18;
+    int DATAWATCHER_BEGGING = 19;
+    int DATAWATCHER_COLLAR_COLOUR = 20;
 
     Attributes.Color getWolfCollarColor();
 
-    void setTamed(boolean flag);
+    void setWolfCollarColor(Attributes.Color color);
 
     boolean isTamed();
 
-    void setAngry(boolean flag);
+    void setTamed(boolean flag);
 
     boolean isAngry();
+
+    void setAngry(boolean flag);
 
     float getTailHealth();
 }

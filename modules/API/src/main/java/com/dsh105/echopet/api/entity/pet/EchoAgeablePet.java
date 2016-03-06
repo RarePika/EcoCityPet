@@ -23,34 +23,43 @@ import com.dsh105.echopet.bridge.entity.AgeableEntityBridge;
 
 import java.util.UUID;
 
-public abstract class EchoAgeablePet<T extends AgeableEntityBridge, S extends EntityAgeablePet> extends AbstractPetBase<T, S> implements AgeablePet<T, S> {
+public abstract class EchoAgeablePet<T extends AgeableEntityBridge, S extends EntityAgeablePet> extends AbstractPetBase<T, S> implements AgeablePet<T, S>
+{
 
-    protected EchoAgeablePet(UUID playerUID) {
+    protected EchoAgeablePet(UUID playerUID)
+    {
         super(playerUID);
         getBridgeEntity().setAgeLock(true);
     }
 
     @Override
-    public void setBaby(boolean flag) {
-        if (flag) {
+    public boolean isBaby()
+    {
+        return !getBridgeEntity().isAdult();
+    }
+
+    @Override
+    public void setBaby(boolean flag)
+    {
+        if (flag)
+        {
             getBridgeEntity().setAdult(false);
-        } else {
+        }
+        else
+        {
             getBridgeEntity().setAdult(true);
         }
     }
 
     @Override
-    public boolean isBaby() {
-        return !getBridgeEntity().isAdult();
-    }
-
-    @Override
-    public SizeCategory getSizeCategory() {
+    public SizeCategory getSizeCategory()
+    {
         return isBaby() ? SizeCategory.TINY : SizeCategory.REGULAR;
     }
 
     @Override
-    public void onLive() {
+    public void onLive()
+    {
         super.onLive();
 
         // no mating or loving. This entity is solitary

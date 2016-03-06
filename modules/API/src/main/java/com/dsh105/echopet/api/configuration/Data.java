@@ -23,7 +23,8 @@ import com.dsh105.commodus.configuration.OptionSet;
 
 import java.util.ArrayList;
 
-public class Data extends OptionSet {
+public class Data extends OptionSet
+{
 
     public static Option<String> SECTION = optionString("%s");
     public static Option<String> PET_SECTION = optionString("%s.%s");
@@ -36,12 +37,14 @@ public class Data extends OptionSet {
     public static Option<ArrayList<String>> RIDER_ATTRIBUTES = option("%s.%s.rider.attributes", new ArrayList<String>());
     public static Option<ArrayList<String>> RIDER_ATTRIBUTES_BY_TYPE = option("%s.%s.rider.attributes.%s", new ArrayList<String>());
 
-    public Data(Config config) {
+    public Data(Config config)
+    {
         super(config);
     }
 
     @Override
-    public void setDefaults() {
+    public void setDefaults()
+    {
 
     }
 }

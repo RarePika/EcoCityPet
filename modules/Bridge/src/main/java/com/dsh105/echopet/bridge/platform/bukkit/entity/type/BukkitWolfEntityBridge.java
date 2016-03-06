@@ -21,10 +21,12 @@ import com.dsh105.echopet.bridge.entity.type.WolfEntityBridge;
 import com.dsh105.echopet.bridge.platform.bukkit.entity.BukkitAgeableEntityBridge;
 import org.bukkit.entity.Wolf;
 
-public class BukkitWolfEntityBridge extends BukkitAgeableEntityBridge<Wolf> implements WolfEntityBridge {
+public class BukkitWolfEntityBridge extends BukkitAgeableEntityBridge<Wolf> implements WolfEntityBridge
+{
 
     @Override
-    public void setSitting(boolean flag) {
+    public void setSitting(boolean flag)
+    {
         getBukkitEntity().setSitting(flag);
     }
 }

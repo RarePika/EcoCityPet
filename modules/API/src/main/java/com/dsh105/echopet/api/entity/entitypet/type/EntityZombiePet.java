@@ -24,16 +24,17 @@ import com.dsh105.echopet.api.entity.entitypet.EntityEquipablePet;
 import com.dsh105.echopet.api.entity.pet.type.ZombiePet;
 
 @Entity(PetType.ZOMBIE)
-public interface EntityZombiePet<T extends ZombiePet> extends EntityEquipablePet<T>, EntityAgeablePet<T> {
+public interface EntityZombiePet<T extends ZombiePet> extends EntityEquipablePet<T>, EntityAgeablePet<T>
+{
 
-    public static final int DATAWATCHER_VILLAGER = 13;
-    public static final int DATAWATCHER_BABY = 12;
-
-    void setVillager(boolean flag);
+    int DATAWATCHER_VILLAGER = 13;
+    int DATAWATCHER_BABY = 12;
 
     boolean isVillager();
 
-    void setBaby(boolean flag);
+    void setVillager(boolean flag);
 
     boolean isBaby();
+
+    void setBaby(boolean flag);
 }

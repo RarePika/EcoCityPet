@@ -26,17 +26,21 @@ import com.dsh105.influx.InfluxManager;
 import com.dsh105.influx.dispatch.CommandContext;
 import com.dsh105.influx.syntax.ConsumedArgumentSet;
 
-public class EchoPetCommandEvent<S extends CommandSourceContainer> extends CommandContext<S> {
+public class EchoPetCommandEvent<S extends CommandSourceContainer> extends CommandContext<S>
+{
 
-    public EchoPetCommandEvent(InfluxManager<S> manager, Controller controller, S sender, ConsumedArgumentSet consumedArgumentSet) {
+    public EchoPetCommandEvent(InfluxManager<S> manager, Controller controller, S sender, ConsumedArgumentSet consumedArgumentSet)
+    {
         super(manager, controller, sender, consumedArgumentSet);
     }
 
-    public PluginNucleus getPluginNucleus() {
+    public PluginNucleus getPluginNucleus()
+    {
         return EchoPet.getNucleus();
     }
 
-    public PluginCore getPlugin() {
+    public PluginCore getPlugin()
+    {
         return EchoPet.getCore();
     }
 }

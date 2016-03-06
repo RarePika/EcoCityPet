@@ -22,9 +22,11 @@ import com.dsh105.echopet.bridge.entity.type.MooshroomEntityBridge;
 
 import java.util.UUID;
 
-public class EchoMooshroomPet extends EchoCowPet<MooshroomEntityBridge, EntityMooshroomPet> implements MooshroomPet {
+public class EchoMooshroomPet extends EchoCowPet<MooshroomEntityBridge, EntityMooshroomPet> implements MooshroomPet
+{
 
-    public EchoMooshroomPet(UUID playerUID) {
+    public EchoMooshroomPet(UUID playerUID)
+    {
         super(playerUID);
     }
 }

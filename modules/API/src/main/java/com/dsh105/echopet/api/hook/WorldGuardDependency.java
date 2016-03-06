@@ -21,9 +21,10 @@ import com.dsh105.commodus.PluginDependency;
 import com.dsh105.commodus.container.PositionContainer;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
-public interface WorldGuardDependency<H> extends PluginDependency<H, WorldGuardPlugin> {
+public interface WorldGuardDependency<H> extends PluginDependency<H, WorldGuardPlugin>
+{
 
-    public boolean allowPets(PositionContainer position);
+    boolean allowPets(PositionContainer position);
 
-    public boolean allowRegion(PositionContainer position);
+    boolean allowRegion(PositionContainer position);
 }

@@ -19,6 +19,7 @@ package com.dsh105.echopet.bridge.entity.type;
 
 import com.dsh105.echopet.bridge.entity.AgeableEntityBridge;
 
-public interface SheepEntityBridge extends AgeableEntityBridge {
+public interface SheepEntityBridge extends AgeableEntityBridge
+{
 
 }

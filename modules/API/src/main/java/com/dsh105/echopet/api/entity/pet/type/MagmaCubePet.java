@@ -27,6 +27,7 @@ import com.dsh105.echopet.bridge.entity.type.MagmaCubeEntityBridge;
 
 @Traits(type = PetType.MAGMA_CUBE, hositility = Hostility.AGGRESSIVE, width = 0.6F, height = 0.6F, health = 20.0D, attackDamage = 5.0D)
 @Size(SizeCategory.REGULAR)
-public interface MagmaCubePet extends SlimePet<MagmaCubeEntityBridge, EntityMagmaCubePet> {
+public interface MagmaCubePet extends SlimePet<MagmaCubeEntityBridge, EntityMagmaCubePet>
+{
 
 }

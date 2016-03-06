@@ -23,11 +23,12 @@ import com.dsh105.echopet.api.entity.attribute.Attributes;
 import com.dsh105.echopet.api.entity.entitypet.EntityAgeablePet;
 import com.dsh105.echopet.bridge.entity.AgeableEntityBridge;
 
-public interface AgeablePet<T extends AgeableEntityBridge, S extends EntityAgeablePet> extends Pet<T, S> {
-
-    @AttributeSetter(Attributes.Attribute.BABY)
-    void setBaby(boolean flag);
+public interface AgeablePet<T extends AgeableEntityBridge, S extends EntityAgeablePet> extends Pet<T, S>
+{
 
     @AttributeGetter(Attributes.Attribute.BABY)
     boolean isBaby();
+
+    @AttributeSetter(Attributes.Attribute.BABY)
+    void setBaby(boolean flag);
 }

@@ -23,7 +23,8 @@ import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.entity.pet.type.GhastPet;
 import com.dsh105.echopet.bridge.PlayerBridge;
 
-public class BehaviourFollowOwner extends Behaviour {
+public class BehaviourFollowOwner extends Behaviour
+{
 
     private double speed = 1.45F;
 
@@ -33,7 +34,8 @@ public class BehaviourFollowOwner extends Behaviour {
     private double teleportDistance;
 
     @Override
-    protected void setPet(Pet pet) {
+    protected void setPet(Pet pet)
+    {
         super.setPet(pet);
         startDistance = getPet().getSizeCategory().startFollowDistance(getPet().getType());
         stopDistance = getPet().getSizeCategory().stopFollowDistance(getPet().getType());
@@ -41,24 +43,34 @@ public class BehaviourFollowOwner extends Behaviour {
     }
 
     @Override
-    public BehaviourType getType() {
+    public BehaviourType getType()
+    {
         return BehaviourType.THREE;
     }
 
     @Override
-    public String getDefaultKey() {
+    public String getDefaultKey()
+    {
         return "followowner";
     }
 
     @Override
-    public boolean shouldStart() {
-        if (getBukkitEntity().isDead()) {
+    public boolean shouldStart()
+    {
+        if (getBukkitEntity().isDead())
+        {
             return false;
-        } else if (getPet().getOwner().get() == null) {
+        }
+        else if (getPet().getOwner().get() == null)
+        {
             return false;
-        } else if (getPet().isOwnerRiding() || getPet().isHat()) {
+        }
+        else if (getPet().isOwnerRiding() || getPet().isHat())
+        {
             return false;
-        } else if (getModifier().distanceTo(getPet().getOwner().get()) < startDistance) {
+        }
+        else if (getModifier().distanceTo(getPet().getOwner().get()) < startDistance)
+        {
             return false;
         } // else return !(getPet.getGoalTarget() != null && !getPet().getGoalTarget().isDead)
         // TODO
@@ -66,16 +78,26 @@ public class BehaviourFollowOwner extends Behaviour {
     }
 
     @Override
-    public boolean shouldContinue() {
-        if (getModifier().isNavigating()) {
+    public boolean shouldContinue()
+    {
+        if (getModifier().isNavigating())
+        {
             return false;
-        } else if (getPet().getOwner().get() == null || !getPet().getOwner().isOnline()) {
+        }
+        else if (getPet().getOwner().get() == null || !getPet().getOwner().isOnline())
+        {
             return false;
-        } else if (getPet().isOwnerRiding() || getPet().isHat()) {
+        }
+        else if (getPet().isOwnerRiding() || getPet().isHat())
+        {
             return false;
-        } else if (getModifier().distanceTo(getPet().getOwner().get()) <= stopDistance) {
+        }
+        else if (getModifier().distanceTo(getPet().getOwner().get()) <= stopDistance)
+        {
             return false;
-        } else if (getPet().isStationary()) {
+        }
+        else if (getPet().isStationary())
+        {
             return false;
         }
         // TODO: Is attack goal active
@@ -83,34 +105,43 @@ public class BehaviourFollowOwner extends Behaviour {
     }
 
     @Override
-    public void start() {
+    public void start()
+    {
         this.timer = 0;
         getModifier().setPathfindingRadius((float) teleportDistance);
     }
 
     @Override
-    public void finish() {
+    public void finish()
+    {
         getModifier().stopNavigating();
     }
 
     @Override
-    public void tick() {
+    public void tick()
+    {
         PlayerBridge player = getPet().getOwner();
         getModifier().lookAt(player.get(), 10.0F, (float) getModifier().getMaxHeadRotation());
-        if (--timer <= 0) {
+        if (--timer <= 0)
+        {
             timer = 10;
-            if (player.isFlying()) {
+            if (player.isFlying())
+            {
                 return;
             }
 
-            if (getModifier().distanceTo(player.get()) > teleportDistance && player.isOnGround()) {
+            if (getModifier().distanceTo(player.get()) > teleportDistance && player.isOnGround())
+            {
                 getPet().moveToOwner();
             }
         }
 
-        if (getPet() instanceof GhastPet) {
+        if (getPet() instanceof GhastPet)
+        {
             getModifier().navigateTo((int) player.getLocX(), (int) player.getLocY() + 5, (int) player.getLocZ(), speed);
-        } else {
+        }
+        else
+        {
             getModifier().navigateTo(player.get(), speed);
         }
     }

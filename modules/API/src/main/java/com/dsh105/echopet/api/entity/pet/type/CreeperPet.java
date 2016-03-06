@@ -31,17 +31,18 @@ import com.dsh105.echopet.bridge.entity.type.CreeperEntityBridge;
 
 @Traits(type = PetType.CREEPER, hositility = Hostility.AGGRESSIVE, width = 0.6F, height = 1.9F, health = 20.0D, attackDamage = 6.0D)
 @Size(SizeCategory.TINY)
-public interface CreeperPet extends Pet<CreeperEntityBridge, EntityCreeperPet> {
-
-    @AttributeSetter(Attributes.Attribute.POWER)
-    void setPowered(boolean flag);
+public interface CreeperPet extends Pet<CreeperEntityBridge, EntityCreeperPet>
+{
 
     @AttributeGetter(Attributes.Attribute.POWER)
     boolean isPowered();
 
-    @AttributeSetter(Attributes.Attribute.IGNITION)
-    void setIgnited(boolean flag);
+    @AttributeSetter(Attributes.Attribute.POWER)
+    void setPowered(boolean flag);
 
     @AttributeGetter(Attributes.Attribute.IGNITION)
     boolean isIgnited();
+
+    @AttributeSetter(Attributes.Attribute.IGNITION)
+    void setIgnited(boolean flag);
 }

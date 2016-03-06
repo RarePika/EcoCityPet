@@ -22,47 +22,54 @@ import com.dsh105.echopet.api.entity.attribute.Attributes;
 import com.dsh105.echopet.api.entity.entitypet.type.EntitySkeletonPet;
 import com.dsh105.echopet.api.entity.pet.EchoEquipablePet;
 import com.dsh105.echopet.bridge.entity.type.SkeletonEntityBridge;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
-public class EchoSkeletonPet extends EchoEquipablePet<SkeletonEntityBridge, EntitySkeletonPet> implements SkeletonPet {
+public class EchoSkeletonPet extends EchoEquipablePet<SkeletonEntityBridge, EntitySkeletonPet> implements SkeletonPet
+{
 
-    public EchoSkeletonPet(UUID playerUID) {
+    public EchoSkeletonPet(UUID playerUID)
+    {
         super(playerUID);
     }
 
     @Override
-    public void setWither(boolean flag) {
-        setSkeletonType(flag ? Attributes.SkeletonType.WITHER : Attributes.SkeletonType.NORMAL);
-    }
-
-    @Override
-    public boolean isWither() {
+    public boolean isWither()
+    {
         return getSkeletonType() == Attributes.SkeletonType.WITHER;
     }
 
     @Override
-    public void setSkeletonType(Attributes.SkeletonType type) {
-        if (type != getSkeletonType()) {
+    public void setWither(boolean flag)
+    {
+        setSkeletonType(flag ? Attributes.SkeletonType.WITHER : Attributes.SkeletonType.NORMAL);
+    }
+
+    @Override
+    public Attributes.SkeletonType getSkeletonType()
+    {
+        return getEntity().getSkeletonEntityType();
+    }
+
+    @Override
+    public void setSkeletonType(Attributes.SkeletonType type)
+    {
+        if (type != getSkeletonType())
+        {
             getEntity().applyDefaultItems();
         }
         getEntity().setSkeletonEntityType(type);
     }
 
     @Override
-    public Attributes.SkeletonType getSkeletonType() {
-        return getEntity().getSkeletonEntityType();
-    }
-
-    @Override
-    public SizeCategory getSizeCategory() {
+    public SizeCategory getSizeCategory()
+    {
         return isWither() ? SizeCategory.LARGE : super.getSizeCategory();
     }
 
     @Override
-    public void rangedAttack(Object livingEntity, float speed) {
+    public void rangedAttack(Object livingEntity, float speed)
+    {
         getEntity().rangedAttack(livingEntity, speed);
     }
 }

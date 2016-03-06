@@ -28,6 +28,7 @@ import com.dsh105.echopet.bridge.entity.type.SnowmanEntityBridge;
 
 @Traits(type = PetType.SNOWMAN, hositility = Hostility.NEUTRAL, width = 0.4F, height = 1.8F, health = 4.0D, attackDamage = 4.0D)
 @Size(SizeCategory.REGULAR)
-public interface SnowmanPet extends RangedPet<SnowmanEntityBridge, EntitySnowmanPet> {
+public interface SnowmanPet extends RangedPet<SnowmanEntityBridge, EntitySnowmanPet>
+{
 
 }

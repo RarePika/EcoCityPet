@@ -1,18 +1,18 @@
 package com.dsh105.echopet.bridge.entity;
 
 import com.dsh105.commodus.container.PositionContainer;
-import com.dsh105.commodus.container.Vector3dContainer;
 import com.dsh105.echopet.bridge.PlatformBridge;
 
-public interface LivingEntityBridge extends PlatformBridge {
+public interface LivingEntityBridge extends PlatformBridge
+{
 
     Object getBridgedEntity();
 
     boolean isAlive();
 
-    void setHealth(float health);
-
     float getHealth();
+
+    void setHealth(float health);
 
     float getMaxHealth();
 
@@ -34,7 +34,6 @@ public interface LivingEntityBridge extends PlatformBridge {
 
     boolean move(PositionContainer to);
 
-    void setVelocity(Vector3dContainer vector3d);
 
     PositionContainer getLocation();
 }

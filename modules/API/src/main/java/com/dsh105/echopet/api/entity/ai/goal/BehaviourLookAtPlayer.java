@@ -23,37 +23,46 @@ import com.dsh105.echopet.api.entity.ai.BehaviourType;
 import com.dsh105.echopet.bridge.Ident;
 import com.dsh105.echopet.bridge.PlayerBridge;
 
-public class BehaviourLookAtPlayer extends Behaviour {
+public class BehaviourLookAtPlayer extends Behaviour
+{
 
     private Object targetPlayer;
     private float range;
     private int ticksLeft;
     private float chance;
 
-    public BehaviourLookAtPlayer() {
+    public BehaviourLookAtPlayer()
+    {
         this(8.0F, 0.1F);
     }
 
-    public BehaviourLookAtPlayer(float range, float chance) {
+    public BehaviourLookAtPlayer(float range, float chance)
+    {
         this.range = range;
         this.chance = chance;
     }
 
     @Override
-    public BehaviourType getType() {
+    public BehaviourType getType()
+    {
         return BehaviourType.TWO;
     }
 
     @Override
-    public String getDefaultKey() {
+    public String getDefaultKey()
+    {
         return "lookatplayer";
     }
 
     @Override
-    public boolean shouldStart() {
-        if (GeneralUtil.random().nextFloat() >= chance) {
+    public boolean shouldStart()
+    {
+        if (GeneralUtil.random().nextFloat() >= chance)
+        {
             return false;
-        } else if (getModifier().getPassenger() != null) {
+        }
+        else if (getModifier().getPassenger() != null)
+        {
             return false;
         }
         targetPlayer = getModifier().findPlayer(range);
@@ -61,22 +70,26 @@ public class BehaviourLookAtPlayer extends Behaviour {
     }
 
     @Override
-    public boolean shouldContinue() {
+    public boolean shouldContinue()
+    {
         return !PlayerBridge.of(Ident.get().getUID(targetPlayer)).isDead() && getModifier().distanceTo(targetPlayer) < (double) (range * range) && ticksLeft > 0;
     }
 
     @Override
-    public void start() {
+    public void start()
+    {
         this.ticksLeft = 40 + GeneralUtil.random().nextInt(40);
     }
 
     @Override
-    public void finish() {
+    public void finish()
+    {
         this.targetPlayer = null;
     }
 
     @Override
-    public void tick() {
+    public void tick()
+    {
         getModifier().lookAt(targetPlayer, 10.0F, (float) getModifier().getMaxHeadRotation());
         --ticksLeft;
     }

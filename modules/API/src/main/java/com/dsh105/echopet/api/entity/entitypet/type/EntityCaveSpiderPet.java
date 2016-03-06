@@ -22,6 +22,7 @@ import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.pet.type.CaveSpiderPet;
 
 @Entity(PetType.CAVE_SPIDER)
-public interface EntityCaveSpiderPet extends EntitySpiderPet<CaveSpiderPet> {
+public interface EntityCaveSpiderPet extends EntitySpiderPet<CaveSpiderPet>
+{
 
 }

@@ -24,29 +24,35 @@ import com.dsh105.echopet.bridge.entity.type.SheepEntityBridge;
 
 import java.util.UUID;
 
-public class EchoSheepPet extends EchoAgeablePet<SheepEntityBridge, EntitySheepPet> implements SheepPet {
+public class EchoSheepPet extends EchoAgeablePet<SheepEntityBridge, EntitySheepPet> implements SheepPet
+{
 
-    public EchoSheepPet(UUID playerUID) {
+    public EchoSheepPet(UUID playerUID)
+    {
         super(playerUID);
     }
 
     @Override
-    public void setSheared(boolean flag) {
-        getEntity().setSheared(flag);
-    }
-
-    @Override
-    public boolean isSheared() {
+    public boolean isSheared()
+    {
         return getEntity().isSheared();
     }
 
     @Override
-    public Attributes.Color getColor() {
+    public void setSheared(boolean flag)
+    {
+        getEntity().setSheared(flag);
+    }
+
+    @Override
+    public Attributes.Color getColor()
+    {
         return getEntity().getDyeColor();
     }
 
     @Override
-    public void setColor(Attributes.Color dyeColor) {
+    public void setColor(Attributes.Color dyeColor)
+    {
         getEntity().setDyeColor(dyeColor);
     }
 }

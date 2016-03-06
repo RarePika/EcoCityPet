@@ -23,6 +23,7 @@ import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.pet.type.SpiderPet;
 
 @Entity(PetType.SPIDER)
-public interface EntitySpiderPet<T extends SpiderPet> extends EntityPet<T> {
+public interface EntitySpiderPet<T extends SpiderPet> extends EntityPet<T>
+{
 
 }

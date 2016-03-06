@@ -23,13 +23,14 @@ import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.pet.type.CreeperPet;
 
 @Entity(PetType.CREEPER)
-public interface EntityCreeperPet extends EntityPet<CreeperPet> {
+public interface EntityCreeperPet extends EntityPet<CreeperPet>
+{
 
-    public static final int DATAWATCHER_FUSE_STATE = 16;
-    public static final int DATAWATCHER_POWERED = 17;
-    public static final int DATAWATCHER_IGNITION = 18;
-
-    void setPowered(boolean flag);
+    int DATAWATCHER_FUSE_STATE = 16;
+    int DATAWATCHER_POWERED = 17;
+    int DATAWATCHER_IGNITION = 18;
 
     boolean isPowered();
+
+    void setPowered(boolean flag);
 }

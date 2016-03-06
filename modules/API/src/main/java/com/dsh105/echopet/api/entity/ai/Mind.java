@@ -17,21 +17,22 @@
 
 package com.dsh105.echopet.api.entity.ai;
 
-public interface Mind {
+public interface Mind
+{
 
-    public void addGoal(Behaviour behaviour, int priority);
+    void addGoal(Behaviour behaviour, int priority);
 
-    public void addGoal(String key, Behaviour behaviour, int priority);
+    void addGoal(String key, Behaviour behaviour, int priority);
 
-    public void addAndReplaceGoal(String key, Behaviour behaviour, int priority);
+    void addAndReplaceGoal(String key, Behaviour behaviour, int priority);
 
-    public void removeGoal(Behaviour behaviour);
+    void removeGoal(Behaviour behaviour);
 
-    public void removeGoal(String key);
+    void removeGoal(String key);
 
-    public void clearGoals(String key);
+    void clearGoals(String key);
 
-    public Behaviour getGoal(String key);
+    Behaviour getGoal(String key);
 
-    public void updateGoals();
+    void updateGoals();
 }

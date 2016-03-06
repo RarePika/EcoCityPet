@@ -26,17 +26,18 @@ import com.dsh105.echopet.api.entity.pet.Hostility;
 import com.dsh105.echopet.bridge.entity.type.SheepEntityBridge;
 
 @Traits(type = PetType.SHEEP, hositility = Hostility.PASSIVE, width = 0.9F, height = 1.3F, health = 8.0D, attackDamage = 3.0D)
-public interface SheepPet extends AgeablePet<SheepEntityBridge, EntitySheepPet> {
-
-    @AttributeSetter(Attributes.Attribute.SHEARED)
-    void setSheared(boolean flag);
+public interface SheepPet extends AgeablePet<SheepEntityBridge, EntitySheepPet>
+{
 
     @AttributeGetter(Attributes.Attribute.SHEARED)
     boolean isSheared();
 
-    @GroupAttributeSetter(AttributeType.COLOR)
-    void setColor(Attributes.Color color);
+    @AttributeSetter(Attributes.Attribute.SHEARED)
+    void setSheared(boolean flag);
 
     @GroupAttributeGetter(AttributeType.COLOR)
     Attributes.Color getColor();
+
+    @GroupAttributeSetter(AttributeType.COLOR)
+    void setColor(Attributes.Color color);
 }

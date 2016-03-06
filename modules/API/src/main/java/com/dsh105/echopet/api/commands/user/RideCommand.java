@@ -28,7 +28,8 @@ import com.dsh105.influx.annotation.Authorize;
 import com.dsh105.influx.annotation.Command;
 import com.dsh105.influx.annotation.Convert;
 
-public class RideCommand implements CommandListener {
+public class RideCommand implements CommandListener
+{
 
     @Command(
             syntax = "ride",
@@ -36,8 +37,10 @@ public class RideCommand implements CommandListener {
             help = {"Use \"/pet view\" to select a pet to edit.", "If you only have one pet, there is no need to select one to edit.", "Ride your pet", "Control your pet using the WASD keys and the space bar (to jump)", "Remember, some pets might be able to fly!"}
     )
     @Authorize(Perm.RIDE)
-    public boolean ride(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Convert(PetConverters.Selected.class) Pet pet) {
-        if (pet == null) {
+    public boolean ride(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Convert(PetConverters.Selected.class) Pet pet)
+    {
+        if (pet == null)
+        {
             return true;
         }
         boolean status = pet.isOwnerRiding();

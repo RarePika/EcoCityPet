@@ -25,15 +25,15 @@ import com.dsh105.echopet.api.configuration.ConfigType;
 import com.dsh105.echopet.api.event.EventManager;
 import com.dsh105.echopet.api.registration.PetRegistry;
 import com.dsh105.echopet.bridge.BridgeManager;
-import com.dsh105.influx.InfluxManager;
 import com.jolbox.bonecp.BoneCP;
 
-public interface PluginNucleus extends EchoPetCoreBridge {
+public interface PluginNucleus extends EchoPetCoreBridge
+{
 
     BridgeManager getBridgeManager();
 
     EchoPetCommandManager getCommandManager();
-    
+
     EventManager getEventManager();
 
     PetManager getPetManager();

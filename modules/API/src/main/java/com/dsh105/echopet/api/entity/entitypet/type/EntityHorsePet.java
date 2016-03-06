@@ -24,45 +24,46 @@ import com.dsh105.echopet.api.entity.entitypet.EntityAgeablePet;
 import com.dsh105.echopet.api.entity.pet.type.HorsePet;
 
 @Entity(PetType.HORSE)
-public interface EntityHorsePet extends EntityAgeablePet<HorsePet> {
+public interface EntityHorsePet extends EntityAgeablePet<HorsePet>
+{
 
-    public static final int DATAWATCHER_ANIMATION = 16;
-    public static final int DATAWATCHER_HORSE_VARIANT = 19;
-    public static final int DATAWATCHER_HORSE_SKIN = 20;
-    public static final int DATAWATCHER_OWNER_NAME = 21;
-    public static final int DATAWATCHER_HORSE_ARMOUR = 22;
+    int DATAWATCHER_ANIMATION = 16;
+    int DATAWATCHER_HORSE_VARIANT = 19;
+    int DATAWATCHER_HORSE_SKIN = 20;
+    int DATAWATCHER_OWNER_NAME = 21;
+    int DATAWATCHER_HORSE_ARMOUR = 22;
 
-    public static final int ANIMATION_SADDLE = 4;
-    public static final int ANIMATION_CHEST = 8;
-    public static final int ANIMATION_LOWER_HEAD = 32;
-    public static final int ANIMATION_REAR = 64;
-    public static final int ANIMATION_OPEN_MOUTH = 128;
-
-    void setHorseVariant(Attributes.HorseVariant variant);
+    int ANIMATION_SADDLE = 4;
+    int ANIMATION_CHEST = 8;
+    int ANIMATION_LOWER_HEAD = 32;
+    int ANIMATION_REAR = 64;
+    int ANIMATION_OPEN_MOUTH = 128;
 
     Attributes.HorseVariant getHorseVariant();
 
-    void setColor(Attributes.HorseColor color);
+    void setHorseVariant(Attributes.HorseVariant variant);
 
     Attributes.HorseColor getColor();
 
-    void setStyle(Attributes.HorseStyle style);
+    void setColor(Attributes.HorseColor color);
 
     Attributes.HorseStyle getStyle();
 
-    void setArmour(Attributes.HorseArmour armour);
+    void setStyle(Attributes.HorseStyle style);
 
     Attributes.HorseArmour getArmour();
 
-    void setSaddled(boolean flag);
-
-    void setChested(boolean flag);
+    void setArmour(Attributes.HorseArmour armour);
 
     boolean isSaddled();
 
+    void setSaddled(boolean flag);
+
     boolean isChested();
+
+    void setChested(boolean flag);
 
     void animation(int animationId, boolean flag);
 
-    public void setTame(boolean flag);
+    void setTame(boolean flag);
 }

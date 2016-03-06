@@ -23,7 +23,8 @@ import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.pet.type.GhastPet;
 
 @Entity(PetType.GHAST)
-public interface EntityGhastPet extends EntityPet<GhastPet> {
+public interface EntityGhastPet extends EntityPet<GhastPet>
+{
 
     void setCourseChangeCounter(int value);
 

@@ -23,9 +23,11 @@ import com.dsh105.echopet.bridge.entity.type.WitchEntityBridge;
 
 import java.util.UUID;
 
-public class EchoWitchPet extends EchoRangedPet<WitchEntityBridge, EntityWitchPet> implements WitchPet {
+public class EchoWitchPet extends EchoRangedPet<WitchEntityBridge, EntityWitchPet> implements WitchPet
+{
 
-    public EchoWitchPet(UUID playerUID) {
+    public EchoWitchPet(UUID playerUID)
+    {
         super(playerUID);
     }
 }

@@ -25,7 +25,8 @@ import com.dsh105.echopet.api.entity.attribute.EntityAttribute;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StringForm {
+public class StringForm
+{
 
     private static Map<String, StringForm> FORMS = new HashMap<>();
 
@@ -33,51 +34,65 @@ public class StringForm {
     private String capitalisedName;
     private String configName;
 
-    protected StringForm(String name) {
+    protected StringForm(String name)
+    {
         this.name = name;
         this.capitalisedName = StringUtil.capitalise(name().replace("_", " "));
         this.configName = (name.substring(0, 1) + name.substring(2)).replaceAll("\\s", "");
     }
 
-    public static StringForm create(EntityAttribute entityAttribute) {
+    public static StringForm create(EntityAttribute entityAttribute)
+    {
         String name;
-        if (entityAttribute instanceof AttributeEnumBridge) {
+        if (entityAttribute instanceof AttributeEnumBridge)
+        {
             name = ((AttributeEnumBridge) entityAttribute).name();
-        } else if (entityAttribute instanceof Enum) {
+        }
+        else if (entityAttribute instanceof Enum)
+        {
             name = ((Enum) entityAttribute).name();
-        } else {
+        }
+        else
+        {
             // should never happen
             throw new IllegalStateException("Illegal attribute class type provided.");
         }
         return create(name);
     }
 
-    public static StringForm create(Enum<?> enumType) {
+    public static StringForm create(Enum<?> enumType)
+    {
         return create(enumType.name());
     }
 
-    public static StringForm create(AttributeValue attributeValue) {
+    public static StringForm create(AttributeValue attributeValue)
+    {
         return create(attributeValue.name());
     }
 
-    public static StringForm create(String name) {
+    public static StringForm create(String name)
+    {
         StringForm stringForm = FORMS.get(name);
-        if (stringForm == null) {
+        if (stringForm == null)
+        {
             stringForm = new StringForm(name);
             FORMS.put(name, stringForm);
         }
         return stringForm;
     }
 
-    public String name() {
+    public String name()
+    {
         return name;
     }
 
-    public String getCaptalisedName() {
+    public String getCaptalisedName()
+    {
         return capitalisedName;
     }
 
-    public String getConfigName() {
+    public String getConfigName()
+    {
         return configName;
     }
 }

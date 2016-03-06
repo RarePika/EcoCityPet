@@ -25,15 +25,18 @@ import com.dsh105.echopet.util.Perm;
 import com.dsh105.influx.CommandListener;
 import com.dsh105.influx.annotation.Authorize;
 import com.dsh105.influx.annotation.Command;
+import org.bukkit.entity.Player;
 
-public class SelectorCommand implements CommandListener {
+public class SelectorCommand implements CommandListener
+{
 
     @Command(
             syntax = "select",
             desc = "Open the pet selection menu to create a new pet"
     )
     @Authorize(Perm.SELECT)
-    public boolean select(EchoPetCommandEvent<PlayerCommandSourceContainer> event) {
+    public boolean select(EchoPetCommandEvent<PlayerCommandSourceContainer> event)
+    {
         PetSelector.getInventory().show(event.sender().get());
         return true;
     }
@@ -44,9 +47,10 @@ public class SelectorCommand implements CommandListener {
             help = "This item can be used to open the Pet Selection Menu"
     )
     @Authorize(Perm.SELECTOR)
-    public boolean selector(EchoPetCommandEvent<PlayerCommandSourceContainer> event) {
+    public boolean selector(EchoPetCommandEvent<PlayerCommandSourceContainer> event)
+    {
         // TODO
-        event.sender().getInventory().addItem(PetSelector.getInventory().getInteractIcon().asBukkit());
+        ((Player) event.sender().asBukkit()).getInventory().addItem(PetSelector.getInventory().getInteractIcon().asBukkit());
         event.respond(Lang.SELECTOR_ITEM_ADDED.getValue());
         return true;
     }

@@ -26,7 +26,8 @@ import com.dsh105.echopet.bridge.entity.type.EnderDragonEntityBridge;
 @Traits(type = PetType.ENDER_DRAGON, hositility = Hostility.AGGRESSIVE, width = 16.0F, height = 8.0F, health = 200.0D, attackDamage = 0.0D)
 @Voice(idle = "mob.enderdragon.growl")
 @Size(SizeCategory.EXTRA_LARGE)
-public interface EnderDragonPet extends Pet<EnderDragonEntityBridge, EntityEnderDragonPet> {
+public interface EnderDragonPet extends Pet<EnderDragonEntityBridge, EntityEnderDragonPet>
+{
 
     void setTarget(Object entity);
 }

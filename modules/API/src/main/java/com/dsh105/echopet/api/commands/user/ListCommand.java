@@ -38,7 +38,8 @@ import org.bukkit.ChatColor;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListCommand implements CommandListener {
+public class ListCommand implements CommandListener
+{
 
     @Command(
             syntax = "list [inline]",
@@ -46,8 +47,10 @@ public class ListCommand implements CommandListener {
             help = "If [inline] is specified as \"true\", data types will be shown in the following format (as well as in hover information): \"<type> (<data>, <data>)\""
     )
     @Authorize(Perm.LIST)
-    public boolean list(EchoPetCommandEvent event, @Bind("inline") @Default("") boolean inline) {
-        if (!(event.sender() instanceof PlayerCommandSourceContainer) && event.var("inline").isEmpty()) {
+    public boolean list(EchoPetCommandEvent event, @Bind("inline") @Default("") boolean inline)
+    {
+        if (!(event.sender() instanceof PlayerCommandSourceContainer) && event.var("inline").isEmpty())
+        {
             inline = true;
         }
 
@@ -55,7 +58,8 @@ public class ListCommand implements CommandListener {
                 .then(EchoPet.getCommandManager().getResponder().getResponsePrefix())
                 .then(EchoPet.getCommandManager().getResponder().format("{c1}Valid pet types: "));
 
-        for (PetType type : PetType.values()) {
+        for (PetType type : PetType.values())
+        {
             boolean access = event.sender().hasPermission(Perm.TYPE.replace("<type>", type.storageName()));
             ChatColor format = access ? ChatColor.DARK_GREEN : ChatColor.DARK_RED;
             ChatColor highlight = access ? ChatColor.GREEN : ChatColor.RED;
@@ -67,13 +71,16 @@ public class ListCommand implements CommandListener {
             StringBuilder dataBuilder = new StringBuilder();
             dataBuilder.append(format).append("Valid data types: ");
             int length = 0;
-            for (EntityAttribute attribute : registeredData) {
+            for (EntityAttribute attribute : registeredData)
+            {
                 StringForm form = StringForm.create(attribute);
                 String name = form.getCaptalisedName();
                 boolean dataAccess = event.sender().hasPermission(Perm.DATA.replace("<type>", type.storageName()).replace("<data>", form.getConfigName()));
-                if (dataAccess) {
+                if (dataAccess)
+                {
                     registeredStringData.add(name);
-                    if (length >= 35) {
+                    if (length >= 35)
+                    {
                         dataBuilder.append("\n");
                         length = 0;
                     }
@@ -82,12 +89,16 @@ public class ListCommand implements CommandListener {
                 }
             }
 
-            if (registeredStringData.size() <= 0) {
+            if (registeredStringData.size() <= 0)
+            {
                 message.tooltip(format + "No valid data types.");
-            } else {
+            }
+            else
+            {
                 String data = dataBuilder.substring(0, dataBuilder.length() - 2);
                 message.tooltip(data);
-                if (inline) {
+                if (inline)
+                {
                     message.then(" (" + StringUtil.combine(", ", registeredStringData) + ")").colour(format);
                 }
             }

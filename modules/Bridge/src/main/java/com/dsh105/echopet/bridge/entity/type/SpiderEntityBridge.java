@@ -19,6 +19,7 @@ package com.dsh105.echopet.bridge.entity.type;
 
 import com.dsh105.echopet.bridge.entity.LivingEntityBridge;
 
-public interface SpiderEntityBridge extends LivingEntityBridge {
+public interface SpiderEntityBridge extends LivingEntityBridge
+{
 
 }

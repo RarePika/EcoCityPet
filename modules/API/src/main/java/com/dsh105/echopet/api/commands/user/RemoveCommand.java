@@ -29,7 +29,8 @@ import com.dsh105.influx.annotation.Authorize;
 import com.dsh105.influx.annotation.Command;
 import com.dsh105.influx.annotation.Convert;
 
-public class RemoveCommand implements CommandListener {
+public class RemoveCommand implements CommandListener
+{
 
     @Command(
             syntax = "remove",
@@ -37,8 +38,10 @@ public class RemoveCommand implements CommandListener {
             help = {"Use \"/pet view\" to select a pet to edit.", "If you only have one pet, there is no need to select one to edit.", "Removes an existing pet"}
     )
     @Authorize(Perm.REMOVE)
-    public boolean remove(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Convert(PetConverters.Selected.class) Pet pet) {
-        if (pet == null) {
+    public boolean remove(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Convert(PetConverters.Selected.class) Pet pet)
+    {
+        if (pet == null)
+        {
             return true;
         }
         EchoPet.getManager().removePet(pet);

@@ -27,15 +27,17 @@ import com.dsh105.influx.CommandListener;
 import com.dsh105.influx.annotation.Authorize;
 import com.dsh105.influx.annotation.Command;
 
-public class ReloadCommand implements CommandListener {
+public class ReloadCommand implements CommandListener
+{
 
     @Command(
             syntax = "reload",
-            desc = "Reload all EchoPet configuration files",
+            desc = "Reload all EcoCityPet configuration files",
             help = {"This does NOT refresh any pets", "This might not have an effect on certain configuration options - those will require a server restart"}
     )
     @Authorize(Perm.RELOAD)
-    public boolean command(EchoPetCommandEvent event) {
+    public boolean command(EchoPetCommandEvent event)
+    {
         EchoPet.getConfig(ConfigType.GENERAL).reload();
         EchoPet.getConfig(ConfigType.MESSAGES).reload();
         EchoPet.getConfig(ConfigType.MENU).reload();

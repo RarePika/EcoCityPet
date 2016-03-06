@@ -18,7 +18,6 @@
 package com.dsh105.echopet.api.inventory;
 
 import com.dsh105.commodus.StringUtil;
-import com.dsh105.commodus.container.ItemStackContainer;
 import com.dsh105.echopet.api.entity.PetType;
 import com.dsh105.echopet.api.entity.attribute.AttributeManager;
 import com.dsh105.echopet.api.entity.attribute.AttributeType;
@@ -27,10 +26,13 @@ import com.dsh105.echopet.api.entity.attribute.EntityAttribute;
 import com.dsh105.interact.Interact;
 import com.dsh105.interact.api.Icon;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
-public enum MenuPreset {
+public enum MenuPreset
+{
 
     TOGGLE("bone", ChatColor.YELLOW + "Toggle Pet", "toggle", MenuType.SELECTOR),
     CALL("ender_pearl", ChatColor.YELLOW + "Call Pet", "call", MenuType.SELECTOR),
@@ -124,7 +126,7 @@ public enum MenuPreset {
     PROFESSION_BLACKSMITH("iron_pickaxe", MenuType.DATA, Attributes.VillagerProfession.BLACKSMITH),
     PROFESSION_BUTCHER("cooked_beef", MenuType.DATA, Attributes.VillagerProfession.BUTCHER),
 
-    
+
     /*
      * Careers
      */
@@ -155,7 +157,7 @@ public enum MenuPreset {
     SIZE_SMALL("slime_ball", 1, 0, MenuType.DATA_SECOND_LEVEL, Attributes.SlimeSize.SMALL),
     SIZE_MEDIUM("slime_ball", 2, 0, MenuType.DATA_SECOND_LEVEL, Attributes.SlimeSize.MEDIUM),
     SIZE_LARGE("slime_ball", 3, 0, MenuType.DATA_SECOND_LEVEL, Attributes.SlimeSize.LARGE),
-    
+
     /*
      * Switches
      */
@@ -181,26 +183,34 @@ public enum MenuPreset {
     private static final Map<PetType, List<MenuPreset>> PET_TYPE_PRESETS;
     private static final Map<MenuType, List<MenuPreset>> BY_TYPE;
 
-    static {
-        SELECTOR_PRESET = Interact.icon().of(ItemStackContainer.of("bone", 1)).name("Pets").build();
+    static
+    {
+
+        SELECTOR_PRESET = Interact.icon().of(com.dsh105.interact.libraries.container.ItemStackContainer.of(new ItemStack(Material.BONE, 1))).name("Pets").build();
 
         ICON_TO_PRESET = new HashMap<>();
-        for (MenuPreset preset : values()) {
+        for (MenuPreset preset : values())
+        {
             ICON_TO_PRESET.put(preset.getIcon(), preset);
         }
 
         PET_TYPE_PRESETS = new HashMap<>();
-        for (PetType petType : PetType.values()) {
+        for (PetType petType : PetType.values())
+        {
             List<MenuPreset> presets = new ArrayList<>(Arrays.asList(RIDE, HAT));
 
             List<EntityAttribute> registeredData = AttributeManager.getModifier(petType).getValidAttributes();
             List<MenuPreset> dataPresets = getPresetsOfType(MenuType.DATA);
-            for (MenuPreset preset : dataPresets) {
-                if (presets.contains(preset)) {
+            for (MenuPreset preset : dataPresets)
+            {
+                if (presets.contains(preset))
+                {
                     continue;
                 }
-                for (EntityAttribute attribute : registeredData) {
-                    if (attribute.equals(preset.attribute) || attribute.getType().equals(preset.attributeType)) {
+                for (EntityAttribute attribute : registeredData)
+                {
+                    if (attribute.equals(preset.attribute) || attribute.getType().equals(preset.attributeType))
+                    {
                         presets.add(preset);
                     }
                 }
@@ -210,10 +220,13 @@ public enum MenuPreset {
         }
 
         BY_TYPE = new HashMap<>();
-        for (MenuType menuType : MenuType.values()) {
+        for (MenuType menuType : MenuType.values())
+        {
             List<MenuPreset> presets = new ArrayList<>();
-            for (MenuPreset preset : MenuPreset.values()) {
-                if (preset.menuType.equals(menuType)) {
+            for (MenuPreset preset : MenuPreset.values())
+            {
+                if (preset.menuType.equals(menuType))
+                {
                     presets.add(preset);
                 }
             }
@@ -230,57 +243,71 @@ public enum MenuPreset {
     private AttributeType attributeType;
     private EntityAttribute attribute;
 
-    MenuPreset(String typeId, MenuType menuType, EntityAttribute attribute) {
+    MenuPreset(String typeId, MenuType menuType, EntityAttribute attribute)
+    {
         init(typeId, StringUtil.capitalise(toString().replace("_", " ")), null, 0, menuType, AttributeType.SWITCH, attribute);
     }
 
-    MenuPreset(String typeId, int meta, MenuType menuType, EntityAttribute attribute) {
+    MenuPreset(String typeId, int meta, MenuType menuType, EntityAttribute attribute)
+    {
         init(typeId, StringUtil.capitalise(toString().replace("_", " ")), null, meta, menuType, AttributeType.SWITCH, attribute);
     }
 
-    MenuPreset(String typeId, int quantity, int meta, MenuType menuType, EntityAttribute attribute) {
+    MenuPreset(String typeId, int quantity, int meta, MenuType menuType, EntityAttribute attribute)
+    {
         init(typeId, StringUtil.capitalise(toString().replace("_", " ")), null, quantity, meta, menuType, AttributeType.SWITCH, attribute);
     }
 
-    MenuPreset(String typeId, MenuType menuType, AttributeType attributeType) {
+    MenuPreset(String typeId, MenuType menuType, AttributeType attributeType)
+    {
         init(typeId, StringUtil.capitalise(toString().replace("_", " ")), null, 0, menuType, attributeType, null);
     }
 
-    MenuPreset(String typeId, String name, String command, MenuType menuType) {
+    MenuPreset(String typeId, String name, String command, MenuType menuType)
+    {
         init(typeId, name, command, 0, menuType, null, null);
     }
 
-    public static List<MenuPreset> getPresetsOfType(MenuType menuType, AttributeType attributeType) {
+    public static List<MenuPreset> getPresetsOfType(MenuType menuType, AttributeType attributeType)
+    {
         List<MenuPreset> presets = new ArrayList<>();
-        for (MenuPreset preset : MenuPreset.values()) {
-            if ((menuType == null || menuType.equals(preset.menuType)) && (preset.attributeType != null && preset.attributeType.equals(attributeType))) {
+        for (MenuPreset preset : MenuPreset.values())
+        {
+            if ((menuType == null || menuType.equals(preset.menuType)) && (preset.attributeType != null && preset.attributeType.equals(attributeType)))
+            {
                 presets.add(preset);
             }
         }
         return presets;
     }
-    
-    public static List<MenuPreset> getPresetsOfType(AttributeType attributeType) {
+
+    public static List<MenuPreset> getPresetsOfType(AttributeType attributeType)
+    {
         return getPresetsOfType(null, attributeType);
     }
 
-    public static List<MenuPreset> getPresetsOfType(MenuType type) {
+    public static List<MenuPreset> getPresetsOfType(MenuType type)
+    {
         return Collections.unmodifiableList(BY_TYPE.get(type));
     }
 
-    public static List<MenuPreset> getPresets(PetType petType) {
+    public static List<MenuPreset> getPresets(PetType petType)
+    {
         return Collections.unmodifiableList(PET_TYPE_PRESETS.get(petType));
     }
 
-    public static Map<Icon, MenuPreset> getIconToTypeMap() {
+    public static Map<Icon, MenuPreset> getIconToTypeMap()
+    {
         return Collections.unmodifiableMap(ICON_TO_PRESET);
     }
 
-    private void init(String typeId, String name, String command, int materialData, MenuType menuType, AttributeType attributeType, EntityAttribute attribute) {
+    private void init(String typeId, String name, String command, int materialData, MenuType menuType, AttributeType attributeType, EntityAttribute attribute)
+    {
         init(typeId, name, command, 1, materialData, menuType, attributeType, attribute);
     }
 
-    private void init(String typeId, String name, String command, int quantity, int meta, MenuType menuType, AttributeType attributeType, EntityAttribute attribute) {
+    private void init(String typeId, String name, String command, int quantity, int meta, MenuType menuType, AttributeType attributeType, EntityAttribute attribute)
+    {
         this.typeId = typeId;
         this.name = name;
         this.command = "pet " + command;
@@ -291,49 +318,66 @@ public enum MenuPreset {
         this.attribute = attribute;
     }
 
-    public String getCommand() {
+    public String getCommand()
+    {
         return command;
     }
 
-    public String getTypeId() {
+    public String getTypeId()
+    {
         return typeId;
     }
 
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
-    public short getTypeMeta() {
+    public short getTypeMeta()
+    {
         return meta;
     }
 
-    public int getQuantity() {
+    public int getQuantity()
+    {
         return quantity;
     }
 
-    public MenuType getMenuType() {
+    public MenuType getMenuType()
+    {
         return menuType;
     }
 
-    public AttributeType getAttributeType() {
+    public AttributeType getAttributeType()
+    {
         return attributeType;
     }
 
-    public EntityAttribute getAttribute() {
+    public EntityAttribute getAttribute()
+    {
         return attribute;
     }
 
-    public Icon getIcon() {
+    public Icon getIcon()
+    {
         Icon.Builder builder;
-        if (command != null) {
+        if (command != null)
+        {
             builder = Interact.commandIcon().command(command);
-        } else {
+        }
+        else
+        {
             builder = Interact.icon();
         }
-        return builder.name(name).of(ItemStackContainer.of(typeId, meta, quantity)).build();
+
+        return builder.name(name).of(com.dsh105.interact.libraries.container.ItemStackContainer.of(
+                new ItemStack(Material.valueOf(typeId.toUpperCase()), quantity, meta))).build();
     }
 
-    public enum MenuType {
-        SELECTOR, DATA, DATA_SECOND_LEVEL
+    public enum MenuType
+    {
+        SELECTOR,
+        DATA,
+        DATA_SECOND_LEVEL
     }
 }

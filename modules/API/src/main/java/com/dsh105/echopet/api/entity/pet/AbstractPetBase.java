@@ -47,7 +47,9 @@ import com.dsh105.echopet.api.entity.pet.type.ZombiePet;
 import com.dsh105.echopet.api.inventory.DataMenu;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.echopet.api.plugin.SQLPetManager;
-import com.dsh105.echopet.bridge.*;
+import com.dsh105.echopet.bridge.MessageBridge;
+import com.dsh105.echopet.bridge.PlayerBridge;
+import com.dsh105.echopet.bridge.SchedulerBridge;
 import com.dsh105.echopet.bridge.entity.LivingEntityBridge;
 import com.dsh105.echopet.util.Perm;
 
@@ -55,7 +57,8 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class AbstractPetBase<T extends LivingEntityBridge, S extends EntityPet> implements Pet<T, S> {
+public abstract class AbstractPetBase<T extends LivingEntityBridge, S extends EntityPet> implements Pet<T, S>
+{
 
     private static Pattern PREVIOUS_NAME_PATTERN = Pattern.compile(".+\\s([0-9])\\b");
 
@@ -84,23 +87,30 @@ public abstract class AbstractPetBase<T extends LivingEntityBridge, S extends En
     protected double rideSpeed;
     protected boolean shouldVanish;
 
-    protected AbstractPetBase(UUID playerUID) {
+    protected AbstractPetBase(UUID playerUID)
+    {
         Affirm.notNull(playerUID);
         this.owner = PlayerBridge.of(playerUID);
         Affirm.notNull(this.owner.get());
-        do {
+        do
+        {
             petId = UUID.randomUUID();
-        } while (EchoPet.getManager().getPetUniqueIdMap().containsKey(petId));
+        }
+        while (EchoPet.getManager().getPetUniqueIdMap().containsKey(petId));
 
         this.entity = Spawn.spawnBukkit(this);
-        if (this.entity != null) {
+        if (this.entity != null)
+        {
             // Begin initiating our EntityPet
 
             JUMP_FIELD = new Reflection().reflect(MinecraftReflection.getMinecraftClass("EntityLiving")).getSafeFieldByName(getModifier().getJumpField());
 
-            try {
+            try
+            {
                 this.bridgeEntity = (T) EchoPet.getBridgeManager().createEntity(StringUtil.capitalise(getType().name().replace("_", " ")).replace(" ", ""));
-            } catch (ClassNotFoundException e) {
+            }
+            catch (ClassNotFoundException e)
+            {
                 onError(e);
                 return;
             }
@@ -129,145 +139,194 @@ public abstract class AbstractPetBase<T extends LivingEntityBridge, S extends En
         }
     }
 
+    private static boolean getStatus(Object entity, Status status)
+    {
+        Object handle = BukkitUnwrapper.getInstance().unwrap(entity);
+        return (Boolean) new Reflection().reflect(MinecraftReflection.getMinecraftClass("Entity")).getSafeMethod(status.getGetter()).getAccessor().invoke(handle);
+    }
+
+    private static void setStatus(Object entity, Status status, boolean value)
+    {
+        Object handle = BukkitUnwrapper.getInstance().unwrap(entity);
+        new Reflection().reflect(MinecraftReflection.getMinecraftClass("Entity")).getSafeMethod(status.getSetter(), boolean.class).getAccessor().invoke(handle, value);
+    }
+
     @Override
-    public T getBridgeEntity() {
+    public T getBridgeEntity()
+    {
         return bridgeEntity;
     }
 
     @Override
-    public S getEntity() {
+    public S getEntity()
+    {
         return entity;
     }
 
     @Override
-    public <P extends Pet<T, S>> EntityPetModifier<P> getModifier() {
+    public <P extends Pet<T, S>> EntityPetModifier<P> getModifier()
+    {
         return (EntityPetModifier<P>) entity.getModifier();
     }
 
     @Override
-    public PlayerBridge getOwner() {
+    public PlayerBridge getOwner()
+    {
         return owner;
     }
 
     @Override
-    public String getOwnerName() {
+    public String getOwnerName()
+    {
         return getOwner().getName();
     }
 
     @Override
-    public UUID getOwnerUID() {
+    public UUID getOwnerUID()
+    {
         return owner.getUID();
     }
 
     @Override
-    public String getOwnerUIDAsString() {
+    public String getOwnerUIDAsString()
+    {
         return getOwnerUID().toString();
     }
 
     @Override
-    public PetType getType() {
+    public PetType getType()
+    {
         return getTraits().type();
     }
 
     @Override
-    public UUID getPetId() {
+    public UUID getPetId()
+    {
         return petId;
     }
 
     @Override
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
     @Override
-    public Mind getMind() {
+    public Mind getMind()
+    {
         return mind;
     }
 
-    private Traits getTraits() {
+    private Traits getTraits()
+    {
         return Attributes.getTraits(getType());
     }
 
     @Override
-    public Voice getVoice() {
+    public Voice getVoice()
+    {
         return Attributes.getVoice(getType());
     }
 
     @Override
-    public String getIdleSound() {
+    public String getIdleSound()
+    {
         return Attributes.getIdleSound(getType());
     }
 
     @Override
-    public String getHurtSound() {
+    public String getHurtSound()
+    {
         return Attributes.getHurtSound(getType());
     }
 
     @Override
-    public String getDeathSound() {
+    public String getDeathSound()
+    {
         return Attributes.getDeathSound(getType());
     }
 
     @Override
-    public void makeStepSound() {
-        if (getVoice() != null) {
+    public void makeStepSound()
+    {
+        if (getVoice() != null)
+        {
             getEntity().makeSound(Attributes.getStepSound(getType()), 0.15F, 1.0F);
         }
     }
 
     @Override
-    public SizeCategory getSizeCategory() {
+    public SizeCategory getSizeCategory()
+    {
         Size size = this.getClass().getInterfaces()[0].getAnnotation(Size.class);
-        if (this instanceof AgeablePet) {
+        if (this instanceof AgeablePet)
+        {
             return ((AgeablePet) this).isBaby() ? SizeCategory.TINY : size.value();
-        } else if (this instanceof ZombiePet) {
+        }
+        else if (this instanceof ZombiePet)
+        {
             return ((ZombiePet) this).isBaby() ? SizeCategory.TINY : size.value();
         }
         return SizeCategory.REGULAR;
     }
 
     @Override
-    public boolean setName(String name) {
+    public boolean setName(String name)
+    {
         return setName(name, true);
     }
 
     @Override
-    public boolean setName(String name, boolean sendFailMessage) {
-        if (name == null || name.isEmpty()) {
+    public boolean setName(String name, boolean sendFailMessage)
+    {
+        if (name == null || name.isEmpty())
+        {
             return false;
         }
 
-        if (name.length() > 32) {
+        if (name.length() > 32)
+        {
             name = name.substring(0, 32);
         }
 
-        if (EchoPet.getManager().getPetNameMapFor(getOwnerUID()).containsKey(name)) {
+        if (EchoPet.getManager().getPetNameMapFor(getOwnerUID()).containsKey(name))
+        {
             Matcher matcher = PREVIOUS_NAME_PATTERN.matcher(name);
-            if (matcher.matches()) {
+            if (matcher.matches())
+            {
                 // Append a number onto the end to prevent duplicate names
                 // This is especially problematic for multiple pets with the default name
                 name = name.replace(matcher.group(0), " " + (GeneralUtil.toInteger(matcher.group(1)) + 1));
-            } else {
+            }
+            else
+            {
                 name += " 1";
             }
         }
 
         boolean allow = true;
-        if (Settings.PET_NAME_REGEX_MATCHING.getValue()) {
+        if (Settings.PET_NAME_REGEX_MATCHING.getValue())
+        {
             List<Map<String, String>> csRegex = Settings.PET_NAME_REGEX.getValue();
-            if (!csRegex.isEmpty()) {
-                for (Map<String, String> regexMap : csRegex) {
-                    for (Map.Entry<String, String> entry : regexMap.entrySet()) {
-                        if (Pattern.compile(entry.getKey(), Pattern.CASE_INSENSITIVE).matcher(name).matches()) {
+            if (!csRegex.isEmpty())
+            {
+                for (Map<String, String> regexMap : csRegex)
+                {
+                    for (Map.Entry<String, String> entry : regexMap.entrySet())
+                    {
+                        if (Pattern.compile(entry.getKey(), Pattern.CASE_INSENSITIVE).matcher(name).matches())
+                        {
                             allow = !StringUtil.toBoolean(entry.getValue());
                         }
                     }
                 }
             }
         }
-        if (EchoPet.getBridge(MessageBridge.class).isPermitted(owner.get(), "echopet.pet.name.override") || allow || Settings.PET_NAME.getValue(name)) {
+        if (EchoPet.getBridge(MessageBridge.class).isPermitted(owner.get(), "echopet.pet.name.override") || allow || Settings.PET_NAME.getValue(name))
+        {
             name = EchoPet.getBridge(MessageBridge.class).translateChatColours(name);
-            if (Settings.STRIP_DIACRITICS.getValue()) {
+            if (Settings.STRIP_DIACRITICS.getValue())
+            {
                 name = StringUtil.stripDiacritics(name);
             }
             EchoPet.getManager().unmapPetName(getOwnerUID(), this.name);
@@ -280,67 +339,81 @@ public abstract class AbstractPetBase<T extends LivingEntityBridge, S extends En
             return true;
         }
 
-        if (sendFailMessage) {
+        if (sendFailMessage)
+        {
             Lang.NAME_NOT_ALLOWED.send(getOwner(), "name", name);
         }
         return false;
     }
 
     @Override
-    public boolean isRider() {
+    public boolean isRider()
+    {
         return isRider;
     }
 
     @Override
-    public Pet getRider() {
+    public Pet getRider()
+    {
         return rider;
     }
 
     @Override
-    public float width() {
+    public float width()
+    {
         return getTraits().width();
     }
 
     @Override
-    public float height() {
+    public float height()
+    {
         return getTraits().height();
     }
 
     @Override
-    public boolean getAttribute(Attributes.Attribute attribute) {
+    public boolean getAttribute(Attributes.Attribute attribute)
+    {
         return AttributeManager.getModifier(this).getModifier(attribute).getAttribute(this);
     }
 
     @Override
-    public void setAttribute(Attributes.Attribute attribute, boolean value) {
+    public void setAttribute(Attributes.Attribute attribute, boolean value)
+    {
         AttributeManager.getModifier(this).getModifier(attribute).setAttribute(this, value);
     }
 
     @Override
-    public void invertAttribute(Attributes.Attribute attribute) {
+    public void invertAttribute(Attributes.Attribute attribute)
+    {
         AttributeManager.getModifier(this).getModifier(attribute).setAttribute(this, !getAttribute(attribute));
     }
 
     @Override
-    public EntityAttribute getAttribute(AttributeType attributeType) {
+    public EntityAttribute getAttribute(AttributeType attributeType)
+    {
         return AttributeManager.getModifier(this).getModifier(attributeType).getAttribute(this);
     }
 
     @Override
-    public void setAttribute(EntityAttribute entityAttribute) {
+    public void setAttribute(EntityAttribute entityAttribute)
+    {
         AttributeManager.getModifier(this).getModifier(AttributeType.getByEnumBridge(entityAttribute.getClass())).setAttribute(this, entityAttribute);
     }
 
     @Override
-    public List<EntityAttribute> getValidAttributes() {
+    public List<EntityAttribute> getValidAttributes()
+    {
         return AttributeManager.getModifier(this).getValidAttributes();
     }
 
     @Override
-    public List<EntityAttribute> getActiveAttributes() {
+    public List<EntityAttribute> getActiveAttributes()
+    {
         List<EntityAttribute> active = new ArrayList<>();
-        for (EntityAttribute entityAttribute : getValidAttributes()) {
-            if (AttributeManager.getModifier(this).isActive(this, entityAttribute)) {
+        for (EntityAttribute entityAttribute : getValidAttributes())
+        {
+            if (AttributeManager.getModifier(this).isActive(this, entityAttribute))
+            {
                 active.add(entityAttribute);
             }
         }
@@ -348,32 +421,40 @@ public abstract class AbstractPetBase<T extends LivingEntityBridge, S extends En
     }
 
     @Override
-    public boolean isStationary() {
+    public boolean isStationary()
+    {
         return stationary;
     }
 
     @Override
-    public void setStationary(boolean flag) {
+    public void setStationary(boolean flag)
+    {
         this.stationary = flag;
     }
 
     @Override
-    public void remove(boolean makeDeathSound) {
-        if (despawned) {
+    public void remove(boolean makeDeathSound)
+    {
+        if (despawned)
+        {
             // He's dead, Jim!
             return;
         }
 
-        if (entity != null && getBridgeEntity() != null) {
+        if (entity != null && getBridgeEntity() != null)
+        {
             Particle.DEATH_CLOUD.builder().show(getLocation());
             getBridgeEntity().removeEntity();
-            if (makeDeathSound) {
-                if (getDeathSound() != null && !getDeathSound().isEmpty()) {
+            if (makeDeathSound)
+            {
+                if (getDeathSound() != null && !getDeathSound().isEmpty())
+                {
                     entity.makeSound(getDeathSound(), 1.0F, 1.0F);
                 }
             }
         }
-        if (rider != null) {
+        if (rider != null)
+        {
             rider.remove(false);
             rider = null;
         }
@@ -382,35 +463,48 @@ public abstract class AbstractPetBase<T extends LivingEntityBridge, S extends En
     }
 
     @Override
-    public Pet spawnRider(PetType type, boolean sendFailMessage) {
+    public Pet spawnRider(PetType type, boolean sendFailMessage)
+    {
         return setRider(EchoPet.getPetRegistry().spawn(type, getOwnerUID()), sendFailMessage);
     }
 
     @Override
-    public Pet setRider(Pet rider, boolean sendFailMessage) {
-        if (rider == null) {
+    public Pet setRider(Pet rider, boolean sendFailMessage)
+    {
+        if (rider == null)
+        {
             return null;
         }
         String failMessage;
-        if (!PetSettings.ENABLE.getValue(rider.getType().storageName())) {
+        if (!PetSettings.ENABLE.getValue(rider.getType().storageName()))
+        {
             failMessage = Lang.PET_TYPE_DISABLED.getValue("type", rider.getType().humanName());
-        } else if (!PetSettings.ALLOW_RIDERS.getValue(getType().storageName())) {
+        }
+        else if (!PetSettings.ALLOW_RIDERS.getValue(getType().storageName()))
+        {
             failMessage = Lang.RIDERS_DISABLED.getValue("type", getType().humanName());
-        } else {
-            if (owningRiding) {
+        }
+        else
+        {
+            if (owningRiding)
+            {
                 setOwnerRiding(false);
             }
 
-            if (this.rider != null) {
+            if (this.rider != null)
+            {
                 this.rider.remove(false);
             }
 
             this.rider = rider;
             ((AbstractPetBase) rider).isRider = true;
-            EchoPet.getBridge(SchedulerBridge.class).runLater(false, 5L, new Runnable() {
+            EchoPet.getBridge(SchedulerBridge.class).runLater(false, 5L, new Runnable()
+            {
                 @Override
-                public void run() {
-                    if (getBridgeEntity() != null) {
+                public void run()
+                {
+                    if (getBridgeEntity() != null)
+                    {
                         getBridgeEntity().setPassenger(getRider().getBridgeEntity());
                     }
                 }
@@ -418,7 +512,8 @@ public abstract class AbstractPetBase<T extends LivingEntityBridge, S extends En
             return rider;
         }
 
-        if (sendFailMessage) {
+        if (sendFailMessage)
+        {
             EchoPet.getBridge(MessageBridge.class).send(getOwner(), failMessage);
         }
         rider.remove(false);
@@ -426,9 +521,11 @@ public abstract class AbstractPetBase<T extends LivingEntityBridge, S extends En
     }
 
     @Override
-    public void removeRider() {
+    public void removeRider()
+    {
         rider.remove(true);
-        if (EchoPet.getManager() instanceof SQLPetManager) {
+        if (EchoPet.getManager() instanceof SQLPetManager)
+        {
             ((SQLPetManager) EchoPet.getManager()).clearRider(this);
         }
         rider = null;
@@ -436,97 +533,114 @@ public abstract class AbstractPetBase<T extends LivingEntityBridge, S extends En
     }
 
     @Override
-    public PositionContainer getLocation() {
+    public PositionContainer getLocation()
+    {
         return getBridgeEntity().getLocation();
     }
 
     @Override
-    public boolean moveToOwner() {
+    public boolean moveToOwner()
+    {
         return getOwner().get() != null && move(getOwner().getLocation());
     }
 
     @Override
-    public boolean move(PositionContainer to) {
-        if (entity == null || getModifier().isDead()) {
+    public boolean move(PositionContainer to)
+    {
+        if (entity == null || getModifier().isDead())
+        {
             return false;
         }
 
-        if (rider != null) {
+        if (rider != null)
+        {
             rider.getBridgeEntity().eject();
             rider.getBridgeEntity().move(to);
         }
         boolean result = getBridgeEntity().move(to);
-        if (rider != null) {
+        if (rider != null)
+        {
             getBridgeEntity().setPassenger(rider.getBridgeEntity());
         }
         return result;
     }
 
     @Override
-    public double getJumpHeight() {
+    public double getJumpHeight()
+    {
         return jumpHeight;
     }
 
     @Override
-    public void setJumpHeight(double jumpHeight) {
+    public void setJumpHeight(double jumpHeight)
+    {
         this.jumpHeight = jumpHeight;
     }
 
     @Override
-    public double getRideSpeed() {
+    public double getRideSpeed()
+    {
         return rideSpeed;
     }
 
     @Override
-    public void setRideSpeed(double rideSpeed) {
+    public void setRideSpeed(double rideSpeed)
+    {
         this.rideSpeed = rideSpeed;
     }
 
     @Override
-    public boolean shouldVanish() {
+    public boolean shouldVanish()
+    {
         return shouldVanish;
     }
 
     @Override
-    public void setShouldVanish(boolean flag) {
+    public void setShouldVanish(boolean flag)
+    {
         this.shouldVanish = flag;
     }
 
     @Override
-    public boolean isOwnerRiding() {
+    public boolean isOwnerRiding()
+    {
         return owningRiding;
     }
 
     @Override
-    public boolean isOwnerInMountingProcess() {
-        return ownerInMountingProcess;
-    }
-
-    @Override
-    public void setOwnerRiding(boolean flag) {
-        if (owningRiding == flag) {
+    public void setOwnerRiding(boolean flag)
+    {
+        if (owningRiding == flag)
+        {
             return;
         }
-        if (hat) {
+        if (hat)
+        {
             setHat(false);
         }
 
-        if (flag) {
+        if (flag)
+        {
             this.ownerInMountingProcess = true;
 
-            if (rider != null) {
+            if (rider != null)
+            {
                 rider.remove(false);
             }
             getBridgeEntity().setPassenger(owner.get());
-            if (this instanceof EnderDragonPet) {
+            if (this instanceof EnderDragonPet)
+            {
                 getModifier().setNoClipEnabled(false);
             }
 
             this.ownerInMountingProcess = false;
 
             entity.modifyBoundingBox(width() / 2, height() / 2);
-        } else {
-            if (this instanceof EnderDragonPet) {
+        }
+        else
+        {
+            if (this instanceof EnderDragonPet)
+            {
                 getModifier().setNoClipEnabled(true);
             }
             EchoPet.getManager().loadRider(this);
@@ -538,25 +652,39 @@ public abstract class AbstractPetBase<T extends LivingEntityBridge, S extends En
     }
 
     @Override
-    public boolean isHat() {
+    public boolean isOwnerInMountingProcess()
+    {
+        return ownerInMountingProcess;
+    }
+
+    @Override
+    public boolean isHat()
+    {
         return hat;
     }
 
     @Override
-    public void setHat(boolean flag) {
-        if (hat == flag) {
+    public void setHat(boolean flag)
+    {
+        if (hat == flag)
+        {
             return;
         }
-        if (owningRiding) {
+        if (owningRiding)
+        {
             setOwnerRiding(false);
         }
 
-        if (flag) {
-            if (rider != null) {
+        if (flag)
+        {
+            if (rider != null)
+            {
                 rider.remove(false);
             }
             owner.setPassenger(bridgeEntity.getBridgedEntity());
-        } else {
+        }
+        else
+        {
             owner.setPassenger(null);
             EchoPet.getManager().loadRider(this);
             entity.modifyBoundingBox(width(), height());
@@ -567,7 +695,8 @@ public abstract class AbstractPetBase<T extends LivingEntityBridge, S extends En
     }
 
     @Override
-    public void onError(Throwable e) {
+    public void onError(Throwable e)
+    {
         EchoPet.log().severe("Uh oh. Something bad happened");
         e.printStackTrace();
         // TODO: send the player a message
@@ -575,26 +704,33 @@ public abstract class AbstractPetBase<T extends LivingEntityBridge, S extends En
     }
 
     @Override
-    public void onLive() {
+    public void onLive()
+    {
         // This should NEVER happen. NEVER
-        if (getModifier().getPet() == null) {
+        if (getModifier().getPet() == null)
+        {
             remove(false);
             return;
         }
 
-        if (owner.get() == null || !owner.isOnline()) {
+        if (owner.get() == null || !owner.isOnline())
+        {
             EchoPet.getManager().removePet(this, false);
             return;
         }
 
-        if (owningRiding && getModifier().getPassenger() == null && !ownerInMountingProcess) {
+        if (owningRiding && getModifier().getPassenger() == null && !ownerInMountingProcess)
+        {
             setOwnerRiding(false);
         }
 
-        for (Status status : new Status[]{Status.INVISIBLE, Status.SPRINTING, Status.SNEAKING}) {
+        for (Status status : new Status[]{Status.INVISIBLE, Status.SPRINTING, Status.SNEAKING})
+        {
             boolean entityStatus = getStatus(getBridgeEntity().getBridgedEntity(), status);
-            if (getStatus(owner.get(), status) != entityStatus) {
-                if (status != Status.INVISIBLE || !shouldVanish()) {
+            if (getStatus(owner.get(), status) != entityStatus)
+            {
+                if (status != Status.INVISIBLE || !shouldVanish())
+                {
                     setStatus(getBridgeEntity().getBridgedEntity(), status, !entityStatus);
                 }
             }
@@ -602,19 +738,23 @@ public abstract class AbstractPetBase<T extends LivingEntityBridge, S extends En
 
         PositionContainer ownerPosition = owner.getLocation();
 
-        if (this.hat) {
+        if (this.hat)
+        {
             getModifier().setYaw(getType() == PetType.ENDER_DRAGON ? ownerPosition.getXRotation() - 180 : ownerPosition.getXRotation());
         }
 
-        if (owner.isFlying() && PetSettings.CAN_FLY.getValue(getType().storageName())) {
+        if (owner.isFlying() && PetSettings.CAN_FLY.getValue(getType().storageName()))
+        {
             Vector3dContainer direction = ownerPosition.toVector().subtract(getLocation().toVector());
             getBridgeEntity().setVelocity(new Vector3dContainer(direction.getX() + (ownerPosition.getX() > 0 ? 1 : -1), direction.getY(), direction.getZ() + (ownerPosition.getZ() > 0 ? 1 : -1)).normalize().multiply(0.3D));
         }
     }
 
     @Override
-    public void onRide(float sideMotion, float forwardMotion) {
-        if (getModifier().getPassenger() == null || !getModifier().getPassenger().equals(owner.get())) {
+    public void onRide(float sideMotion, float forwardMotion)
+    {
+        if (getModifier().getPassenger() == null || !getModifier().getPassenger().equals(owner.get()))
+        {
             entity.updateMotion(sideMotion, forwardMotion);
             getModifier().setStepHeight(0.5F);
             return;
@@ -627,7 +767,8 @@ public abstract class AbstractPetBase<T extends LivingEntityBridge, S extends En
         sideMotion = getModifier().getPassengerSideMotion() * 0.5F;
         forwardMotion = getModifier().getPassengerForwardMotion();
 
-        if (forwardMotion <= 0F) {
+        if (forwardMotion <= 0F)
+        {
             // Slow down backwards movement
             forwardMotion *= 0.25F;
         }
@@ -638,16 +779,21 @@ public abstract class AbstractPetBase<T extends LivingEntityBridge, S extends En
         // Apply all changes to entity motion
         entity.updateMotion(sideMotion, forwardMotion);
 
-        if (JUMP_FIELD != null) {
+        if (JUMP_FIELD != null)
+        {
             boolean canFly = PetSettings.CAN_FLY.getValue(getType().storageName());
             double jumpHeight = canFly ? 0.5D : this.jumpHeight;
-            if (canFly || getModifier().isGrounded()) {
-                if (JUMP_FIELD.getAccessor().get(getModifier().getPassenger())) {
-                    if (owner.isFlying()) {
+            if (canFly || getModifier().isGrounded())
+            {
+                if (JUMP_FIELD.getAccessor().get(getModifier().getPassenger()))
+                {
+                    if (owner.isFlying())
+                    {
                         owner.setFlying(false);
                     }
                     getModifier().setMotionY((float) jumpHeight);
-                    if (!canFly) {
+                    if (!canFly)
+                    {
                         doJumpAnimation();
                     }
                 }
@@ -656,9 +802,12 @@ public abstract class AbstractPetBase<T extends LivingEntityBridge, S extends En
     }
 
     @Override
-    public boolean onInteract(PlayerBridge player) {
-        if (owner.is(player)) {
-            if (EchoPet.getBridge(MessageBridge.class).isPermitted(player, Perm.MENU)) {
+    public boolean onInteract(PlayerBridge player)
+    {
+        if (owner.is(player))
+        {
+            if (EchoPet.getBridge(MessageBridge.class).isPermitted(player, Perm.MENU))
+            {
                 DataMenu.getInventory(this).show(player);
             }
             return true;
@@ -667,40 +816,36 @@ public abstract class AbstractPetBase<T extends LivingEntityBridge, S extends En
     }
 
     @Override
-    public void doJumpAnimation() {
+    public void doJumpAnimation()
+    {
 
     }
 
-    private static boolean getStatus(Object entity, Status status) {
-        Object handle = BukkitUnwrapper.getInstance().unwrap(entity);
-        return (Boolean) new Reflection().reflect(MinecraftReflection.getMinecraftClass("Entity")).getSafeMethod(status.getGetter()).getAccessor().invoke(handle);
-    }
-
-    private static void setStatus(Object entity, Status status, boolean value) {
-        Object handle = BukkitUnwrapper.getInstance().unwrap(entity);
-        new Reflection().reflect(MinecraftReflection.getMinecraftClass("Entity")).getSafeMethod(status.getSetter(), boolean.class).getAccessor().invoke(handle, value);
-    }
-
-    private enum Status {
+    private enum Status
+    {
         INVISIBLE,
         SPRINTING,
         SNEAKING;
 
         private String key;
 
-        Status() {
+        Status()
+        {
             this.key = StringUtil.capitalise(this.name(), true);
         }
 
-        public String getKey() {
+        public String getKey()
+        {
             return key;
         }
 
-        public String getSetter() {
+        public String getSetter()
+        {
             return "set" + key;
         }
 
-        public String getGetter() {
+        public String getGetter()
+        {
             return "is" + key;
         }
     }

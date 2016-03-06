@@ -23,11 +23,12 @@ import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.pet.type.SlimePet;
 
 @Entity(PetType.SLIME)
-public interface EntitySlimePet<T extends SlimePet> extends EntityPet<T> {
+public interface EntitySlimePet<T extends SlimePet> extends EntityPet<T>
+{
 
-    public static final int DATAWATCHER_SIZE = 13;
-
-    void setSize(int size);
+    int DATAWATCHER_SIZE = 13;
 
     int getSize();
+
+    void setSize(int size);
 }

@@ -21,9 +21,11 @@ import com.captainbern.minecraft.conversion.BukkitUnwrapper;
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 
 // TODO: implement general API methods
-public class EchoPetAPI {
+public class EchoPetAPI
+{
 
-    public static boolean isPetEntity(Object entity) {
+    public static boolean isPetEntity(Object entity)
+    {
         return BukkitUnwrapper.getInstance().unwrap(entity) instanceof EntityPet;
     }
 }

@@ -24,7 +24,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public interface PetManager {
+public interface PetManager
+{
 
     List<Pet> getPetsOfType(PetType petType);
 

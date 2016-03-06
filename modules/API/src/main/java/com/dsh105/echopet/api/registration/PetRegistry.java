@@ -38,13 +38,15 @@ import static com.captainbern.reflection.matcher.Matchers.withType;
  * so
  * that custom pet entities can be spawned.
  */
-public class PetRegistry {
+public class PetRegistry
+{
 
     private static final EntityMapModifier<Class<?>, String> CLASS_TO_NAME_MODIFIER;
     private static final EntityMapModifier<Class<?>, Integer> CLASS_TO_ID_MODIFIER;
     private static final EntityMapModifier<Integer, Class<?>> ID_TO_CLASS_MODIFIER;
 
-    static {
+    static
+    {
         ClassTemplate entityTypesTemplate = new Reflection().reflect(MinecraftReflection.getMinecraftClass("EntityTypes"));
         List<SafeField<Map>> fields = entityTypesTemplate.getSafeFields(withType(Map.class));
         CLASS_TO_NAME_MODIFIER = new EntityMapModifier<>((Map<Class<?>, String>) fields.get(1).getAccessor().getStatic());
@@ -54,8 +56,10 @@ public class PetRegistry {
 
     private final Map<PetType, PetRegistrationEntry> registrationEntries = new HashMap<>();
 
-    public PetRegistry() {
-        for (PetType petType : PetType.values()) {
+    public PetRegistry()
+    {
+        for (PetType petType : PetType.values())
+        {
             PetRegistrationEntry registrationEntry = PetRegistrationEntry.create(petType);
             registrationEntries.put(petType, registrationEntry);
 
@@ -67,46 +71,58 @@ public class PetRegistry {
         CLASS_TO_ID_MODIFIER.applyModifications();
     }
 
-    public PetRegistrationEntry getRegistrationEntry(PetType petType) {
+    public PetRegistrationEntry getRegistrationEntry(PetType petType)
+    {
         return registrationEntries.get(petType);
     }
 
-    public void shutdown() {
+    public void shutdown()
+    {
         CLASS_TO_NAME_MODIFIER.removeModifications();
         CLASS_TO_ID_MODIFIER.removeModifications();
     }
 
-    public Pet spawn(PetType petType, final UUID playerUID) {
+    public Pet spawn(PetType petType, final UUID playerUID)
+    {
         Affirm.notNull(petType, "Pet type must not be null.");
         Affirm.notNull(playerUID, "Player ID must not be null.");
 
         final PetRegistrationEntry registrationEntry = getRegistrationEntry(petType);
-        if (registrationEntry == null) {
+        if (registrationEntry == null)
+        {
             // Pet type not registered
             return null;
         }
 
-        return performRegistration(registrationEntry, new Callable<Pet>() {
+        return performRegistration(registrationEntry, new Callable<Pet>()
+        {
             @Override
-            public Pet call() throws Exception {
+            public Pet call() throws Exception
+            {
                 return registrationEntry.createFor(playerUID);
             }
         });
     }
 
-    public <T> T performRegistration(PetRegistrationEntry registrationEntry, Callable<T> callable) {
+    public <T> T performRegistration(PetRegistrationEntry registrationEntry, Callable<T> callable)
+    {
         Class<?> existingEntityClass = ID_TO_CLASS_MODIFIER.getMap().get(registrationEntry.getRegistrationId());
         // Just to be sure, remove any existing mappings and replace them afterwards
         // Make this entity the 'default' while the pet is being spawned
         ID_TO_CLASS_MODIFIER.clear(existingEntityClass);
         ID_TO_CLASS_MODIFIER.modify(registrationEntry.getRegistrationId(), registrationEntry.getEntityClass());
 
-        try {
+        try
+        {
             ID_TO_CLASS_MODIFIER.applyModifications();
             return callable.call();
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             throw new PetRegistrationException(e);
-        } finally {
+        }
+        finally
+        {
             // Ensure everything is back to normal
             // Client will now receive the correct entity ID and we're all set!
             ID_TO_CLASS_MODIFIER.removeModifications();

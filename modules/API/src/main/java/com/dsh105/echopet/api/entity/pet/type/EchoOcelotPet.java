@@ -24,24 +24,29 @@ import com.dsh105.echopet.bridge.entity.type.OcelotEntityBridge;
 
 import java.util.UUID;
 
-public class EchoOcelotPet extends EchoAgeablePet<OcelotEntityBridge, EntityOcelotPet> implements OcelotPet {
+public class EchoOcelotPet extends EchoAgeablePet<OcelotEntityBridge, EntityOcelotPet> implements OcelotPet
+{
 
-    public EchoOcelotPet(UUID playerUID) {
+    public EchoOcelotPet(UUID playerUID)
+    {
         super(playerUID);
     }
 
     @Override
-    public Attributes.OcelotType getCatType() {
+    public Attributes.OcelotType getCatType()
+    {
         return getEntity().getBukkitCatType();
     }
 
     @Override
-    public void setCatType(Attributes.OcelotType type) {
+    public void setCatType(Attributes.OcelotType type)
+    {
         getEntity().setBukkitCatType(type);
     }
 
     @Override
-    public void setStationary(boolean flag) {
+    public void setStationary(boolean flag)
+    {
         super.setStationary(flag);
         getBridgeEntity().setSitting(flag);
     }

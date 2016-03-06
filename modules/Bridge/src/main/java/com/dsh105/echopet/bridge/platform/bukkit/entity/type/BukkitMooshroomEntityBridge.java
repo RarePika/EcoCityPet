@@ -20,6 +20,7 @@ package com.dsh105.echopet.bridge.platform.bukkit.entity.type;
 import com.dsh105.echopet.bridge.entity.type.MooshroomEntityBridge;
 import org.bukkit.entity.MushroomCow;
 
-public class BukkitMooshroomEntityBridge extends BukkitCowEntityBridge<MushroomCow> implements MooshroomEntityBridge {
+public class BukkitMooshroomEntityBridge extends BukkitCowEntityBridge<MushroomCow> implements MooshroomEntityBridge
+{
 
 }

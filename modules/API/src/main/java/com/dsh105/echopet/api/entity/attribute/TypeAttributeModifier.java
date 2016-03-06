@@ -22,24 +22,29 @@ import com.dsh105.echopet.api.entity.pet.Pet;
 
 import java.lang.reflect.Method;
 
-public class TypeAttributeModifier<P extends Pet> extends AttributeModifier<P> {
+public class TypeAttributeModifier<P extends Pet> extends AttributeModifier<P>
+{
 
     protected Attributes.Attribute type;
 
-    public TypeAttributeModifier(Method setter, Method getter, Attributes.Attribute type) {
+    public TypeAttributeModifier(Method setter, Method getter, Attributes.Attribute type)
+    {
         super(setter, getter);
         this.type = type;
     }
 
-    public Attributes.Attribute getType() {
+    public Attributes.Attribute getType()
+    {
         return type;
     }
 
-    public boolean getAttribute(P pet) {
+    public boolean getAttribute(P pet)
+    {
         return (boolean) Reflection.invoke(getGetter(), pet);
     }
 
-    public void setAttribute(P pet, boolean value) {
+    public void setAttribute(P pet, boolean value)
+    {
         Reflection.invoke(getSetter(), pet, value);
     }
 }

@@ -24,7 +24,8 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface Voice {
+public @interface Voice
+{
 
     String idle() default "";
 

@@ -28,7 +28,8 @@ import com.dsh105.echopet.api.entity.pet.Hostility;
 import com.dsh105.echopet.bridge.entity.type.PigEntityBridge;
 
 @Traits(type = PetType.PIG, hositility = Hostility.PASSIVE, width = 0.9F, height = 0.9F, health = 10.0D, attackDamage = 3.0D)
-public interface PigPet extends AgeablePet<PigEntityBridge, EntityPigPet> {
+public interface PigPet extends AgeablePet<PigEntityBridge, EntityPigPet>
+{
 
     @AttributeSetter(Attributes.Attribute.SADDLE)
     void setSaddle(boolean flag);

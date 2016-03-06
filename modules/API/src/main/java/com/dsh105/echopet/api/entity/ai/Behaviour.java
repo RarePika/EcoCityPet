@@ -22,31 +22,38 @@ import com.dsh105.echopet.api.entity.entitypet.EntityPetModifier;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import org.bukkit.entity.LivingEntity;
 
-public abstract class Behaviour {
+public abstract class Behaviour
+{
 
     private Pet pet;
 
-    protected void setPet(Pet pet) {
-        if (this.pet != null) {
+    public Pet getPet()
+    {
+        return pet;
+    }
+
+    protected void setPet(Pet pet)
+    {
+        if (this.pet != null)
+        {
             throw new UnsupportedOperationException("Pet is already set");
         }
         this.pet = pet;
     }
 
-    public Pet getPet() {
-        return pet;
-    }
-
-    public EntityPet getEntity() {
+    public EntityPet getEntity()
+    {
         return pet.getEntity();
     }
 
-    public EntityPetModifier getModifier() {
+    public EntityPetModifier getModifier()
+    {
         return pet.getModifier();
     }
 
-    public LivingEntity getBukkitEntity() {
-        return pet.getBridgeEntity();
+    public LivingEntity getBukkitEntity()
+    {
+
     }
 
     public abstract BehaviourType getType();
@@ -55,17 +62,21 @@ public abstract class Behaviour {
 
     public abstract boolean shouldStart(); //a
 
-    public boolean shouldContinue() { //b
+    public boolean shouldContinue()
+    { //b
         return shouldStart();
     }
 
-    public void start() { //c
+    public void start()
+    { //c
     }
 
-    public void finish() { //d
+    public void finish()
+    { //d
     }
 
-    public boolean isContinuous() {
+    public boolean isContinuous()
+    {
         return true;
     }
 

@@ -19,21 +19,25 @@ package com.dsh105.echopet.api.entity.attribute;
 
 import java.lang.reflect.Method;
 
-public abstract class AttributeModifier<P> {
+public abstract class AttributeModifier<P>
+{
 
     private Method setter;
     private Method getter;
 
-    public AttributeModifier(Method setter, Method getter) {
+    public AttributeModifier(Method setter, Method getter)
+    {
         this.setter = setter;
         this.getter = getter;
     }
 
-    public Method getSetter() {
+    public Method getSetter()
+    {
         return setter;
     }
 
-    public Method getGetter() {
+    public Method getGetter()
+    {
         return getter;
     }
 }

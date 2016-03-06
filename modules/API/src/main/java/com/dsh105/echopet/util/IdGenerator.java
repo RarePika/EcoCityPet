@@ -34,11 +34,13 @@
 
 package com.dsh105.echopet.util;
 
-public class IdGenerator {
+public class IdGenerator
+{
 
     private static long nextId = Short.MIN_VALUE;
 
-    public static long nextId() {
+    public static long nextId()
+    {
         return ++nextId;
     }
 }

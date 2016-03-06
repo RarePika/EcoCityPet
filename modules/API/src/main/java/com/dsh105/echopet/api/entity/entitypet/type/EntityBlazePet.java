@@ -23,11 +23,12 @@ import com.dsh105.echopet.api.entity.entitypet.EntityRangedPet;
 import com.dsh105.echopet.api.entity.pet.type.BlazePet;
 
 @Entity(PetType.BLAZE)
-public interface EntityBlazePet extends EntityRangedPet<BlazePet> {
+public interface EntityBlazePet extends EntityRangedPet<BlazePet>
+{
 
-    public static final int DATAWATCHER_ON_FIRE = 16;
-
-    void setOnFire(boolean flag);
+    int DATAWATCHER_ON_FIRE = 16;
 
     boolean isOnFire();
+
+    void setOnFire(boolean flag);
 }

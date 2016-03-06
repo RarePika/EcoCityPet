@@ -22,9 +22,11 @@ import com.dsh105.echopet.bridge.entity.type.MagmaCubeEntityBridge;
 
 import java.util.UUID;
 
-public class EchoMagmaCubePet extends EchoSlimePet<MagmaCubeEntityBridge, EntityMagmaCubePet> implements MagmaCubePet {
+public class EchoMagmaCubePet extends EchoSlimePet<MagmaCubeEntityBridge, EntityMagmaCubePet> implements MagmaCubePet
+{
 
-    public EchoMagmaCubePet(UUID playerUID) {
+    public EchoMagmaCubePet(UUID playerUID)
+    {
         super(playerUID);
     }
 }

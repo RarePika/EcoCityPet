@@ -22,6 +22,7 @@ import com.dsh105.commodus.UUIDFetcher;
 import com.dsh105.commodus.configuration.Config;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -29,24 +30,34 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class UUIDMigration {
+public class UUIDMigration
+{
 
-    public static void migrateConfig(final Config config) {
+    public static void migrateConfig(final YamlConfiguration config)
+    {
         // TODO: hmm
+
         ConfigurationSection cs = config.getConfigurationSection("autosave");
-        if (cs != null) {
+        if (cs != null)
+        {
             final LinkedHashMap<String, LinkedHashMap<String, Object>> keyToValueMap = new LinkedHashMap<String, LinkedHashMap<String, Object>>();
-            for (String key : cs.getKeys(false)) {
-                try {
+            for (String key : cs.getKeys(false))
+            {
+                try
+                {
                     StringUtil.convertUUID(key);
                     continue;
-                } catch (IllegalArgumentException e) {
+                }
+                catch (IllegalArgumentException e)
+                {
                     // Do nothing and keep migrating
                 }
                 ConfigurationSection petSection = config.getConfigurationSection("autosave." + key);
-                for (String fullPath : petSection.getKeys(true)) {
+                for (String fullPath : petSection.getKeys(true))
+                {
                     LinkedHashMap<String, Object> existingMap = keyToValueMap.get(key);
-                    if (existingMap == null) {
+                    if (existingMap == null)
+                    {
                         existingMap = new LinkedHashMap<>();
                     }
                     existingMap.put(fullPath, petSection.get(fullPath));
@@ -56,27 +67,36 @@ public class UUIDMigration {
             }
 
 
-            new BukkitRunnable() {
+            new BukkitRunnable()
+            {
 
                 @Override
-                public void run() {
-                    try {
+                public void run()
+                {
+                    try
+                    {
                         final Map<String, UUID> uuidMap = new UUIDFetcher(new ArrayList<String>(keyToValueMap.keySet())).call();
 
-                        new BukkitRunnable() {
+                        new BukkitRunnable()
+                        {
 
                             @Override
-                            public void run() {
-                                for (Map.Entry<String, UUID> entry : uuidMap.entrySet()) {
-                                    for (Map.Entry<String, Object> valueEntries : keyToValueMap.get(entry.getKey()).entrySet()) {
+                            public void run()
+                            {
+                                for (Map.Entry<String, UUID> entry : uuidMap.entrySet())
+                                {
+                                    for (Map.Entry<String, Object> valueEntries : keyToValueMap.get(entry.getKey()).entrySet())
+                                    {
                                         config.set("autosave." + entry.getValue() + "." + valueEntries.getKey(), valueEntries.getValue());
                                     }
                                 }
-                                config.saveConfig();
+                                config.save();
                             }
                         }.runTask(EchoPet.getCore());
 
-                    } catch (Exception ignored) {
+                    }
+                    catch (Exception ignored)
+                    {
                     }
                 }
 

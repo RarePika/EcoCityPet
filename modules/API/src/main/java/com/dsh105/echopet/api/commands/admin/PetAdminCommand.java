@@ -21,9 +21,11 @@ import com.dsh105.echopet.api.commands.influx.EchoPetCommandManager;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.influx.CommandListener;
 
-public class PetAdminCommand implements CommandListener {
+public class PetAdminCommand implements CommandListener
+{
 
-    public PetAdminCommand() {
+    public PetAdminCommand()
+    {
         EchoPetCommandManager manager = EchoPet.getCommandManager();
         manager.register(this);
         manager.nestCommandsIn(this, new ReloadCommand());

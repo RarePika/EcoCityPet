@@ -17,7 +17,8 @@
 
 package com.dsh105.echopet.api.entity.pet;
 
-public enum HorseArmour {
+public enum HorseArmour
+{
 
     NONE(Integer.MIN_VALUE),
     IRON(1),
@@ -26,11 +27,13 @@ public enum HorseArmour {
 
     private int id;
 
-    HorseArmour(int id) {
+    HorseArmour(int id)
+    {
         this.id = id;
     }
 
-    public int getId() {
+    public int getId()
+    {
         return this.id;
     }
 }

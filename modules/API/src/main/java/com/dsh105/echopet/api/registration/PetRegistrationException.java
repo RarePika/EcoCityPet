@@ -17,24 +17,30 @@
 
 package com.dsh105.echopet.api.registration;
 
-public class PetRegistrationException extends RuntimeException {
+public class PetRegistrationException extends RuntimeException
+{
 
-    public PetRegistrationException() {
+    public PetRegistrationException()
+    {
     }
 
-    public PetRegistrationException(String message) {
+    public PetRegistrationException(String message)
+    {
         super(message);
     }
 
-    public PetRegistrationException(String message, Throwable cause) {
+    public PetRegistrationException(String message, Throwable cause)
+    {
         super(message, cause);
     }
 
-    public PetRegistrationException(Throwable cause) {
+    public PetRegistrationException(Throwable cause)
+    {
         super(cause);
     }
 
-    public PetRegistrationException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public PetRegistrationException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace)
+    {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

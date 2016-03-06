@@ -19,18 +19,20 @@ package com.dsh105.echopet.api.entity.pet.type;
 
 import com.dsh105.commodus.reflection.Reflection;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityGhastPet;
-import com.dsh105.echopet.bridge.entity.type.GhastEntityBridge;
 import com.dsh105.echopet.api.entity.pet.AbstractPetBase;
+import com.dsh105.echopet.bridge.entity.type.GhastEntityBridge;
 
 import java.lang.reflect.Field;
 import java.util.UUID;
 
-public class EchoGhastPet extends AbstractPetBase<GhastEntityBridge, EntityGhastPet> implements GhastPet {
+public class EchoGhastPet extends AbstractPetBase<GhastEntityBridge, EntityGhastPet> implements GhastPet
+{
 
     private Field aggressionCounter;
     private Field target;
 
-    public EchoGhastPet(UUID playerUID) {
+    public EchoGhastPet(UUID playerUID)
+    {
         super(playerUID);
 
         aggressionCounter = Reflection.getField(Reflection.getNMSClass("EntityGhast"), getEntity().getAggressionCounterFieldName());
@@ -38,26 +40,35 @@ public class EchoGhastPet extends AbstractPetBase<GhastEntityBridge, EntityGhast
         nullifyTarget();
     }
 
-    protected void setAggressionCounter(int value) {
+    protected void setAggressionCounter(int value)
+    {
         // messy
-        try {
+        try
+        {
             aggressionCounter.set(getEntity(), value);
-        } catch (IllegalAccessException e) {
+        }
+        catch (IllegalAccessException e)
+        {
             onError(e);
         }
     }
 
-    protected void nullifyTarget() {
+    protected void nullifyTarget()
+    {
         // messy
-        try {
+        try
+        {
             target.set(getEntity(), null);
-        } catch (IllegalAccessException e) {
+        }
+        catch (IllegalAccessException e)
+        {
             onError(e);
         }
     }
 
     @Override
-    public void onLive() {
+    public void onLive()
+    {
         // doesn't deviate from the custom goal selector path
         getEntity().setCourseChangeCounter(1);
 

@@ -22,27 +22,31 @@ import com.dsh105.echopet.api.entity.SizeCategory;
 import com.dsh105.echopet.api.entity.attribute.AttributeValue;
 import com.dsh105.echopet.api.entity.attribute.Attributes;
 import com.dsh105.echopet.api.entity.entitypet.type.EntitySlimePet;
+import com.dsh105.echopet.api.entity.pet.AbstractPetBase;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.echopet.bridge.MessageBridge;
 import com.dsh105.echopet.bridge.entity.type.SlimeEntityBridge;
-import com.dsh105.echopet.api.entity.pet.AbstractPetBase;
 import com.dsh105.echopet.util.Perm;
 
 import java.util.UUID;
 
-public class EchoSlimePet<T extends SlimeEntityBridge, S extends EntitySlimePet> extends AbstractPetBase<T, S> implements SlimePet<T, S> {
+public class EchoSlimePet<T extends SlimeEntityBridge, S extends EntitySlimePet> extends AbstractPetBase<T, S> implements SlimePet<T, S>
+{
 
     private int jumpDelay;
 
-    public EchoSlimePet(UUID playerUID) {
+    public EchoSlimePet(UUID playerUID)
+    {
         super(playerUID);
         this.jumpDelay = GeneralUtil.random().nextInt(15) + 10;
 
         String permission = Perm.DATA.replace("<type>", getType().storageName());
         int size = 2;
-        for (Attributes.SlimeSize slimeSize : new Attributes.SlimeSize[]{Attributes.SlimeSize.SMALL, Attributes.SlimeSize.LARGE}) {
+        for (Attributes.SlimeSize slimeSize : new Attributes.SlimeSize[]{Attributes.SlimeSize.SMALL, Attributes.SlimeSize.LARGE})
+        {
             AttributeValue attributeValue = slimeSize.getType().getValue(slimeSize);
-            if (EchoPet.getBridge(MessageBridge.class).isPermitted(getOwner().get(), permission.replace("<data>", attributeValue.getConfigName()))) {
+            if (EchoPet.getBridge(MessageBridge.class).isPermitted(getOwner().get(), permission.replace("<data>", attributeValue.getConfigName())))
+            {
                 size = slimeSize.getSize();
                 break;
             }
@@ -51,24 +55,28 @@ public class EchoSlimePet<T extends SlimeEntityBridge, S extends EntitySlimePet>
     }
 
     @Override
-    public void setSize(Attributes.SlimeSize size) {
+    public Attributes.SlimeSize getSize()
+    {
+        return Attributes.SlimeSize.getBySize(getBridgeEntity().getSize());
+    }
+
+    @Override
+    public void setSize(Attributes.SlimeSize size)
+    {
         int slimeSize = size.getSize();
         getBridgeEntity().setSize(slimeSize);
         getEntity().modifyBoundingBox(width() * slimeSize, height() * slimeSize);
     }
 
     @Override
-    public Attributes.SlimeSize getSize() {
-        return Attributes.SlimeSize.getBySize(getBridgeEntity().getSize());
-    }
-
-    @Override
-    public SizeCategory getSizeCategory() {
+    public SizeCategory getSizeCategory()
+    {
         return getSize() == Attributes.SlimeSize.SMALL ? SizeCategory.TINY : (getSize() == Attributes.SlimeSize.LARGE ? SizeCategory.LARGE : super.getSizeCategory());
     }
 
     @Override
-    public void onLive() {
+    public void onLive()
+    {
         super.onLive();
         /*if (getModifier().isGrounded() && jumpDelay-- <= 0) {
             jumpDelay = GeneralUtil.random().nextInt(15) + 10;

@@ -26,13 +26,14 @@ import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.echopet.util.Perm;
 import com.dsh105.interact.Interact;
-import com.dsh105.interact.api.CommandIcon;
+import com.dsh105.menuapi.api.CommandIcon;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public enum PetType {
+public enum PetType
+{
 
     BAT(65),
     BLAZE(61),
@@ -74,15 +75,18 @@ public enum PetType {
     private String materialId;
     private short materialMeta;
 
-    PetType(int registrationId) {
+    PetType(int registrationId)
+    {
         this(registrationId, "spawn_egg", 0);
     }
 
-    PetType(int registrationId, String materialId) {
+    PetType(int registrationId, String materialId)
+    {
         this(registrationId, materialId, 0);
     }
 
-    PetType(int registrationId, String materialId, int materialMeta) {
+    PetType(int registrationId, String materialId, int materialMeta)
+    {
         this.registrationId = registrationId;
         this.materialId = materialId;
         this.materialMeta = (short) materialMeta;
@@ -93,49 +97,63 @@ public enum PetType {
         this.petClass = (Class<? extends Pet>) Reflection.getClass("com.dsh105.echopet.api.entity.pet.type.Echo" + classIdentifier + "Pet");
     }
 
-    public static List<PetType> sortAlphabetically() {
+    public static List<PetType> sortAlphabetically()
+    {
         List<PetType> types = Arrays.asList(values());
         Collections.sort(types);
         return types;
     }
 
-    public int getRegistrationId() {
+    public int getRegistrationId()
+    {
         return this.registrationId;
     }
 
-    public String getCommand() {
+    public String getCommand()
+    {
         return command;
     }
 
-    public String getMaterial() {
+    public String getMaterial()
+    {
         return materialId;
     }
 
-    public short getMaterialMeta() {
+    public short getMaterialMeta()
+    {
         return materialMeta;
     }
 
-    public CommandIcon getIcon() {
-        return Interact.commandIcon().command(command).permission(Perm.TYPE.replace("<type>", storageName())).name(humanName()).of(ItemStackContainer.of(materialId, materialMeta, 1)).build();
+    public CommandIcon getIcon()
+    {
+        return Interact.commandIcon()
+                .command(command)
+                .permission(Perm.TYPE.replace("<type>", storageName()))
+                .name(humanName()).of(ItemStackContainer.of(materialId, materialMeta, 1)).build();
     }
 
-    public String getDefaultName(String name) {
+    public String getDefaultName(String name)
+    {
         return PetSettings.DEFAULT_NAME.getValue(storageName()).replaceAll("(user|owner)", name).replaceAll("(userApos|ownerApos)", name + "\'s");
     }
 
-    public Class<? extends EntityPet> getEntityClass() {
+    public Class<? extends EntityPet> getEntityClass()
+    {
         return this.entityClass;
     }
 
-    public Class<? extends Pet> getPetClass() {
+    public Class<? extends Pet> getPetClass()
+    {
         return this.petClass;
     }
 
-    public String storageName() {
+    public String storageName()
+    {
         return toString().toLowerCase().replace("_", "");
     }
 
-    public String humanName() {
+    public String humanName()
+    {
         return StringUtil.capitalise(toString().toLowerCase().replace("_", " "));
     }
 }

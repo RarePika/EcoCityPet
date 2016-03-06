@@ -28,6 +28,7 @@ import com.dsh105.echopet.bridge.entity.type.GiantEntityBridge;
 
 @Traits(type = PetType.GIANT, hositility = Hostility.NEUTRAL, width = 5.5F, height = 5.5F, health = 100.0D, attackDamage = 0.0D)
 @Size(SizeCategory.EXTRA_LARGE)
-public interface GiantPet extends Pet<GiantEntityBridge, EntityGiantPet> {
+public interface GiantPet extends Pet<GiantEntityBridge, EntityGiantPet>
+{
 
 }

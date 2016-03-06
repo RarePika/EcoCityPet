@@ -19,43 +19,53 @@ package com.dsh105.echopet.api.entity.pet.type;
 
 import com.dsh105.echopet.api.entity.SizeCategory;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityIronGolemPet;
-import com.dsh105.echopet.bridge.entity.type.IronGolemEntityBridge;
 import com.dsh105.echopet.api.entity.pet.AbstractPetBase;
+import com.dsh105.echopet.bridge.entity.type.IronGolemEntityBridge;
 
 import java.util.UUID;
 
-public class EchoIronGolemPet extends AbstractPetBase<IronGolemEntityBridge, EntityIronGolemPet> implements IronGolemPet {
+public class EchoIronGolemPet extends AbstractPetBase<IronGolemEntityBridge, EntityIronGolemPet> implements IronGolemPet
+{
 
     private boolean holdingRose;
     private int holdingRoseCounter;
 
-    public EchoIronGolemPet(UUID playerUID) {
+    public EchoIronGolemPet(UUID playerUID)
+    {
         super(playerUID);
     }
 
     @Override
-    public SizeCategory getSizeCategory() {
+    public SizeCategory getSizeCategory()
+    {
         return SizeCategory.LARGE;
     }
 
     @Override
-    public void setHoldingRose(boolean flag) {
+    public boolean getHoldingRose()
+    {
+        return holdingRose;
+    }
+
+    @Override
+    public void setHoldingRose(boolean flag)
+    {
         getEntity().setHoldingRose(flag);
         this.holdingRose = flag;
         this.holdingRoseCounter = 400;
     }
 
     @Override
-    public boolean getHoldingRose() {
-        return holdingRose;
-    }
-
-    @Override
-    public void onLive() {
-        if (this.holdingRoseCounter > 0 && --this.holdingRoseCounter <= 0) {
-            if (holdingRose) {
+    public void onLive()
+    {
+        if (this.holdingRoseCounter > 0 && --this.holdingRoseCounter <= 0)
+        {
+            if (holdingRose)
+            {
                 setHoldingRose(true);
-            } else {
+            }
+            else
+            {
                 this.holdingRoseCounter = 0;
             }
         }

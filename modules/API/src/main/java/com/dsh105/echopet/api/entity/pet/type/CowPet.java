@@ -25,6 +25,7 @@ import com.dsh105.echopet.api.entity.pet.Hostility;
 import com.dsh105.echopet.bridge.entity.type.CowEntityBridge;
 
 @Traits(type = PetType.COW, hositility = Hostility.PASSIVE, width = 0.9F, height = 1.3F, health = 10.0D, attackDamage = 4.0D)
-public interface CowPet<T extends CowEntityBridge, S extends EntityCowPet> extends AgeablePet<T, S> {
+public interface CowPet<T extends CowEntityBridge, S extends EntityCowPet> extends AgeablePet<T, S>
+{
 
 }

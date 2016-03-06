@@ -17,7 +17,8 @@
 
 package com.dsh105.echopet.api.plugin;
 
-public abstract class LoadCallback<T> {
+public abstract class LoadCallback<T>
+{
 
     public abstract void call(T parameter);
 }

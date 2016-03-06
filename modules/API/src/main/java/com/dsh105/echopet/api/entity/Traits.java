@@ -26,7 +26,8 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface Traits {
+public @interface Traits
+{
 
     PetType type();
 

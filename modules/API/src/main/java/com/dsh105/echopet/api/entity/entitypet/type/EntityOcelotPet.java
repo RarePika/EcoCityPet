@@ -24,13 +24,14 @@ import com.dsh105.echopet.api.entity.entitypet.EntityAgeablePet;
 import com.dsh105.echopet.api.entity.pet.type.OcelotPet;
 
 @Entity(PetType.OCELOT)
-public interface EntityOcelotPet extends EntityAgeablePet<OcelotPet> {
+public interface EntityOcelotPet extends EntityAgeablePet<OcelotPet>
+{
 
-    public static int DATAWATCHER_ENTITY_STATUS = 16;
-    public static int DATAWATCHER_OWNER_NAME = 17;
-    public static int DATAWATCHER_TYPE = 18;
-
-    void setBukkitCatType(Attributes.OcelotType type);
+    int DATAWATCHER_ENTITY_STATUS = 16;
+    int DATAWATCHER_OWNER_NAME = 17;
+    int DATAWATCHER_TYPE = 18;
 
     Attributes.OcelotType getBukkitCatType();
+
+    void setBukkitCatType(Attributes.OcelotType type);
 }

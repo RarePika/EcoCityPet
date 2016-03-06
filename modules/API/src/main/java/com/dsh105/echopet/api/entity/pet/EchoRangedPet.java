@@ -22,14 +22,17 @@ import com.dsh105.echopet.bridge.entity.RangedEntityBridge;
 
 import java.util.UUID;
 
-public abstract class EchoRangedPet<T extends RangedEntityBridge, S extends EntityRangedPet> extends AbstractPetBase<T, S> implements RangedPet<T, S> {
+public abstract class EchoRangedPet<T extends RangedEntityBridge, S extends EntityRangedPet> extends AbstractPetBase<T, S> implements RangedPet<T, S>
+{
 
-    protected EchoRangedPet(UUID playerUID) {
+    protected EchoRangedPet(UUID playerUID)
+    {
         super(playerUID);
     }
 
     @Override
-    public void rangedAttack(Object livingEntity, float speed) {
+    public void rangedAttack(Object livingEntity, float speed)
+    {
         getEntity().rangedAttack(livingEntity, speed);
     }
 }

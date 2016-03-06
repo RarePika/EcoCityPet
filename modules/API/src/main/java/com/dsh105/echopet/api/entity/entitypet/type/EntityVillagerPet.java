@@ -24,15 +24,16 @@ import com.dsh105.echopet.api.entity.entitypet.EntityAgeablePet;
 import com.dsh105.echopet.api.entity.pet.type.VillagerPet;
 
 @Entity(PetType.VILLAGER)
-public interface EntityVillagerPet extends EntityAgeablePet<VillagerPet> {
+public interface EntityVillagerPet extends EntityAgeablePet<VillagerPet>
+{
 
-    public static int DATAWATCHER_PROFESSION = 16;
-
-    void setVillagerProfession(Attributes.VillagerProfession profession);
+    int DATAWATCHER_PROFESSION = 16;
 
     Attributes.VillagerProfession getVillagerProfession();
 
-    void setCareer(Attributes.VillagerCareer career);
+    void setVillagerProfession(Attributes.VillagerProfession profession);
 
     Attributes.VillagerCareer getCareer();
+
+    void setCareer(Attributes.VillagerCareer career);
 }

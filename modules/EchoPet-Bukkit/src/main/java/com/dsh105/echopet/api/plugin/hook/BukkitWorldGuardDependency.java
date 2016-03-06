@@ -32,55 +32,71 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
 
-public class BukkitWorldGuardDependency extends AbstractBukkitPluginDependency<WorldGuardPlugin> implements WorldGuardDependency<Plugin> {
+public class BukkitWorldGuardDependency extends AbstractBukkitPluginDependency<WorldGuardPlugin> implements WorldGuardDependency<Plugin>
+{
 
-    public BukkitWorldGuardDependency(Plugin myPluginInstance) {
+    public BukkitWorldGuardDependency(Plugin myPluginInstance)
+    {
         super(myPluginInstance, "WorldGuard");
     }
 
     @Override
-    public void onHook() {
-        if (new Version(getDependency().getDescription().getVersion()).isCompatible("6.0")) {
-            if (Settings.WORLDGUARD_REGION_ENTER.getValue()) {
+    public void onHook()
+    {
+        if (new Version(getDependency().getDescription().getVersion()).isCompatible("6.0"))
+        {
+            if (Settings.WORLDGUARD_REGION_ENTER.getValue())
+            {
                 this.getHandlingPlugin().getServer().getPluginManager().registerEvents(new BukkitListener.RegionListener(), this.getHandlingPlugin());
             }
-        } else {
+        }
+        else
+        {
             throw new IllegalStateException("Only WorldGuard 6.0 and after are supported");
         }
     }
 
     @Override
-    public void onUnhook() {
+    public void onUnhook()
+    {
 
     }
 
     @Override
-    public boolean allowPets(PositionContainer position) {
+    public boolean allowPets(PositionContainer position)
+    {
         Location location = position.toBukkit();
         Boolean allowWorld = Settings.WORLD.getValue(location.getWorld().getName());
         return (allowWorld == null ? Settings.WORLDS_DEFAULT.getValue() : allowWorld) && allowRegion(position);
     }
 
     @Override
-    public boolean allowRegion(PositionContainer position) {
+    public boolean allowRegion(PositionContainer position)
+    {
         Location location = position.toBukkit();
         boolean result = true;
-        if (isHooked()) {
+        if (isHooked())
+        {
             WorldGuardPlugin wg = getDependency();
-            if (wg == null) {
+            if (wg == null)
+            {
                 return true;
             }
             RegionManager regionManager = wg.getRegionManager(location.getWorld());
-            if (regionManager == null) {
+            if (regionManager == null)
+            {
                 return true;
             }
             ApplicableRegionSet set = regionManager.getApplicableRegions(location);
-            if (set.size() <= 0) {
+            if (set.size() <= 0)
+            {
                 return true;
             }
 
-            for (ProtectedRegion region : set) {
-                if (EchoPet.getConfig(ConfigType.GENERAL).get(Settings.WORLDGUARD_REGION.getPath(region.getId())) != null) {
+            for (ProtectedRegion region : set)
+            {
+                if (EchoPet.getConfig(ConfigType.GENERAL).get(Settings.WORLDGUARD_REGION.getPath(region.getId())) != null)
+                {
                     Boolean allow = Settings.WORLDGUARD_REGION.getValue(region.getId());
                     result = allow == null ? Settings.WORLDGUARD_REGION_DEFAULT.getValue() : allow;
                 }

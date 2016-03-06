@@ -18,12 +18,8 @@
 package com.dsh105.echopet.api.commands;
 
 import com.dsh105.commodus.Affirm;
-import com.dsh105.commodus.GeneralUtil;
-import com.dsh105.commodus.StringUtil;
 import com.dsh105.echopet.api.configuration.Lang;
 import com.dsh105.echopet.api.entity.PetType;
-import com.dsh105.echopet.api.entity.attribute.Attributes;
-import com.dsh105.echopet.api.entity.attribute.EntityAttribute;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.echopet.bridge.Ident;
@@ -33,59 +29,76 @@ import com.dsh105.influx.conversion.UnboundConverter;
 import com.dsh105.influx.dispatch.CommandContext;
 import com.dsh105.influx.syntax.ContextualVariable;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
-public class PetConverters {
+public class PetConverters
+{
 
     private static final Map<UUID, UUID> PLAYER_TO_PET_ID = new HashMap<>();
 
-    public static void selectPet(UUID ownerUID, UUID petUniqueId) {
+    public static void selectPet(UUID ownerUID, UUID petUniqueId)
+    {
         Affirm.notNull(ownerUID, "Pet owner ID must not be null.");
-        if (petUniqueId == null) {
+        if (petUniqueId == null)
+        {
             PLAYER_TO_PET_ID.remove(ownerUID);
         }
         PLAYER_TO_PET_ID.put(ownerUID, petUniqueId);
     }
 
-    private static Object getTarget(ContextualVariable variable) throws ConversionException {
+    private static Object getTarget(ContextualVariable variable) throws ConversionException
+    {
         return getTarget(variable.getContext());
     }
 
-    private static Object getTarget(CommandContext context) throws ConversionException {
+    private static Object getTarget(CommandContext context) throws ConversionException
+    {
         Object target = null;
         String targetName = context.var("target");
-        if (targetName != null) {
+        if (targetName != null)
+        {
             target = Ident.get().getByName(targetName, false);
         }
 
-        if (target == null) {
-            if (!Ident.get().isPlayer(context.sender())) {
+        if (target == null)
+        {
+            if (!Ident.get().isPlayer(context.sender()))
+            {
                 throw new ConversionException("Target player not specified!");
             }
             target = context.sender();
         }
         return target;
     }
-    
-    public static class Selected extends UnboundConverter<Pet> {
 
-        public Selected() {
+    public static class Selected extends UnboundConverter<Pet>
+    {
+
+        public Selected()
+        {
             super(Pet.class);
         }
 
         @Override
-        public Pet convert(CommandContext<?> context) throws ConversionException {
+        public Pet convert(CommandContext<?> context) throws ConversionException
+        {
             Object sender = context.sender();
             UUID senderUID = Ident.get().getUID(sender);
             UUID petUniqueId = PLAYER_TO_PET_ID.get(senderUID);
             Pet pet = null;
-            if (petUniqueId != null) {
+            if (petUniqueId != null)
+            {
                 pet = EchoPet.getManager().getPetById(petUniqueId);
             }
 
-            if (pet == null) {
+            if (pet == null)
+            {
                 pet = new OnlyPet().convert(context);
-                if (pet == null) {
+                if (pet == null)
+                {
                     context.respond(Lang.NO_SELECTED_PET.getValue());
                 }
             }
@@ -93,20 +106,26 @@ public class PetConverters {
         }
     }
 
-    public static class CreateType extends Converter<Pet> {
+    public static class CreateType extends Converter<Pet>
+    {
 
-        public CreateType() {
+        public CreateType()
+        {
             super(Pet.class);
         }
 
         @Override
-        public Pet convert(ContextualVariable variable) throws ConversionException {
+        public Pet convert(ContextualVariable variable) throws ConversionException
+        {
             Object target = getTarget(variable);
             UUID targetUID = Ident.get().getUID(target);
             PetType petType;
-            try {
+            try
+            {
                 petType = PetType.valueOf(variable.getConsumedArguments()[0].toUpperCase());
-            } catch (IllegalArgumentException e) {
+            }
+            catch (IllegalArgumentException e)
+            {
                 throw new ConversionException(Lang.INVALID_PET_TYPE.getValue("type", variable.getConsumedArguments()[0]));
             }
 
@@ -114,20 +133,26 @@ public class PetConverters {
         }
     }
 
-    public static class OnlyPet extends UnboundConverter<Pet> {
+    public static class OnlyPet extends UnboundConverter<Pet>
+    {
 
-        public OnlyPet() {
+        public OnlyPet()
+        {
             super(Pet.class);
         }
 
         @Override
-        public Pet convert(CommandContext<?> context) throws ConversionException {
+        public Pet convert(CommandContext<?> context) throws ConversionException
+        {
             Object target = getTarget(context);
             UUID targetUID = Ident.get().getUID(target);
             List<Pet> pets = EchoPet.getManager().getPetsFor(targetUID);
-            if (pets.size() <= 0) {
+            if (pets.size() <= 0)
+            {
                 throw new ConversionException(Lang.NO_PETS_FOUND.getValue());
-            } else if (pets.size() > 1) {
+            }
+            else if (pets.size() > 1)
+            {
                 return null;
             }
 

@@ -25,6 +25,7 @@ import com.dsh105.echopet.api.entity.pet.Hostility;
 import com.dsh105.echopet.bridge.entity.type.ChickenEntityBridge;
 
 @Traits(type = PetType.CHICKEN, hositility = Hostility.PASSIVE, width = 0.3F, height = 0.7F, health = 4.0D, attackDamage = 3.0D)
-public interface ChickenPet extends AgeablePet<ChickenEntityBridge, EntityChickenPet> {
+public interface ChickenPet extends AgeablePet<ChickenEntityBridge, EntityChickenPet>
+{
 
 }

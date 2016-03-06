@@ -20,7 +20,8 @@ package com.dsh105.echopet.api.entity.pet;
 import com.dsh105.echopet.api.entity.entitypet.EntityRangedPet;
 import com.dsh105.echopet.bridge.entity.RangedEntityBridge;
 
-public interface RangedPet<T extends RangedEntityBridge, S extends EntityRangedPet> extends Pet<T, S> {
+public interface RangedPet<T extends RangedEntityBridge, S extends EntityRangedPet> extends Pet<T, S>
+{
 
-    public void rangedAttack(Object livingEntity, float speed);
+    void rangedAttack(Object livingEntity, float speed);
 }

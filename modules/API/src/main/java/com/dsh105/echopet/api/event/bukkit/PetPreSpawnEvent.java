@@ -27,7 +27,8 @@ import org.bukkit.event.HandlerList;
  * Called when a Pet spawns
  */
 
-public class PetPreSpawnEvent extends Event implements Cancellable {
+public class PetPreSpawnEvent extends Event implements Cancellable
+{
 
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled = false;
@@ -35,9 +36,15 @@ public class PetPreSpawnEvent extends Event implements Cancellable {
     private Pet pet;
     private Location spawnLocation;
 
-    public PetPreSpawnEvent(Pet pet, Location spawnLocation) {
+    public PetPreSpawnEvent(Pet pet, Location spawnLocation)
+    {
         this.pet = pet;
         this.spawnLocation = spawnLocation;
+    }
+
+    public static HandlerList getHandlerList()
+    {
+        return handlers;
     }
 
     /**
@@ -45,7 +52,8 @@ public class PetPreSpawnEvent extends Event implements Cancellable {
      *
      * @return Pet involved
      */
-    public Pet getPet() {
+    public Pet getPet()
+    {
         return this.pet;
     }
 
@@ -56,7 +64,8 @@ public class PetPreSpawnEvent extends Event implements Cancellable {
      *
      * @return the Location this LivingPet spawned
      */
-    public Location getSpawnLocation() {
+    public Location getSpawnLocation()
+    {
         return this.spawnLocation;
     }
 
@@ -65,7 +74,8 @@ public class PetPreSpawnEvent extends Event implements Cancellable {
      *
      * @param spawnLocation new Location to spawn the Pet
      */
-    public void setSpawnLocation(Location spawnLocation) {
+    public void setSpawnLocation(Location spawnLocation)
+    {
         this.spawnLocation = spawnLocation;
     }
 
@@ -76,7 +86,8 @@ public class PetPreSpawnEvent extends Event implements Cancellable {
      * @return true if this event is cancelled
      */
     @Override
-    public boolean isCancelled() {
+    public boolean isCancelled()
+    {
         return this.cancelled;
     }
 
@@ -87,16 +98,14 @@ public class PetPreSpawnEvent extends Event implements Cancellable {
      * @param cancel true if you wish to cancel this event
      */
     @Override
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(boolean cancel)
+    {
         this.cancelled = cancel;
     }
 
     @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
+    public HandlerList getHandlers()
+    {
         return handlers;
     }
 }

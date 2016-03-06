@@ -21,6 +21,7 @@ import com.dsh105.echopet.bridge.entity.type.PigEntityBridge;
 import com.dsh105.echopet.bridge.platform.bukkit.entity.BukkitAgeableEntityBridge;
 import org.bukkit.entity.Pig;
 
-public class BukkitPigEntityBridge extends BukkitAgeableEntityBridge<Pig> implements PigEntityBridge {
+public class BukkitPigEntityBridge extends BukkitAgeableEntityBridge<Pig> implements PigEntityBridge
+{
 
 }

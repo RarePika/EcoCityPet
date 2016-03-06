@@ -9,35 +9,44 @@ import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
-public class BukkitIdentBridge implements IdentBridge {
+public class BukkitIdentBridge implements IdentBridge
+{
 
     @Override
-    public UUID getUID(Object player) {
+    public UUID getUID(Object player)
+    {
         Affirm.checkInstanceOf(Player.class, player);
         return StringUtil.convertUUID(BukkitIdentUtil.getIdent((Player) player));
     }
 
     @Override
-    public Object getPlayer(UUID uniqueId) {
+    public Object getPlayer(UUID uniqueId)
+    {
         return BukkitIdentUtil.getPlayer(uniqueId);
     }
 
     @Override
-    public boolean areIdentical(Object player, Object player1) {
+    public boolean areIdentical(Object player, Object player1)
+    {
         return getUID(player).equals(getUID(player1));
     }
 
     @Override
-    public Object getByName(String targetName, boolean exact) {
-        if (exact) {
+    public Object getByName(String targetName, boolean exact)
+    {
+        if (exact)
+        {
             return Bukkit.getPlayerExact(targetName);
-        } else {
+        }
+        else
+        {
             return Bukkit.getPlayer(targetName);
         }
     }
 
     @Override
-    public boolean isPlayer(Object player) {
+    public boolean isPlayer(Object player)
+    {
         return player instanceof Player;
     }
 }

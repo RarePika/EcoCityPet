@@ -18,7 +18,6 @@
 package com.dsh105.echopet.api.commands.influx;
 
 import com.dsh105.commodus.ServerUtil;
-import com.dsh105.commodus.sponge.SpongeUtil;
 import com.dsh105.echopet.api.configuration.Lang;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.echopet.bridge.container.CommandSourceContainer;
@@ -27,43 +26,38 @@ import com.dsh105.influx.Controller;
 import com.dsh105.influx.dispatch.Authorization;
 import com.dsh105.influx.help.HelpProvision;
 import com.dsh105.influx.registration.bukkit.BukkitRegistry;
-import com.dsh105.influx.registration.sponge.SpongeRegistry;
 import com.dsh105.influx.response.MessagePurpose;
 import org.bukkit.plugin.Plugin;
-import org.spongepowered.api.util.command.CommandSource;
 
-public class EchoPetCommandManager extends CommandManager<CommandSourceContainer> {
+public class EchoPetCommandManager extends CommandManager<CommandSourceContainer>
+{
 
-    public EchoPetCommandManager() {
+    public EchoPetCommandManager()
+    {
         super(null, "/", "EchoPet");
 
         this.dispatcher = new EchoPetDispatcher(this);
-        this.setAuthorization(new Authorization<CommandSourceContainer>() {
+        this.setAuthorization(new Authorization<CommandSourceContainer>()
+        {
             @Override
-            public boolean authorize(CommandSourceContainer sender, Controller toExecute, String permission) {
+            public boolean authorize(CommandSourceContainer sender, Controller toExecute, String permission)
+            {
                 return sender.isPermitted(permission);
             }
         });
-        switch (ServerUtil.getServerBrand().getCapsule()) {
+        switch (ServerUtil.getServerBrand().getCapsule())
+        {
             case BUKKIT:
                 this.setRegistrationStrategy(new BukkitRegistry(this, (Plugin) EchoPet.getCore(), getDispatcher()));
                 this.setHelpProvision(HelpProvision.BUKKIT);
                 this.setResponseHandler(new EchoPetBukkitResponder(Lang.PREFIX.getValue()));
-            case SPONGE:
-                this.setRegistrationStrategy(new SpongeRegistry(this, EchoPet.getCore(), SpongeUtil.getGame(), getDispatcher(), new Authorization<CommandSource>() {
-                    @Override
-                    public boolean authorize(CommandSource sender, Controller toExecute, String permission) {
-                        return getAuthorization().authorize(CommandSourceContainer.from(sender), toExecute, permission);
-                    }
-                }));
-                this.setHelpProvision(HelpProvision.SPONGE);
-                this.setResponseHandler(new EchoPetSpongeResponder(Lang.PREFIX.getValue()));
         }
         this.setMessage(MessagePurpose.RESTRICTED_SENDER, "Please log in to perform that command.");
     }
 
     @Override
-    public EchoPetDispatcher getDispatcher() {
+    public EchoPetDispatcher getDispatcher()
+    {
         return (EchoPetDispatcher) super.getDispatcher();
     }
 }

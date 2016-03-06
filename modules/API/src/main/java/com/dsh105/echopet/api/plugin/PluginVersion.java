@@ -17,7 +17,8 @@
 
 package com.dsh105.echopet.api.plugin;
 
-public class PluginVersion {
+public class PluginVersion
+{
 
     public static final String PLUGIN_ID = "${pluginId}";
     public static final String PLUGIN_NAME = "${project.name}";

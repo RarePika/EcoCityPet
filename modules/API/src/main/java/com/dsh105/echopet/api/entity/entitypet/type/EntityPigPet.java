@@ -23,9 +23,10 @@ import com.dsh105.echopet.api.entity.entitypet.EntityAgeablePet;
 import com.dsh105.echopet.api.entity.pet.type.PigPet;
 
 @Entity(PetType.PIG)
-public interface EntityPigPet extends EntityAgeablePet<PigPet> {
+public interface EntityPigPet extends EntityAgeablePet<PigPet>
+{
 
-    public static int DATAWATCHER_SADDLE = 16;
+    int DATAWATCHER_SADDLE = 16;
 
     void setSaddle(boolean flag);
 

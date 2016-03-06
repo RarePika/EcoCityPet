@@ -18,14 +18,16 @@
 package com.dsh105.echopet.api.entity.pet.type;
 
 import com.dsh105.echopet.api.entity.entitypet.type.EntitySpiderPet;
-import com.dsh105.echopet.bridge.entity.type.SpiderEntityBridge;
 import com.dsh105.echopet.api.entity.pet.AbstractPetBase;
+import com.dsh105.echopet.bridge.entity.type.SpiderEntityBridge;
 
 import java.util.UUID;
 
-public class EchoSpiderPet<T extends SpiderEntityBridge, S extends EntitySpiderPet> extends AbstractPetBase<T, S> implements SpiderPet<T, S> {
+public class EchoSpiderPet<T extends SpiderEntityBridge, S extends EntitySpiderPet> extends AbstractPetBase<T, S> implements SpiderPet<T, S>
+{
 
-    public EchoSpiderPet(UUID playerUID) {
+    public EchoSpiderPet(UUID playerUID)
+    {
         super(playerUID);
     }
 }

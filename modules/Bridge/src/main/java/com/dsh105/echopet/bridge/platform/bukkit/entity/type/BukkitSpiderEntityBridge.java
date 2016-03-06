@@ -21,6 +21,7 @@ import com.dsh105.echopet.bridge.entity.type.SpiderEntityBridge;
 import com.dsh105.echopet.bridge.platform.bukkit.entity.BukkitLivingEntityBridge;
 import org.bukkit.entity.Spider;
 
-public class BukkitSpiderEntityBridge<E extends Spider> extends BukkitLivingEntityBridge<E> implements SpiderEntityBridge {
+public class BukkitSpiderEntityBridge<E extends Spider> extends BukkitLivingEntityBridge<E> implements SpiderEntityBridge
+{
 
 }

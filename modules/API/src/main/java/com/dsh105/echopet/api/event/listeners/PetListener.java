@@ -23,17 +23,14 @@ import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.entitypet.type.EntityEnderDragonPet;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.event.Listen;
-import com.dsh105.echopet.api.event.NullSpongeEvent;
 import com.dsh105.echopet.bridge.container.EventContainer;
 import com.dsh105.echopet.util.PetUtil;
 import org.bukkit.event.block.EntityBlockFormEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.vehicle.VehicleExitEvent;
-import org.spongepowered.api.event.entity.EntityChangeHealthEvent;
-import org.spongepowered.api.event.entity.EntityDismountEvent;
-import org.spongepowered.api.event.entity.EntitySpawnEvent;
 
-public class PetListener {
+public class PetListener
+{
 
     // TODO: clear drops on death?
 
@@ -41,16 +38,20 @@ public class PetListener {
      * Prevent everything else from cancelling pet spawning
      */
 
-    @Listen(bukkit = CreatureSpawnEvent.class, sponge = EntitySpawnEvent.class)
-    public void blockSpawn(EventContainer event) {
-        if (PetUtil.isPetEntity(event.get("entity"))) {
+    @Listen(bukkit = CreatureSpawnEvent.class)
+    public void blockSpawn(EventContainer event)
+    {
+        if (PetUtil.isPetEntity(event.get("entity")))
+        {
             event.setCancelled(true);
         }
     }
 
-    @Listen(bukkit = CreatureSpawnEvent.class, sponge = EntitySpawnEvent.class)
-    public void allowSpawn(EventContainer event) {
-        if (PetUtil.isPetEntity(event.get("entity"))) {
+    @Listen(bukkit = CreatureSpawnEvent.class)
+    public void allowSpawn(EventContainer event)
+    {
+        if (PetUtil.isPetEntity(event.get("entity")))
+        {
             event.setCancelled(false);
         }
     }
@@ -59,23 +60,28 @@ public class PetListener {
      * Other listeners
      */
 
-    @Listen(bukkit = VehicleExitEvent.class, sponge = EntityDismountEvent.class)
-    public void onDismount(EventContainer event) {
+    @Listen(bukkit = VehicleExitEvent.class)
+    public void onDismount(EventContainer event)
+    {
         Object entity = event.get("entity");
-        if (PetUtil.isPetEntity(entity)) {
+        if (PetUtil.isPetEntity(entity))
+        {
             Pet pet = ((EntityPet) entity).getPet();
-            if (pet.isOwnerRiding() && !pet.isOwnerInMountingProcess()) {
+            if (pet.isOwnerRiding() && !pet.isOwnerInMountingProcess())
+            {
                 pet.setOwnerRiding(false);
                 Lang.PET_RIDE_OFF.send(pet.getOwner(), "%name%", pet.getName());
             }
         }
     }
 
-    @Listen(bukkit = EntityDamageByEntityEvent.class, sponge = EntityChangeHealthEvent.class)
-    public void onDamage(EventContainer event) {
+    @Listen(bukkit = EntityDamageByEntityEvent.class)
+    public void onDamage(EventContainer event)
+    {
         // TODO
         Object entity = event.get("entity");
-        if (PetUtil.isPetEntity(entity)) {
+        if (PetUtil.isPetEntity(entity))
+        {
             Pet pet = ((EntityPet) BukkitUnwrapper.getInstance().unwrap(entity)).getPet();
             // TODO: call interact event..?
         }
@@ -94,38 +100,33 @@ public class PetListener {
                     ExplosionPrimeEvent.class,
                     SlimeSplitEvent.class,
                     org.bukkit.event.entity.EntityTameEvent.class
-            },
-            sponge = {
-                    NullSpongeEvent.class,// TODO: perhaps EntityDeathEvent with a reason? EchoPet may already deal with this internally
-                    NullSpongeEvent.class,
-                    NullSpongeEvent.class,
-                    org.spongepowered.api.event.entity.EntityChangeBlockEvent.class,
-                    // above covers two Bukkit events
-                    NullSpongeEvent.class, // target
-                    NullSpongeEvent.class, // explosion prime
-                    NullSpongeEvent.class, // slime split
-                    org.spongepowered.api.event.entity.EntityTameEvent.class
             }
     )
-    public void cancel(EventContainer event) {
-        if (PetUtil.isPetEntity(event.get("entity"))) {
+    public void cancel(EventContainer event)
+    {
+        if (PetUtil.isPetEntity(event.get("entity")))
+        {
             event.setCancelled(true);
         }
     }
 
-    @Listen(bukkit = EntityRegainHealthEvent.class, sponge = EntityChangeHealthEvent.class)
-    public void onDragonRegainHealth(EventContainer event) {
+    @Listen(bukkit = EntityRegainHealthEvent.class)
+    public void onDragonRegainHealth(EventContainer event)
+    {
         // ensure it is indeed a positive health change
-        if (event.get(double.class) > 0 && PetUtil.isPetEntity(event.get("entity"), EntityEnderDragonPet.class)) {
+        if (event.get(double.class) > 0 && PetUtil.isPetEntity(event.get("entity"), EntityEnderDragonPet.class))
+        {
             event.setCancelled(true);
         }
     }
 
     // TODO: ;\
-    @Listen(bukkit = EntityExplodeEvent.class, sponge = NullSpongeEvent.class)
-    public void onDragonExplode(EventContainer event) {
+    @Listen(bukkit = EntityExplodeEvent.class)
+    public void onDragonExplode(EventContainer event)
+    {
         // ensure it is indeed a positive health change
-        if (PetUtil.isPetEntity(event.get("entity"), EntityEnderDragonPet.class)) {
+        if (PetUtil.isPetEntity(event.get("entity"), EntityEnderDragonPet.class))
+        {
             event.setCancelled(true);
         }
     }

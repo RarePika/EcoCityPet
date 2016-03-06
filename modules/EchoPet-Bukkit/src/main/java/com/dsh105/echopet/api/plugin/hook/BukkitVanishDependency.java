@@ -23,24 +23,29 @@ import com.dsh105.echopet.api.hook.VanishNoPacketDependency;
 import org.bukkit.plugin.Plugin;
 import org.kitteh.vanish.VanishPlugin;
 
-public class BukkitVanishDependency extends AbstractBukkitPluginDependency<VanishPlugin> implements VanishNoPacketDependency<Plugin> {
+public class BukkitVanishDependency extends AbstractBukkitPluginDependency<VanishPlugin> implements VanishNoPacketDependency<Plugin>
+{
 
-    public BukkitVanishDependency(Plugin myPluginInstance) {
+    public BukkitVanishDependency(Plugin myPluginInstance)
+    {
         super(myPluginInstance, "VanishNoPacket");
     }
 
     @Override
-    public void onHook() {
+    public void onHook()
+    {
         this.getHandlingPlugin().getServer().getPluginManager().registerEvents(new BukkitListener.VanishListener(), this.getHandlingPlugin());
     }
 
     @Override
-    public void onUnhook() {
+    public void onUnhook()
+    {
 
     }
 
     @Override
-    public boolean isVanished(String playerName) {
+    public boolean isVanished(String playerName)
+    {
         return this.isHooked() && this.getDependency().getManager().isVanished(playerName);
     }
 }

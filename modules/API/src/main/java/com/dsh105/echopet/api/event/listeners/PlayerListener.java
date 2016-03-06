@@ -17,54 +17,66 @@
 
 package com.dsh105.echopet.api.event.listeners;
 
+
 import com.captainbern.minecraft.conversion.BukkitUnwrapper;
-import com.dsh105.commodus.container.ItemStackContainer;
 import com.dsh105.echopet.api.configuration.Lang;
 import com.dsh105.echopet.api.configuration.MenuSettings;
 import com.dsh105.echopet.api.configuration.Settings;
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.pet.Pet;
 import com.dsh105.echopet.api.event.Listen;
-import com.dsh105.echopet.api.event.NullSpongeEvent;
 import com.dsh105.echopet.api.hook.VanishNoPacketDependency;
 import com.dsh105.echopet.api.inventory.PetSelector;
 import com.dsh105.echopet.api.plugin.EchoPet;
 import com.dsh105.echopet.api.plugin.LoadCallback;
-import com.dsh105.echopet.bridge.*;
+import com.dsh105.echopet.bridge.MessageBridge;
+import com.dsh105.echopet.bridge.PlayerBridge;
+import com.dsh105.echopet.bridge.SchedulerBridge;
 import com.dsh105.echopet.bridge.container.EventContainer;
 import com.dsh105.echopet.util.PetUtil;
+import com.dsh105.interact.libraries.container.ItemStackContainer;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
-import org.spongepowered.api.event.entity.EntityChangeHealthEvent;
-import org.spongepowered.api.event.player.PlayerChangeWorldEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Iterator;
 import java.util.List;
 
-public class PlayerListener {
+public class PlayerListener
+{
 
-    @Listen(bukkit = org.bukkit.event.player.PlayerJoinEvent.class, sponge = org.spongepowered.api.event.player.PlayerJoinEvent.class)
-    public void onJoin(EventContainer event) {
+    @Listen(bukkit = PlayerJoinEvent.class)
+    public void onJoin(EventContainer event)
+    {
         final PlayerBridge player = event.get(PlayerBridge.class);
-        if (EchoPet.getCore().isUpdateAvailable() && EchoPet.getBridge(MessageBridge.class).isPermitted(player.get(), "echopet.update")) {
+        if (EchoPet.getCore().isUpdateAvailable() && EchoPet.getBridge(MessageBridge.class).isPermitted(player.get(), "echopet.update"))
+        {
             Lang.UPDATE_AVAILABLE.send(player);
         }
 
         Inventory inventory = player.getInventory();
 
-        if (MenuSettings.SELECTOR_ONJOIN_CLEAR.getValue()) {
+        if (MenuSettings.SELECTOR_ONJOIN_CLEAR.getValue())
+        {
             inventory.clear();
-        } else if (inventory.contains(PetSelector.prepare().getClickItem())) {
+        }
+        else if (inventory.contains(PetSelector.prepare().getClickItem()))
+        {
             inventory.remove(PetSelector.prepare().getClickItem());
         }
 
-        if (inventory.getContents().length < inventory.getSize()) {
-            if (MenuSettings.SELECTOR_ONJOIN_ENABLE.getValue() && (!MenuSettings.SELECTOR_ONJOIN_USE_PERM.getValue() || player.isPermitted(MenuSettings.SELECTOR_ONJOIN_PERM.getValue()))) {
+        if (inventory.getContents().length < inventory.getSize())
+        {
+            if (MenuSettings.SELECTOR_ONJOIN_ENABLE.getValue() && (!MenuSettings.SELECTOR_ONJOIN_USE_PERM.getValue() || player.isPermitted(MenuSettings.SELECTOR_ONJOIN_PERM.getValue())))
+            {
                 int slot = MenuSettings.SELECTOR_ONJOIN_SLOT.getValue();
                 ItemStack existing = inventory.getItem(slot);
                 inventory.setItem(slot, PetSelector.prepare().getClickItem());
-                if (existing != null) {
+                if (existing != null)
+                {
                     inventory.addItem(existing);
                 }
             }
@@ -75,18 +87,27 @@ public class PlayerListener {
             ((HumanPet) pet).updatePosition();
         }*/
 
-        EchoPet.getBridge(SchedulerBridge.class).runLater(false, 20L, new Runnable() {
+        EchoPet.getBridge(SchedulerBridge.class).runLater(false, 20L, new Runnable()
+        {
             @Override
-            public void run() {
-                if (player.isOnline()) {
+            public void run()
+            {
+                if (player.isOnline())
+                {
                     LoadCallback<List<Pet>> callback = null;
-                    if (EchoPet.getDependency(VanishNoPacketDependency.class) != null) {
-                        callback = new LoadCallback<List<Pet>>() {
+                    if (EchoPet.getDependency(VanishNoPacketDependency.class) != null)
+                    {
+                        callback = new LoadCallback<List<Pet>>()
+                        {
                             @Override
-                            public void call(List<Pet> loadedPets) {
-                                if (!loadedPets.isEmpty()) {
-                                    if (EchoPet.getDependency(VanishNoPacketDependency.class).isVanished(player.getName())) {
-                                        for (Pet pet : loadedPets) {
+                            public void call(List<Pet> loadedPets)
+                            {
+                                if (!loadedPets.isEmpty())
+                                {
+                                    if (EchoPet.getDependency(VanishNoPacketDependency.class).isVanished(player.getName()))
+                                    {
+                                        for (Pet pet : loadedPets)
+                                        {
                                             pet.setShouldVanish(true);
                                             pet.getModifier().setInvisible(true);
                                         }
@@ -106,38 +127,43 @@ public class PlayerListener {
             bukkit = {
                     org.bukkit.event.player.PlayerQuitEvent.class,
                     org.bukkit.event.entity.PlayerDeathEvent.class
-            },
-            sponge = {
-                    org.spongepowered.api.event.player.PlayerQuitEvent.class,
-                    org.spongepowered.api.event.player.PlayerDeathEvent.class
             }
     )
-    public void onRemove(EventContainer event) {
+    public void onRemove(EventContainer event)
+    {
         EchoPet.getManager().removePets(event.get(PlayerBridge.class).getUID());
     }
 
     // TODO: no sponge event?
-    @Listen(bukkit = PlayerRespawnEvent.class, sponge = NullSpongeEvent.class)
-    public void onRespawn(final EventContainer event) {
-        EchoPet.getBridge(SchedulerBridge.class).runLater(false, 20L, new Runnable() {
+    @Listen(bukkit = PlayerRespawnEvent.class)
+    public void onRespawn(final EventContainer event)
+    {
+        EchoPet.getBridge(SchedulerBridge.class).runLater(false, 20L, new Runnable()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 PlayerBridge player = event.get(PlayerBridge.class);
-                if (player.isOnline()) {
+                if (player.isOnline())
+                {
                     EchoPet.getManager().load(player.getUID(), false);
                 }
             }
         });
     }
 
-    @Listen(bukkit = PlayerChangedWorldEvent.class, sponge = PlayerChangeWorldEvent.class)
-    public void onWorldChange(final EventContainer event) {
+    @Listen(bukkit = PlayerChangedWorldEvent.class)
+    public void onWorldChange(final EventContainer event)
+    {
         final PlayerBridge player = event.get(PlayerBridge.class);
         EchoPet.getManager().removePets(player.getUID());
-        EchoPet.getBridge(SchedulerBridge.class).runLater(false, 20L, new Runnable() {
+        EchoPet.getBridge(SchedulerBridge.class).runLater(false, 20L, new Runnable()
+        {
             @Override
-            public void run() {
-                if (player.isOnline()) {
+            public void run()
+            {
+                if (player.isOnline())
+                {
                     EchoPet.getManager().loadPets(player.getUID());
                 }
             }
@@ -145,16 +171,21 @@ public class PlayerListener {
 
     }
 
-    @Listen(bukkit = EntityDamageEvent.class, sponge = EntityChangeHealthEvent.class)
-    public void onDamage(EventContainer event) {
+    @Listen(bukkit = EntityDamageEvent.class)
+    public void onDamage(EventContainer event)
+    {
         PlayerBridge player = event.get(PlayerBridge.class);
         // is fall damage
-        if (event.get(boolean.class)) {
+        if (event.get(boolean.class))
+        {
             List<Pet> pets = EchoPet.getManager().getPetsFor(player.getUID());
-            if (!pets.isEmpty()) {
-                for (Pet pet : pets) {
+            if (!pets.isEmpty())
+            {
+                for (Pet pet : pets)
+                {
                     // Cancel fall damage when the owner is riding the pet
-                    if (pet.isOwnerRiding()) {
+                    if (pet.isOwnerRiding())
+                    {
                         event.setCancelled(true);
                         break;
                     }
@@ -165,33 +196,40 @@ public class PlayerListener {
         // TODO: other events on left click?
     }
 
-    @Listen(bukkit = org.bukkit.event.player.PlayerInteractEntityEvent.class, sponge = org.spongepowered.api.event.player.PlayerInteractEntityEvent.class)
-    public void onInteract(EventContainer event) {
+    @Listen(bukkit = org.bukkit.event.player.PlayerInteractEntityEvent.class)
+    public void onInteract(EventContainer event)
+    {
         PlayerBridge player = event.get(PlayerBridge.class);
         Object entity = event.get("entity");
         ItemStackContainer itemInHand = event.get(ItemStackContainer.class); // TODO: get(ItemContainer.class)
 
         // TODO: basic itemstack container?
-        if (itemInHand != null && itemInHand.isSimilar(PetSelector.getInventory().getInteractIcon().getStack())) {
+        if (itemInHand != null && itemInHand.isSimilar(PetSelector.getInventory().getInteractIcon().getStack()))
+        {
             PetSelector.getInventory().show(player);
             event.setCancelled(true);
             return;
         }
 
-        if (PetUtil.isPetEntity(entity)) {
+        if (PetUtil.isPetEntity(entity))
+        {
             event.setCancelled(true);
             EntityPet entityPet = (EntityPet) BukkitUnwrapper.getInstance().unwrap(entity);
             entityPet.getPet().onInteract(player);
         }
     }
 
-    @Listen(bukkit = org.bukkit.event.player.PlayerDropItemEvent.class, sponge = org.spongepowered.api.event.player.PlayerDropItemEvent.class)
-    public void onDropItem(EventContainer event) {
-        if (!MenuSettings.SELECTOR_ALLOW_DROP.getValue()) {
+    @Listen(bukkit = org.bukkit.event.player.PlayerDropItemEvent.class)
+    public void onDropItem(EventContainer event)
+    {
+        if (!MenuSettings.SELECTOR_ALLOW_DROP.getValue())
+        {
             ItemStackContainer single = event.get(ItemStackContainer.class);
             ItemStackContainer selector = PetSelector.getInventory().getInteractIcon().getStack();
-            if (single != null) {
-                if (single.isSimilar(selector)) {
+            if (single != null)
+            {
+                if (single.isSimilar(selector))
+                {
                     event.setCancelled(true);
                 }
 
@@ -199,9 +237,11 @@ public class PlayerListener {
 
             List<ItemStackContainer> stacks = event.get(List.class);
             Iterator<ItemStackContainer> iterator = stacks.iterator();
-            while (iterator.hasNext()) {
+            while (iterator.hasNext())
+            {
                 ItemStackContainer stack = iterator.next();
-                if (stack.isSimilar(PetSelector.getInventory().getInteractIcon().getStack()) {
+                if (stack.isSimilar(PetSelector.getInventory().getInteractIcon().getStack()))
+                {
                     iterator.remove();
                 }
             }

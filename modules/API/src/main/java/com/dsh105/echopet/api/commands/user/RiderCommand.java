@@ -28,7 +28,8 @@ import com.dsh105.influx.annotation.*;
 import com.dsh105.influx.dispatch.BukkitCommandEvent;
 import org.bukkit.entity.Player;
 
-public class RiderCommand implements CommandListener {
+public class RiderCommand implements CommandListener
+{
 
     @Command(
             syntax = "rider <type>",
@@ -38,8 +39,10 @@ public class RiderCommand implements CommandListener {
     @Authorize(Perm.RIDER_TYPE)
     public boolean rider(BukkitCommandEvent<Player> event,
                          @Bind("type") @Convert(PetConverters.CreateType.class) Pet rider,
-                         @Convert(PetConverters.Selected.class) Pet pet) {
-        if (pet != null && rider != null) {
+                         @Convert(PetConverters.Selected.class) Pet pet)
+    {
+        if (pet != null && rider != null)
+        {
             pet.setRider(rider, true);
         }
         return true;
@@ -52,8 +55,10 @@ public class RiderCommand implements CommandListener {
     )
     @Authorize(Perm.DATA)
     @Nested
-    public boolean applyData(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Convert(PetConverters.Selected.class) Pet pet) {
-        if (pet != null) {
+    public boolean applyData(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Convert(PetConverters.Selected.class) Pet pet)
+    {
+        if (pet != null)
+        {
             PetCommand.applyData(pet, event.getVariable("data"));
         }
         return true;
@@ -65,22 +70,28 @@ public class RiderCommand implements CommandListener {
             help = {"Use \"/pet view\" to select a pet to edit.", "If you only have one pet, there is no need to select one to edit.", "If a name is not provided in the command, you will be asked to enter a name separately", "Names can be more than one word if enclosed in single or double quotations e.g. sheep \"name:My cool pet\""}
     )
     @Authorize(Perm.NAME)
-    public boolean riderName(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Convert(PetConverters.Selected.class) Pet pet) {
-        if (pet == null) {
+    public boolean riderName(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Convert(PetConverters.Selected.class) Pet pet)
+    {
+        if (pet == null)
+        {
             return true;
         }
 
-        if (pet.getRider() == null) {
+        if (pet.getRider() == null)
+        {
             event.respond(Lang.NO_RIDER_FOUND.getValue("name", pet.getName()));
             return true;
         }
 
         String name = event.var("name");
 
-        if (name == null) {
+        if (name == null)
+        {
             // TODO: ask for name input
             //NameFactory.askForName(event.sender(), pet.getRider(), false);
-        } else {
+        }
+        else
+        {
             pet.getRider().setName(name, true);
             event.respond(Lang.NAME_RIDER.getValue("name", pet.getName(), "newname", name));
         }
@@ -93,12 +104,15 @@ public class RiderCommand implements CommandListener {
             help = {"Use \"/pet view\" to select a pet to edit.", "If you only have one pet, there is no need to select one to edit.", "Removes the rider of a pet"}
     )
     @Authorize(Perm.REMOVE)
-    public boolean removeRider(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Convert(PetConverters.Selected.class) Pet pet) {
-        if (pet == null) {
+    public boolean removeRider(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Convert(PetConverters.Selected.class) Pet pet)
+    {
+        if (pet == null)
+        {
             return true;
         }
 
-        if (pet.getRider() == null) {
+        if (pet.getRider() == null)
+        {
             event.respond(Lang.NO_RIDER_FOUND.getValue("name", pet.getName()));
             return true;
         }

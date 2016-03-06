@@ -25,7 +25,8 @@ import com.dsh105.echopet.api.entity.attribute.AttributeManager;
 import com.dsh105.echopet.api.entity.attribute.EntityAttribute;
 import com.dsh105.echopet.util.StringForm;
 
-public class PetSettings extends OptionSet {
+public class PetSettings extends OptionSet
+{
 
     public static final Option<Boolean> ENABLE = option("pets.%s.enable", true);
     public static final Option<Boolean> TAG_VISIBLE = option("pets.%s.tagVisible", true);
@@ -46,37 +47,54 @@ public class PetSettings extends OptionSet {
     public static final Option<Boolean> ALLOW_DATA = option("pets.%s.allow.%s.%s", true);
     public static final Option<Boolean> FORCE_DATA = option("pets.%s.force.%s.%s", false);
 
-    public PetSettings(Config config) {
+    public PetSettings(Config config)
+    {
         super(config);
         lock(ALLOW_RIDERS, false, PetType.ENDER_DRAGON.storageName());
     }
 
     @Override
-    public void setDefaults() {
-        for (PetType petType : PetType.values()) {
-            try {
-                for (Option option : getOptions()) {
-                    if (option.equals(ALLOW_DATA) || option.equals(FORCE_DATA)) {
-                        for (EntityAttribute entityAttribute : AttributeManager.getModifier(petType).getValidAttributes()) {
+    public void setDefaults()
+    {
+        for (PetType petType : PetType.values())
+        {
+            try
+            {
+                for (Option option : getOptions())
+                {
+                    if (option.equals(ALLOW_DATA) || option.equals(FORCE_DATA))
+                    {
+                        for (EntityAttribute entityAttribute : AttributeManager.getModifier(petType).getValidAttributes())
+                        {
                             setDefault(option, petType.storageName(), StringForm.create(entityAttribute).getConfigName());
                         }
                         continue;
                     }
 
-                    if (option.equals(DEFAULT_NAME)) {
+                    if (option.equals(DEFAULT_NAME))
+                    {
                         set(option, petType.humanName() + " Pet");
-                    } else if (option.equals(DAMAGE_DEALT)) {
+                    }
+                    else if (option.equals(DAMAGE_DEALT))
+                    {
                         // TODO
-                    } else if (option.equals(HEALTH)) {
+                    }
+                    else if (option.equals(HEALTH))
+                    {
                         // TODO
-                    } else if (option.equals(CAN_FLY)) {
+                    }
+                    else if (option.equals(CAN_FLY))
+                    {
                         set(option, petType == PetType.BAT || petType == PetType.BLAZE || petType == PetType.GHAST || petType == PetType.SQUID || petType == PetType.WITHER);
-                    } else if (option.equals(ALLOW_RIDERS)) {
+                    }
+                    else if (option.equals(ALLOW_RIDERS))
+                    {
                         set(option, petType != PetType.ENDER_DRAGON);
-                        ;
                     }
                 }
-            } catch (IllegalAccessException e) {
+            }
+            catch (IllegalAccessException e)
+            {
                 throw new RuntimeException("Failed to set configuration defaults", e);
             }
         }

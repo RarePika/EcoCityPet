@@ -17,7 +17,8 @@
 
 package com.dsh105.echopet.util;
 
-public class Perm {
+public class Perm
+{
 
     public static final String
             ECHOPET = "echopet.echopet",

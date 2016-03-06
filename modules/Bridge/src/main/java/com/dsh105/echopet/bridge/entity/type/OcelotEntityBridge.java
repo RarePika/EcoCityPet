@@ -19,7 +19,8 @@ package com.dsh105.echopet.bridge.entity.type;
 
 import com.dsh105.echopet.bridge.entity.AgeableEntityBridge;
 
-public interface OcelotEntityBridge extends AgeableEntityBridge {
+public interface OcelotEntityBridge extends AgeableEntityBridge
+{
 
     void setSitting(boolean flag);
 }

@@ -17,21 +17,25 @@
 
 package com.dsh105.echopet.api.entity.ai;
 
-public class BehaviourContainer {
+public class BehaviourContainer
+{
 
     private Behaviour behaviour;
     private int priority;
 
-    public BehaviourContainer(int priority, Behaviour goal) {
+    public BehaviourContainer(int priority, Behaviour goal)
+    {
         this.behaviour = goal;
         this.priority = priority;
     }
 
-    public Behaviour getBehaviour() {
+    public Behaviour getBehaviour()
+    {
         return behaviour;
     }
 
-    public int getPriority() {
+    public int getPriority()
+    {
         return priority;
     }
 }

@@ -27,7 +27,8 @@ import org.bukkit.event.HandlerList;
  * Called when a Pet attacks another Entity
  */
 
-public class PetAttackEvent extends Event implements Cancellable {
+public class PetAttackEvent extends Event implements Cancellable
+{
 
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled = false;
@@ -36,10 +37,16 @@ public class PetAttackEvent extends Event implements Cancellable {
     private Entity attacked;
     private double damage;
 
-    public PetAttackEvent(Pet pet, Entity attacked, final double damage) {
+    public PetAttackEvent(Pet pet, Entity attacked, final double damage)
+    {
         this.pet = pet;
         this.attacked = attacked;
         this.damage = damage;
+    }
+
+    public static HandlerList getHandlerList()
+    {
+        return handlers;
     }
 
     /**
@@ -47,7 +54,8 @@ public class PetAttackEvent extends Event implements Cancellable {
      *
      * @return Damage dealt
      */
-    public double getDamage() {
+    public double getDamage()
+    {
         return this.damage;
     }
 
@@ -56,7 +64,8 @@ public class PetAttackEvent extends Event implements Cancellable {
      *
      * @param damage Amount of health to take off the attacked
      */
-    public void setDamage(double damage) {
+    public void setDamage(double damage)
+    {
         this.damage = damage;
     }
 
@@ -65,7 +74,8 @@ public class PetAttackEvent extends Event implements Cancellable {
      *
      * @return The Entity attacked
      */
-    public Entity getAttacked() {
+    public Entity getAttacked()
+    {
         return this.attacked;
     }
 
@@ -74,26 +84,26 @@ public class PetAttackEvent extends Event implements Cancellable {
      *
      * @return The Pet involved
      */
-    public Pet getPet() {
+    public Pet getPet()
+    {
         return this.pet;
     }
 
     @Override
-    public boolean isCancelled() {
+    public boolean isCancelled()
+    {
         return cancelled;
     }
 
     @Override
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(boolean cancel)
+    {
         this.cancelled = cancel;
     }
 
     @Override
-    public HandlerList getHandlers() {
-        return this.handlers;
-    }
-
-    public static HandlerList getHandlerList() {
+    public HandlerList getHandlers()
+    {
         return handlers;
     }
 }

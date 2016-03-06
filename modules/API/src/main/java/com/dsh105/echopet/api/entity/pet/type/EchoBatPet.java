@@ -18,36 +18,42 @@
 package com.dsh105.echopet.api.entity.pet.type;
 
 import com.dsh105.echopet.api.entity.entitypet.type.EntityBatPet;
-import com.dsh105.echopet.bridge.entity.type.BatEntityBridge;
 import com.dsh105.echopet.api.entity.pet.AbstractPetBase;
+import com.dsh105.echopet.bridge.entity.type.BatEntityBridge;
 
 import java.util.UUID;
 
-public class EchoBatPet extends AbstractPetBase<BatEntityBridge, EntityBatPet> implements BatPet {
+public class EchoBatPet extends AbstractPetBase<BatEntityBridge, EntityBatPet> implements BatPet
+{
 
-    public EchoBatPet(UUID playerUID) {
+    public EchoBatPet(UUID playerUID)
+    {
         super(playerUID);
         getEntity().setAsleep(false);
     }
 
     @Override
-    public void setStationary(boolean flag) {
+    public void setStationary(boolean flag)
+    {
         super.setStationary(flag);
         getEntity().setAsleep(flag);
     }
 
     @Override
-    public void setAsleep(boolean flag) {
-        getEntity().setAsleep(flag);
-    }
-
-    @Override
-    public boolean isAsleep() {
+    public boolean isAsleep()
+    {
         return getEntity().isAsleep();
     }
 
     @Override
-    public void onLive() {
+    public void setAsleep(boolean flag)
+    {
+        getEntity().setAsleep(flag);
+    }
+
+    @Override
+    public void onLive()
+    {
         super.onLive();
         /*if (isAsleep()) {
             getBridgeEntity().setVelocity(new Vector(0D, 0D, 0D));

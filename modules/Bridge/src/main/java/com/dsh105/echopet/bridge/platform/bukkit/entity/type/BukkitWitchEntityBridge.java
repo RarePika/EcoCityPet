@@ -21,6 +21,7 @@ import com.dsh105.echopet.bridge.entity.type.WitchEntityBridge;
 import com.dsh105.echopet.bridge.platform.bukkit.entity.BukkitRangedEntityBridge;
 import org.bukkit.entity.Witch;
 
-public class BukkitWitchEntityBridge extends BukkitRangedEntityBridge<Witch> implements WitchEntityBridge {
+public class BukkitWitchEntityBridge extends BukkitRangedEntityBridge<Witch> implements WitchEntityBridge
+{
 
 }

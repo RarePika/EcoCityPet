@@ -22,9 +22,11 @@ import com.dsh105.echopet.bridge.entity.type.CaveSpiderEntityBridge;
 
 import java.util.UUID;
 
-public class EchoCaveSpiderPet extends EchoSpiderPet<CaveSpiderEntityBridge, EntityCaveSpiderPet> implements CaveSpiderPet {
+public class EchoCaveSpiderPet extends EchoSpiderPet<CaveSpiderEntityBridge, EntityCaveSpiderPet> implements CaveSpiderPet
+{
 
-    public EchoCaveSpiderPet(UUID playerUID) {
+    public EchoCaveSpiderPet(UUID playerUID)
+    {
         super(playerUID);
     }
 }

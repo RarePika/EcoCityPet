@@ -23,7 +23,8 @@ import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.pet.type.IronGolemPet;
 
 @Entity(PetType.IRON_GOLEM)
-public interface EntityIronGolemPet extends EntityPet<IronGolemPet> {
+public interface EntityIronGolemPet extends EntityPet<IronGolemPet>
+{
 
     void setPlayerCreated(boolean flag);
 

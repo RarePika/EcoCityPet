@@ -32,6 +32,7 @@ import com.dsh105.echopet.util.Perm;
 import com.dsh105.influx.CommandListener;
 import com.dsh105.influx.annotation.*;
 import com.dsh105.influx.syntax.ContextualVariable;
+import com.sun.glass.ui.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +40,11 @@ import java.util.UUID;
 
 @Nest(nests = {"pet"})
 @Authorize(Perm.PET)
-public class PetCommand implements CommandListener {
+public class PetCommand implements CommandListener
+{
 
-    public PetCommand() {
+    public PetCommand()
+    {
         EchoPetCommandManager manager = EchoPet.getCommandManager();
         manager.register(this);
         manager.nestCommandsIn(this, new HelpCommand());
@@ -60,26 +63,33 @@ public class PetCommand implements CommandListener {
     }
 
     // FIXME
-    protected static void applyData(Pet pet, ContextualVariable variable) {
+    protected static void applyData(Pet pet, ContextualVariable variable)
+    {
         List<String> invalidData = new ArrayList<>();
         List<PetData> validData = new ArrayList<>();
         List<String> validStringData = new ArrayList<>();
-        for (String candidate : variable.getConsumedArguments()) {
-            if (GeneralUtil.isEnumType(PetData.class, candidate)) {
+        for (String candidate : variable.getConsumedArguments())
+        {
+            if (GeneralUtil.isEnumType(PetData.class, candidate))
+            {
                 invalidData.add(candidate);
                 continue;
             }
             validData.add(PetData.valueOf(candidate.toUpperCase()));
         }
 
-        if (!invalidData.isEmpty()) {
+        if (!invalidData.isEmpty())
+        {
             variable.getContext().respond(Lang.INVALID_PET_DATA.getValue("data", StringUtil.combine("{c1}, {c2}", invalidData)));
         }
 
-        if (!validData.isEmpty()) {
+        if (!validData.isEmpty())
+        {
             pet.setDataValue(validData.toArray(new PetData[0]));
             variable.getContext().respond(Lang.DATA_APPLIED.getValue("data", StringUtil.combine("{c1}, {c2}", validStringData), "name", pet.getName()));
-        } else if (!invalidData.isEmpty()) {
+        }
+        else if (!invalidData.isEmpty())
+        {
             variable.getContext().respond(Lang.NO_DATA_APPLIED.getValue("name", pet.getName()));
         }
     }
@@ -90,7 +100,8 @@ public class PetCommand implements CommandListener {
             usage = "Use \"/pet help\" for help."
     )
     @Authorize(Perm.PET)
-    public boolean parent(EchoPetCommandEvent event) {
+    public boolean parent(EchoPetCommandEvent event)
+    {
         // TODO: only show this in /petadmin
         event.respond(Lang.PLUGIN_INFORMATION.getValue("version", EchoPet.getNucleus().getPluginVersion()));
         return true;
@@ -103,13 +114,16 @@ public class PetCommand implements CommandListener {
     )
     @Authorize(Perm.VIEW)
     @Nested
-    public boolean view(EchoPetCommandEvent<PlayerCommandSourceContainer> event) {
+    public boolean view(EchoPetCommandEvent<PlayerCommandSourceContainer> event)
+    {
         List<Pet> pets = EchoPet.getManager().getPetsFor(event.sender().get().getUID());
-        if (pets.isEmpty()) {
+        if (pets.isEmpty())
+        {
             event.respond(Lang.NO_PETS_FOUND.getValue());
             return true;
         }
-        ViewMenu.getInventory(pets).show(event.sender().get());
+        //ViewMenu.getInventory(pets).show(event.sender());
+        ViewMenu.getInventory(pets).show(event.sender().);
         return true;
     }
 
@@ -122,7 +136,8 @@ public class PetCommand implements CommandListener {
     @Nested
     @Hidden
     // Internal use by "/pet view" - that's why it's hidden ;D
-    public boolean selectByUniqueId(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Verify("^(?!none$).*") @Bind("pet_uuid") UUID petUniqueId, @Bind("pet_name") String name) {
+    public boolean selectByUniqueId(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Verify("^(?!none$).*") @Bind("pet_uuid") UUID petUniqueId, @Bind("pet_name") String name)
+    {
         PetConverters.selectPet(event.sender().get().getUID(), petUniqueId);
         event.respond((name == null ? Lang.PET_SELECTED : Lang.PET_SELECTED_OF_NAME).getValue("name", name));
         return true;
@@ -137,7 +152,8 @@ public class PetCommand implements CommandListener {
     @Nested
     @Hidden
     // Internal use by "/pet view" - that's why it's hidden ;D
-    public boolean selectNone(EchoPetCommandEvent<PlayerCommandSourceContainer> event) {
+    public boolean selectNone(EchoPetCommandEvent<PlayerCommandSourceContainer> event)
+    {
         PetConverters.selectPet(event.sender().get().getUID(), null);
         // TODO: send a message perhaps?
         return true;
@@ -150,8 +166,10 @@ public class PetCommand implements CommandListener {
     )
     @Authorize(Perm.TYPE)
     @Nested
-    public boolean create(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Bind("type") @Convert(PetConverters.CreateType.class) Pet pet) {
-        if (pet != null) {
+    public boolean create(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Bind("type") @Convert(PetConverters.CreateType.class) Pet pet)
+    {
+        if (pet != null)
+        {
             EchoPet.getManager().save(pet);
             event.respond(Lang.PET_CREATED.getValue("type", pet.getType().humanName()));
         }
@@ -165,8 +183,10 @@ public class PetCommand implements CommandListener {
     )
     @Authorize(Perm.DATA)
     @Nested
-    public boolean applyData(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Convert(PetConverters.Selected.class) Pet pet) {
-        if (pet != null) {
+    public boolean applyData(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Convert(PetConverters.Selected.class) Pet pet)
+    {
+        if (pet != null)
+        {
             applyData(pet, event.getVariable("data"));
         }
         return true;

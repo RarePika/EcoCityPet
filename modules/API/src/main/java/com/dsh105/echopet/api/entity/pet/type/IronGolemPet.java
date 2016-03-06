@@ -31,11 +31,12 @@ import com.dsh105.echopet.bridge.entity.type.IronGolemEntityBridge;
 
 @Traits(type = PetType.IRON_GOLEM, hositility = Hostility.NEUTRAL, width = 1.4F, height = 2.9F, health = 100.0D, attackDamage = 7.0D)
 @Size(SizeCategory.REGULAR)
-public interface IronGolemPet extends Pet<IronGolemEntityBridge, EntityIronGolemPet> {
-
-    @AttributeSetter(Attributes.Attribute.ROSE)
-    void setHoldingRose(boolean flag);
+public interface IronGolemPet extends Pet<IronGolemEntityBridge, EntityIronGolemPet>
+{
 
     @AttributeGetter(Attributes.Attribute.ROSE)
     boolean getHoldingRose();
+
+    @AttributeSetter(Attributes.Attribute.ROSE)
+    void setHoldingRose(boolean flag);
 }

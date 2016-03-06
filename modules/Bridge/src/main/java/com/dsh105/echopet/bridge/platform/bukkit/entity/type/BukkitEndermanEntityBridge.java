@@ -21,6 +21,7 @@ import com.dsh105.echopet.bridge.entity.type.EndermanEntityBridge;
 import com.dsh105.echopet.bridge.platform.bukkit.entity.BukkitLivingEntityBridge;
 import org.bukkit.entity.Enderman;
 
-public class BukkitEndermanEntityBridge extends BukkitLivingEntityBridge<Enderman> implements EndermanEntityBridge {
+public class BukkitEndermanEntityBridge extends BukkitLivingEntityBridge<Enderman> implements EndermanEntityBridge
+{
 
 }

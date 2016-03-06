@@ -21,6 +21,7 @@ import com.dsh105.echopet.bridge.entity.type.SquidEntityBridge;
 import com.dsh105.echopet.bridge.platform.bukkit.entity.BukkitLivingEntityBridge;
 import org.bukkit.entity.Squid;
 
-public class BukkitSquidEntityBridge extends BukkitLivingEntityBridge<Squid> implements SquidEntityBridge {
+public class BukkitSquidEntityBridge extends BukkitLivingEntityBridge<Squid> implements SquidEntityBridge
+{
 
 }

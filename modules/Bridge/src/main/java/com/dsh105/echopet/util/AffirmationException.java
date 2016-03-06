@@ -17,24 +17,30 @@
 
 package com.dsh105.echopet.util;
 
-public class AffirmationException extends RuntimeException {
+public class AffirmationException extends RuntimeException
+{
 
-    public AffirmationException() {
+    public AffirmationException()
+    {
     }
 
-    public AffirmationException(String message) {
+    public AffirmationException(String message)
+    {
         super(message);
     }
 
-    public AffirmationException(String message, Throwable cause) {
+    public AffirmationException(String message, Throwable cause)
+    {
         super(message, cause);
     }
 
-    public AffirmationException(Throwable cause) {
+    public AffirmationException(Throwable cause)
+    {
         super(cause);
     }
 
-    public AffirmationException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public AffirmationException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace)
+    {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

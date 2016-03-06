@@ -25,7 +25,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Settings extends OptionSet {
+public class Settings extends OptionSet
+{
 
     // TODO: comments?
     public static final Option<String> COMMAND = optionString("command", "pet");
@@ -55,35 +56,52 @@ public class Settings extends OptionSet {
     public static final Option<Boolean> WORLDGUARD_REGION = option("worldguard.regions.%s", WORLDGUARD_REGION_DEFAULT.getValue());
     public static final Option<Boolean> WORLDGUARD_REGION_ENTER = option("worldguard.regionEnterCheck", true);
 
-    public Settings(Config config) {
+    public Settings(Config config)
+    {
         super(config);
     }
 
     @Override
-    public void setDefaults() {
-        try {
-            for (Option option : getOptions()) {
-                if (option.equals(PET_NAME)) {
+    public void setDefaults()
+    {
+        try
+        {
+            for (Option option : getOptions())
+            {
+                if (option.equals(PET_NAME))
+                {
                     setDefault(option, "My Pet");
-                } else if (option.equals(WORLD)) {
+                }
+                else if (option.equals(WORLD))
+                {
                     setDefault(option, "world");
-                } else if (option.equals(WORLDGUARD_REGION)) {
+                }
+                else if (option.equals(WORLDGUARD_REGION))
+                {
                     setDefault(option, "echopet");
-                } else if (option.equals(PET_NAME_REGEX)) {
-                    PET_NAME_REGEX.setValue(new ArrayList<Map<String, String>>() {
+                }
+                else if (option.equals(PET_NAME_REGEX))
+                {
+                    PET_NAME_REGEX.setValue(new ArrayList<Map<String, String>>()
+                    {
                         {
-                            add(new HashMap<String, String>() {
+                            add(new HashMap<String, String>()
+                            {
                                 {
                                     put(".*administrator.*", "false");
                                 }
                             });
                         }
                     });
-                } else {
+                }
+                else
+                {
                     setDefault(option);
                 }
             }
-        } catch (IllegalAccessException e) {
+        }
+        catch (IllegalAccessException e)
+        {
             throw new RuntimeException("Failed to set configuration defaults", e);
         }
     }

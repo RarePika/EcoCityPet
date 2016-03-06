@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.api.plugin;
 
-public interface EchoPetCoreBridge {
+public interface EchoPetCoreBridge
+{
 
 }

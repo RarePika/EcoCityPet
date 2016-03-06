@@ -31,11 +31,12 @@ import com.dsh105.echopet.bridge.entity.type.WitherEntityBridge;
 
 @Traits(type = PetType.WITHER, hositility = Hostility.AGGRESSIVE, width = 0.9F, height = 4.0F, health = 300.0D, attackDamage = 8.0D)
 @Size(SizeCategory.LARGE)
-public interface WitherPet extends RangedPet<WitherEntityBridge, EntityWitherPet> {
-
-    @AttributeSetter(Attributes.Attribute.SHIELD)
-    void setShielded(boolean flag);
+public interface WitherPet extends RangedPet<WitherEntityBridge, EntityWitherPet>
+{
 
     @AttributeGetter(Attributes.Attribute.SHIELD)
     boolean isShielded();
+
+    @AttributeSetter(Attributes.Attribute.SHIELD)
+    void setShielded(boolean flag);
 }

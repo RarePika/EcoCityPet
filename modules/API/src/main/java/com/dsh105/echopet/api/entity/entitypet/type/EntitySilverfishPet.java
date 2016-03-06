@@ -23,6 +23,7 @@ import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.pet.type.SilverfishPet;
 
 @Entity(PetType.SILVERFISH)
-public interface EntitySilverfishPet extends EntityPet<SilverfishPet> {
+public interface EntitySilverfishPet extends EntityPet<SilverfishPet>
+{
 
 }

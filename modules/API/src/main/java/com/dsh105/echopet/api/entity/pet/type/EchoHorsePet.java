@@ -25,90 +25,108 @@ import com.dsh105.echopet.bridge.entity.type.HorseEntityBridge;
 
 import java.util.UUID;
 
-public class EchoHorsePet extends EchoAgeablePet<HorseEntityBridge, EntityHorsePet> implements HorsePet {
+public class EchoHorsePet extends EchoAgeablePet<HorseEntityBridge, EntityHorsePet> implements HorsePet
+{
 
     private int rearingCounter;
 
-    public EchoHorsePet(UUID playerUID) {
+    public EchoHorsePet(UUID playerUID)
+    {
         super(playerUID);
         getEntity().setTame(false);
     }
 
     @Override
-    public void setVariant(Attributes.HorseVariant variant) {
-        getEntity().setHorseVariant(variant);
-    }
-
-    @Override
-    public Attributes.HorseVariant getVariant() {
+    public Attributes.HorseVariant getVariant()
+    {
         return getEntity().getHorseVariant();
     }
 
     @Override
-    public void setColor(Attributes.HorseColor color) {
-        getEntity().setColor(color);
+    public void setVariant(Attributes.HorseVariant variant)
+    {
+        getEntity().setHorseVariant(variant);
     }
 
     @Override
-    public Attributes.HorseColor getColor() {
+    public Attributes.HorseColor getColor()
+    {
         return getEntity().getColor();
     }
 
     @Override
-    public void setStyle(Attributes.HorseStyle style) {
-        getEntity().setStyle(style);
+    public void setColor(Attributes.HorseColor color)
+    {
+        getEntity().setColor(color);
     }
 
     @Override
-    public Attributes.HorseStyle getStyle() {
+    public Attributes.HorseStyle getStyle()
+    {
         return getEntity().getStyle();
     }
 
     @Override
-    public void setArmour(Attributes.HorseArmour armour) {
-        getEntity().setArmour(armour);
+    public void setStyle(Attributes.HorseStyle style)
+    {
+        getEntity().setStyle(style);
     }
 
     @Override
-    public Attributes.HorseArmour getArmour() {
+    public Attributes.HorseArmour getArmour()
+    {
         return getEntity().getArmour();
     }
 
     @Override
-    public void setSaddled(boolean flag) {
-        getEntity().setSaddled(flag);
+    public void setArmour(Attributes.HorseArmour armour)
+    {
+        getEntity().setArmour(armour);
     }
 
     @Override
-    public boolean isSaddled() {
+    public boolean isSaddled()
+    {
         return getEntity().isSaddled();
     }
 
     @Override
-    public void setChested(boolean flag) {
-        getEntity().setChested(flag);
+    public void setSaddled(boolean flag)
+    {
+        getEntity().setSaddled(flag);
     }
 
     @Override
-    public boolean isChested() {
+    public boolean isChested()
+    {
         return getEntity().isChested();
     }
 
     @Override
-    public SizeCategory getSizeCategory() {
+    public void setChested(boolean flag)
+    {
+        getEntity().setChested(flag);
+    }
+
+    @Override
+    public SizeCategory getSizeCategory()
+    {
         return isBaby() ? SizeCategory.TINY : SizeCategory.LARGE;
     }
 
     @Override
-    public void onLive() {
+    public void onLive()
+    {
         super.onLive();
-        if (rearingCounter > 0 && ++rearingCounter > 20) {
+        if (rearingCounter > 0 && ++rearingCounter > 20)
+        {
             getEntity().animation(EntityHorsePet.ANIMATION_REAR, false);
         }
     }
 
     @Override
-    public void doJumpAnimation() {
+    public void doJumpAnimation()
+    {
         getEntity().makeSound("mob.horse.jump", 0.4F, 1.0F);
         this.rearingCounter = 1;
         getEntity().animation(EntityHorsePet.ANIMATION_REAR, true);

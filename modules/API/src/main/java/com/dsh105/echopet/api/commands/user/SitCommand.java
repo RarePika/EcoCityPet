@@ -29,7 +29,8 @@ import com.dsh105.influx.annotation.Bind;
 import com.dsh105.influx.annotation.Command;
 import com.dsh105.influx.annotation.Convert;
 
-public class SitCommand implements CommandListener {
+public class SitCommand implements CommandListener
+{
 
     @Command(
             syntax = "sit <state>",
@@ -37,15 +38,20 @@ public class SitCommand implements CommandListener {
             help = {"Use \"/pet view\" to select a pet to edit.", "If you only have one pet, there is no need to select one to edit.", "<state> refers to either yes or no, depending on whether you wish to set the pet sitting or not", "Pets that are sitting will remain stationary"}
     )
     @Authorize(Perm.SIT)
-    public boolean sit(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Bind("state") boolean flag, @Convert(PetConverters.Selected.class) Pet pet) {
-        if (pet == null) {
+    public boolean sit(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Bind("state") boolean flag, @Convert(PetConverters.Selected.class) Pet pet)
+    {
+        if (pet == null)
+        {
             return true;
         }
 
         pet.setStationary(flag);
-        if (flag) {
+        if (flag)
+        {
             event.respond((pet.isStationary() ? Lang.PET_ALREADY_SITTING : Lang.PET_SITTING).getValue("name", pet.getName()));
-        } else {
+        }
+        else
+        {
             event.respond((pet.isStationary() ? Lang.PET_NOT_SITTING : Lang.PET_ALREADY_NOT_SITTING).getValue("name", pet.getName()));
         }
         return true;

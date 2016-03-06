@@ -21,10 +21,12 @@ import com.dsh105.echopet.bridge.entity.type.OcelotEntityBridge;
 import com.dsh105.echopet.bridge.platform.bukkit.entity.BukkitAgeableEntityBridge;
 import org.bukkit.entity.Ocelot;
 
-public class BukkitOcelotEntityBridge extends BukkitAgeableEntityBridge<Ocelot> implements OcelotEntityBridge {
+public class BukkitOcelotEntityBridge extends BukkitAgeableEntityBridge<Ocelot> implements OcelotEntityBridge
+{
 
     @Override
-    public void setSitting(boolean flag) {
+    public void setSitting(boolean flag)
+    {
         getBukkitEntity().setSitting(flag);
     }
 }

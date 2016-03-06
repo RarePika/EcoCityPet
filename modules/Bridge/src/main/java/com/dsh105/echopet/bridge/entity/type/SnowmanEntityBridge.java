@@ -19,6 +19,7 @@ package com.dsh105.echopet.bridge.entity.type;
 
 import com.dsh105.echopet.bridge.entity.RangedEntityBridge;
 
-public interface SnowmanEntityBridge extends RangedEntityBridge {
+public interface SnowmanEntityBridge extends RangedEntityBridge
+{
 
 }

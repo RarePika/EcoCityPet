@@ -18,36 +18,42 @@
 package com.dsh105.echopet.api.entity.pet.type;
 
 import com.dsh105.echopet.api.entity.entitypet.type.EntityCreeperPet;
-import com.dsh105.echopet.bridge.entity.type.CreeperEntityBridge;
 import com.dsh105.echopet.api.entity.pet.AbstractPetBase;
+import com.dsh105.echopet.bridge.entity.type.CreeperEntityBridge;
 
 import java.util.UUID;
 
-public class EchoCreeperPet extends AbstractPetBase<CreeperEntityBridge, EntityCreeperPet> implements CreeperPet {
+public class EchoCreeperPet extends AbstractPetBase<CreeperEntityBridge, EntityCreeperPet> implements CreeperPet
+{
 
     private boolean ignited; // TODO: Sponge can cover this ignition stuff
 
-    public EchoCreeperPet(UUID playerUID) {
+    public EchoCreeperPet(UUID playerUID)
+    {
         super(playerUID);
     }
 
     @Override
-    public void setPowered(boolean flag) {
-        getBridgeEntity().setPowered(flag);
-    }
-
-    @Override
-    public boolean isPowered() {
+    public boolean isPowered()
+    {
         return getBridgeEntity().isPowered();
     }
 
     @Override
-    public void setIgnited(boolean flag) {
-        this.ignited = flag;
+    public void setPowered(boolean flag)
+    {
+        getBridgeEntity().setPowered(flag);
     }
 
     @Override
-    public boolean isIgnited() {
+    public boolean isIgnited()
+    {
         return ignited;
+    }
+
+    @Override
+    public void setIgnited(boolean flag)
+    {
+        this.ignited = flag;
     }
 }

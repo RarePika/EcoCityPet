@@ -24,29 +24,35 @@ import com.dsh105.echopet.bridge.entity.type.VillagerEntityBridge;
 
 import java.util.UUID;
 
-public class EchoVillagerPet extends EchoAgeablePet<VillagerEntityBridge, EntityVillagerPet> implements VillagerPet {
+public class EchoVillagerPet extends EchoAgeablePet<VillagerEntityBridge, EntityVillagerPet> implements VillagerPet
+{
 
-    public EchoVillagerPet(UUID playerUID) {
+    public EchoVillagerPet(UUID playerUID)
+    {
         super(playerUID);
     }
 
     @Override
-    public Attributes.VillagerProfession getProfession() {
+    public Attributes.VillagerProfession getProfession()
+    {
         return getEntity().getVillagerProfession();
     }
 
     @Override
-    public void setProfession(Attributes.VillagerProfession profession) {
+    public void setProfession(Attributes.VillagerProfession profession)
+    {
         getEntity().setVillagerProfession(profession);
     }
 
     @Override
-    public void setCareer(Attributes.VillagerCareer career) {
-        getEntity().setCareer(career);
+    public Attributes.VillagerCareer getCareer()
+    {
+        return getEntity().getCareer();
     }
 
     @Override
-    public Attributes.VillagerCareer getCareer() {
-        return getEntity().getCareer();
+    public void setCareer(Attributes.VillagerCareer career)
+    {
+        getEntity().setCareer(career);
     }
 }

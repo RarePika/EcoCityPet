@@ -20,14 +20,17 @@ package com.dsh105.echopet.bridge.container;
 import com.dsh105.commodus.ServerBrand;
 import com.dsh105.echopet.bridge.PlayerBridge;
 
-public class PlayerCommandSourceContainer extends CommandSourceContainer {
+public class PlayerCommandSourceContainer extends CommandSourceContainer
+{
 
-    protected PlayerCommandSourceContainer(Object commandSource, ServerBrand.Capsule serverCapsule) {
+    protected PlayerCommandSourceContainer(Object commandSource, ServerBrand.Capsule serverCapsule)
+    {
         super(commandSource, serverCapsule);
     }
 
     @Override
-    public PlayerBridge get() {
+    public PlayerBridge get()
+    {
         return (PlayerBridge) super.get();
     }
 }

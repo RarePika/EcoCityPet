@@ -19,9 +19,10 @@ package com.dsh105.echopet.bridge.entity.type;
 
 import com.dsh105.echopet.bridge.entity.LivingEntityBridge;
 
-public interface CreeperEntityBridge extends LivingEntityBridge {
-
-    void setPowered(boolean flag);
+public interface CreeperEntityBridge extends LivingEntityBridge
+{
 
     boolean isPowered();
+
+    void setPowered(boolean flag);
 }

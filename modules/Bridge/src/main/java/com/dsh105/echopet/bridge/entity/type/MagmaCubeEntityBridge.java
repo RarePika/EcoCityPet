@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.bridge.entity.type;
 
-public interface MagmaCubeEntityBridge extends SlimeEntityBridge {
+public interface MagmaCubeEntityBridge extends SlimeEntityBridge
+{
 
 }

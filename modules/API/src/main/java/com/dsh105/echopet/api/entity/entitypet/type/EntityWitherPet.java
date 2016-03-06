@@ -23,11 +23,12 @@ import com.dsh105.echopet.api.entity.entitypet.EntityRangedPet;
 import com.dsh105.echopet.api.entity.pet.type.WitherPet;
 
 @Entity(PetType.WITHER)
-public interface EntityWitherPet extends EntityRangedPet<WitherPet> {
+public interface EntityWitherPet extends EntityRangedPet<WitherPet>
+{
 
-    public static int DATAWATCHER_INVULNERABLE_TIME = 20;
-
-    void setShielded(boolean flag);
+    int DATAWATCHER_INVULNERABLE_TIME = 20;
 
     boolean isShielded();
+
+    void setShielded(boolean flag);
 }

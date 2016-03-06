@@ -20,6 +20,7 @@ package com.dsh105.echopet.bridge.entity.type;
 import com.dsh105.echopet.bridge.entity.EquipableEntityBridge;
 import com.dsh105.echopet.bridge.entity.RangedEntityBridge;
 
-public interface SkeletonEntityBridge extends EquipableEntityBridge, RangedEntityBridge {
+public interface SkeletonEntityBridge extends EquipableEntityBridge, RangedEntityBridge
+{
 
 }

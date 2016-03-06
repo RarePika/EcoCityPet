@@ -26,23 +26,24 @@ import com.dsh105.echopet.api.entity.pet.Hostility;
 import com.dsh105.echopet.bridge.entity.type.WolfEntityBridge;
 
 @Traits(type = PetType.WOLF, hositility = Hostility.NEUTRAL, width = 0.6F, height = 0.8F, health = 20.0D, attackDamage = 6.0D)
-public interface WolfPet extends AgeablePet<WolfEntityBridge, EntityWolfPet> {
-
-    @GroupAttributeSetter(AttributeType.COLOR)
-    void setCollarColor(Attributes.Color color);
+public interface WolfPet extends AgeablePet<WolfEntityBridge, EntityWolfPet>
+{
 
     @GroupAttributeGetter(AttributeType.COLOR)
     Attributes.Color getCollarColor();
 
-    @AttributeSetter(Attributes.Attribute.TAME)
-    void setTamed(boolean flag);
+    @GroupAttributeSetter(AttributeType.COLOR)
+    void setCollarColor(Attributes.Color color);
 
     @AttributeGetter(Attributes.Attribute.TAME)
     boolean isTamed();
 
-    @AttributeSetter(Attributes.Attribute.ANGRY)
-    void setAngry(boolean flag);
+    @AttributeSetter(Attributes.Attribute.TAME)
+    void setTamed(boolean flag);
 
     @AttributeGetter(Attributes.Attribute.ANGRY)
     boolean isAngry();
+
+    @AttributeSetter(Attributes.Attribute.ANGRY)
+    void setAngry(boolean flag);
 }

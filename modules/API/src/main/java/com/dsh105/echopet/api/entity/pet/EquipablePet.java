@@ -21,7 +21,8 @@ import com.dsh105.commodus.container.ItemStackContainer;
 import com.dsh105.echopet.api.entity.entitypet.EntityEquipablePet;
 import com.dsh105.echopet.bridge.entity.EquipableEntityBridge;
 
-public interface EquipablePet<T extends EquipableEntityBridge, S extends EntityEquipablePet> extends Pet<T, S> {
+public interface EquipablePet<T extends EquipableEntityBridge, S extends EntityEquipablePet> extends Pet<T, S>
+{
 
     ItemStackContainer getWeapon();
 

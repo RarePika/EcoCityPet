@@ -20,7 +20,8 @@ package com.dsh105.echopet.api.hook;
 import com.dsh105.commodus.PluginDependency;
 import org.kitteh.vanish.VanishPlugin;
 
-public interface VanishNoPacketDependency<H> extends PluginDependency<H, VanishPlugin> {
+public interface VanishNoPacketDependency<H> extends PluginDependency<H, VanishPlugin>
+{
 
-    public boolean isVanished(String player);
+    boolean isVanished(String player);
 }

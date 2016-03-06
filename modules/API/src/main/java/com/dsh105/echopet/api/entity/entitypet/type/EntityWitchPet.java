@@ -23,6 +23,7 @@ import com.dsh105.echopet.api.entity.entitypet.EntityRangedPet;
 import com.dsh105.echopet.api.entity.pet.type.WitchPet;
 
 @Entity(PetType.WITCH)
-public interface EntityWitchPet extends EntityRangedPet<WitchPet> {
+public interface EntityWitchPet extends EntityRangedPet<WitchPet>
+{
 
 }

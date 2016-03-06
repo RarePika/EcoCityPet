@@ -23,27 +23,33 @@ import com.dsh105.echopet.api.entity.pet.Pet;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AttributeManager {
+public class AttributeManager
+{
 
     private static Map<Class<? extends Pet>, PetAttributeModifier<?>> ATTRIBUTE_MAP = initialise();
 
-    private static Map<Class<? extends Pet>, PetAttributeModifier<?>> initialise() {
+    private static Map<Class<? extends Pet>, PetAttributeModifier<?>> initialise()
+    {
         Map<Class<? extends Pet>, PetAttributeModifier<?>> attributeModifierMap = new HashMap<>();
-        for (PetType petType : PetType.values()) {
+        for (PetType petType : PetType.values())
+        {
             attributeModifierMap.put(petType.getPetClass(), new PetAttributeModifier(petType));
         }
         return attributeModifierMap;
     }
 
-    public static <P extends Pet> PetAttributeModifier<P> getModifier(Class<P> petClass) {
+    public static <P extends Pet> PetAttributeModifier<P> getModifier(Class<P> petClass)
+    {
         return (PetAttributeModifier<P>) ATTRIBUTE_MAP.get(petClass);
     }
 
-    public static PetAttributeModifier<?> getModifier(PetType petType) {
+    public static PetAttributeModifier<?> getModifier(PetType petType)
+    {
         return getModifier(petType.getPetClass());
     }
 
-    public static <P extends Pet> PetAttributeModifier<P> getModifier(P pet) {
+    public static <P extends Pet> PetAttributeModifier<P> getModifier(P pet)
+    {
         return (PetAttributeModifier<P>) getModifier(pet.getType());
     }
 }

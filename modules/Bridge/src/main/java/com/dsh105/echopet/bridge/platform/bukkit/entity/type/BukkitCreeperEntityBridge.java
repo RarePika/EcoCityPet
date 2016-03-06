@@ -21,15 +21,18 @@ import com.dsh105.echopet.bridge.entity.type.CreeperEntityBridge;
 import com.dsh105.echopet.bridge.platform.bukkit.entity.BukkitLivingEntityBridge;
 import org.bukkit.entity.Creeper;
 
-public class BukkitCreeperEntityBridge extends BukkitLivingEntityBridge<Creeper> implements CreeperEntityBridge {
+public class BukkitCreeperEntityBridge extends BukkitLivingEntityBridge<Creeper> implements CreeperEntityBridge
+{
 
     @Override
-    public void setPowered(boolean flag) {
-        getBukkitEntity().setPowered(flag);
+    public boolean isPowered()
+    {
+        return getBukkitEntity().isPowered();
     }
 
     @Override
-    public boolean isPowered() {
-        return getBukkitEntity().isPowered();
+    public void setPowered(boolean flag)
+    {
+        getBukkitEntity().setPowered(flag);
     }
 }

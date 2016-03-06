@@ -25,66 +25,79 @@ import com.dsh105.echopet.bridge.entity.type.WolfEntityBridge;
 
 import java.util.UUID;
 
-public class EchoWolfPet extends EchoAgeablePet<WolfEntityBridge, EntityWolfPet> implements WolfPet {
+public class EchoWolfPet extends EchoAgeablePet<WolfEntityBridge, EntityWolfPet> implements WolfPet
+{
 
     private boolean wet;
     private boolean shaking;
     private float shakeCount;
 
-    public EchoWolfPet(UUID playerUID) {
+    public EchoWolfPet(UUID playerUID)
+    {
         super(playerUID);
     }
 
     @Override
-    public void setCollarColor(Attributes.Color color) {
-        getEntity().setWolfCollarColor(color);
-    }
-
-    @Override
-    public Attributes.Color getCollarColor() {
+    public Attributes.Color getCollarColor()
+    {
         return getEntity().getWolfCollarColor();
     }
 
     @Override
-    public void setTamed(boolean flag) {
-        if (flag && isAngry()) {
+    public void setCollarColor(Attributes.Color color)
+    {
+        getEntity().setWolfCollarColor(color);
+    }
+
+    @Override
+    public boolean isTamed()
+    {
+        return getEntity().isTamed();
+    }
+
+    @Override
+    public void setTamed(boolean flag)
+    {
+        if (flag && isAngry())
+        {
             setAttribute(Attributes.Attribute.ANGRY, false);
         }
         getEntity().setTamed(flag);
     }
 
     @Override
-    public boolean isTamed() {
-        return getEntity().isTamed();
+    public boolean isAngry()
+    {
+        return getEntity().isAngry();
     }
 
     @Override
-    public void setAngry(boolean flag) {
-        if (flag && isTamed()) {
+    public void setAngry(boolean flag)
+    {
+        if (flag && isTamed())
+        {
             setAttribute(Attributes.Attribute.TAME, false);
         }
         getEntity().setAngry(flag);
     }
 
     @Override
-    public boolean isAngry() {
-        return getEntity().isAngry();
-    }
-
-    @Override
-    public String getIdleSound() {
+    public String getIdleSound()
+    {
         String idleSound = super.getIdleSound();
         return idleSound.equals("default") || idleSound.isEmpty() ? idleSound : String.format(super.getIdleSound(), isAngry() ? "growl" : (GeneralUtil.random().nextInt(3) == 0 ? (this.isTamed() && getEntity().getTailHealth() < (getBridgeEntity().getMaxHealth() / 2) ? "whine" : "panting") : "bark"));
     }
 
     @Override
-    public void setStationary(boolean flag) {
+    public void setStationary(boolean flag)
+    {
         super.setStationary(flag);
         getBridgeEntity().setSitting(flag);
     }
 
     @Override
-    public void onLive() {
+    public void onLive()
+    {
         super.onLive();
         /*if (getModifier().isWet()) {
             this.wet = true;

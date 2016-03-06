@@ -28,7 +28,8 @@ import com.dsh105.influx.annotation.Authorize;
 import com.dsh105.influx.annotation.Command;
 import com.dsh105.influx.annotation.Convert;
 
-public class HatCommand implements CommandListener {
+public class HatCommand implements CommandListener
+{
 
     @Command(
             syntax = "hat",
@@ -36,8 +37,10 @@ public class HatCommand implements CommandListener {
             help = {"Use \"/pet view\" to select a pet to edit.", "If you only have one pet, there is no need to select one to edit.", "Have your pet ride on top of you", "Pets will appear floating higher on your screen than others to avoid screen blocking"}
     )
     @Authorize(Perm.HAT)
-    public boolean hat(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Convert(PetConverters.Selected.class) Pet pet) {
-        if (pet == null) {
+    public boolean hat(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Convert(PetConverters.Selected.class) Pet pet)
+    {
+        if (pet == null)
+        {
             return true;
         }
         boolean status = pet.isHat();

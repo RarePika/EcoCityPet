@@ -23,9 +23,11 @@ import com.dsh105.echopet.bridge.entity.type.CowEntityBridge;
 
 import java.util.UUID;
 
-public class EchoCowPet<T extends CowEntityBridge, S extends EntityCowPet> extends EchoAgeablePet<T, S> implements CowPet<T, S> {
+public class EchoCowPet<T extends CowEntityBridge, S extends EntityCowPet> extends EchoAgeablePet<T, S> implements CowPet<T, S>
+{
 
-    public EchoCowPet(UUID playerUID) {
+    public EchoCowPet(UUID playerUID)
+    {
         super(playerUID);
     }
 }

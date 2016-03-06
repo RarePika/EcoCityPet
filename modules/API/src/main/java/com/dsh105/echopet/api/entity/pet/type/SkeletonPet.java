@@ -33,15 +33,16 @@ import com.dsh105.echopet.bridge.entity.type.SkeletonEntityBridge;
 
 @Traits(type = PetType.SKELETON, hositility = Hostility.AGGRESSIVE, width = 0.6F, height = 1.9F, health = 20.0D, attackDamage = 5.0D)
 @Size(SizeCategory.REGULAR)
-public interface SkeletonPet extends EquipablePet<SkeletonEntityBridge, EntitySkeletonPet>, RangedPet<SkeletonEntityBridge, EntitySkeletonPet> {
-
-    void setWither(boolean flag);
+public interface SkeletonPet extends EquipablePet<SkeletonEntityBridge, EntitySkeletonPet>, RangedPet<SkeletonEntityBridge, EntitySkeletonPet>
+{
 
     boolean isWither();
 
-    @GroupAttributeSetter(AttributeType.SKELETON_TYPE)
-    void setSkeletonType(Attributes.SkeletonType type);
+    void setWither(boolean flag);
 
     @GroupAttributeGetter(AttributeType.SKELETON_TYPE)
     Attributes.SkeletonType getSkeletonType();
+
+    @GroupAttributeSetter(AttributeType.SKELETON_TYPE)
+    void setSkeletonType(Attributes.SkeletonType type);
 }

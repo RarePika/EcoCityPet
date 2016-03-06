@@ -1,9 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>EchoPet-Bridge</artifactId>
-    <name>EchoPet Bridge</name>
+    <artifactId>EcoCityPet-Bridge</artifactId>
+    <name>EcoCityPet Bridge</name>
     <version>${plugin.version}</version>
     <packaging>jar</packaging>
 
@@ -13,15 +13,10 @@
 
     <parent>
         <groupId>com.dsh105</groupId>
-        <artifactId>EchoPet-Parent</artifactId>
+        <artifactId>EcoCityPet-Parent</artifactId>
         <version>v3</version>
         <relativePath>../../</relativePath>
     </parent>
-
-    <dependencies>
-
-    </dependencies>
-
     <build>
         <directory>../../target</directory>
         <sourceDirectory>src/main/java/</sourceDirectory>

@@ -20,6 +20,7 @@ package com.dsh105.echopet.bridge.platform.bukkit.entity.type;
 import com.dsh105.echopet.bridge.entity.type.CaveSpiderEntityBridge;
 import org.bukkit.entity.CaveSpider;
 
-public class BukkitCaveSpiderEntityBridge extends BukkitSpiderEntityBridge<CaveSpider> implements CaveSpiderEntityBridge {
+public class BukkitCaveSpiderEntityBridge extends BukkitSpiderEntityBridge<CaveSpider> implements CaveSpiderEntityBridge
+{
 
 }

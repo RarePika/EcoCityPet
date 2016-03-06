@@ -23,24 +23,29 @@ import com.dsh105.echopet.api.entity.pet.Pet;
 
 import java.lang.reflect.Method;
 
-public class GroupAttributeModifier<P extends Pet> extends AttributeModifier<P> {
+public class GroupAttributeModifier<P extends Pet> extends AttributeModifier<P>
+{
 
     protected AttributeType type;
 
-    public GroupAttributeModifier(Method setter, Method getter, AttributeType type) {
+    public GroupAttributeModifier(Method setter, Method getter, AttributeType type)
+    {
         super(setter, getter);
         this.type = type;
     }
 
-    public AttributeType getType() {
+    public AttributeType getType()
+    {
         return type;
     }
 
-    public EntityAttribute getAttribute(P pet) {
+    public EntityAttribute getAttribute(P pet)
+    {
         return (EntityAttribute) Reflection.invoke(getGetter(), pet);
     }
 
-    public void setAttribute(P pet, EntityAttribute value) {
+    public void setAttribute(P pet, EntityAttribute value)
+    {
         Method setter = getSetter();
         Affirm.checkInstanceOf(setter.getParameterTypes()[0], value);
         Reflection.invoke(setter, pet, value);

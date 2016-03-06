@@ -23,25 +23,30 @@ import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.MessagePrompt;
 import org.bukkit.conversations.Prompt;
 
-public class NameSuccessPrompt extends MessagePrompt {
+public class NameSuccessPrompt extends MessagePrompt
+{
 
     private Pet pet;
     private boolean admin;
 
-    public NameSuccessPrompt(Pet pet, boolean admin) {
+    public NameSuccessPrompt(Pet pet, boolean admin)
+    {
         this.pet = pet;
         this.admin = admin;
     }
 
     @Override
-    protected Prompt getNextPrompt(ConversationContext context) {
+    protected Prompt getNextPrompt(ConversationContext context)
+    {
         return Prompt.END_OF_CONVERSATION;
     }
 
     @Override
-    public String getPromptText(ConversationContext context) {
+    public String getPromptText(ConversationContext context)
+    {
         String name = (String) context.getSessionData("name");
-        if (pet.setName(name, false)) {
+        if (pet.setName(name, false))
+        {
             return (this.admin ? Lang.ADMIN_NAME_PET : Lang.NAME_PET).getValue("player", pet.getOwnerName(), "name", pet.getType().humanName(), "newname", pet.getName());
         }
         return Lang.NAME_NOT_ALLOWED.getValue("name", name);

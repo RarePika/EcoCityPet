@@ -20,6 +20,7 @@ package com.dsh105.echopet.bridge.platform.bukkit.entity.type;
 import com.dsh105.echopet.bridge.entity.type.MagmaCubeEntityBridge;
 import org.bukkit.entity.MagmaCube;
 
-public class BukkitMagmaCubeEntityBridge extends BukkitSlimeEntityBridge<MagmaCube> implements MagmaCubeEntityBridge {
+public class BukkitMagmaCubeEntityBridge extends BukkitSlimeEntityBridge<MagmaCube> implements MagmaCubeEntityBridge
+{
 
 }

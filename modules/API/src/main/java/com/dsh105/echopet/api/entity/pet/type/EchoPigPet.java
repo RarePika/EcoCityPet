@@ -23,19 +23,23 @@ import com.dsh105.echopet.bridge.entity.type.PigEntityBridge;
 
 import java.util.UUID;
 
-public class EchoPigPet extends EchoAgeablePet<PigEntityBridge, EntityPigPet> implements PigPet {
+public class EchoPigPet extends EchoAgeablePet<PigEntityBridge, EntityPigPet> implements PigPet
+{
 
-    public EchoPigPet(UUID playerUID) {
+    public EchoPigPet(UUID playerUID)
+    {
         super(playerUID);
     }
 
     @Override
-    public void setSaddle(boolean flag) {
+    public void setSaddle(boolean flag)
+    {
         getEntity().setSaddle(flag);
     }
 
     @Override
-    public boolean hasSaddle() {
+    public boolean hasSaddle()
+    {
         return getEntity().hasSaddle();
     }
 }

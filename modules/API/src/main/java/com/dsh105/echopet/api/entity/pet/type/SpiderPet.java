@@ -28,6 +28,7 @@ import com.dsh105.echopet.bridge.entity.type.SpiderEntityBridge;
 
 @Traits(type = PetType.SPIDER, hositility = Hostility.AGGRESSIVE, width = 1.4F, height = 0.9F, health = 16.0D, attackDamage = 5.0D)
 @Size(SizeCategory.REGULAR)
-public interface SpiderPet<T extends SpiderEntityBridge, S extends EntitySpiderPet> extends Pet<T, S> {
+public interface SpiderPet<T extends SpiderEntityBridge, S extends EntitySpiderPet> extends Pet<T, S>
+{
 
 }

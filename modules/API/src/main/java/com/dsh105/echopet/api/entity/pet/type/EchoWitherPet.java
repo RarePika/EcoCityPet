@@ -23,39 +23,49 @@ import com.dsh105.echopet.bridge.entity.type.WitherEntityBridge;
 
 import java.util.UUID;
 
-public class EchoWitherPet extends EchoRangedPet<WitherEntityBridge, EntityWitherPet> implements WitherPet {
+public class EchoWitherPet extends EchoRangedPet<WitherEntityBridge, EntityWitherPet> implements WitherPet
+{
 
-    public EchoWitherPet(UUID playerUID) {
+    public EchoWitherPet(UUID playerUID)
+    {
         super(playerUID);
     }
 
     @Override
-    public void setShielded(boolean flag) {
-        getEntity().setShielded(flag);
-    }
-
-    @Override
-    public boolean isShielded() {
+    public boolean isShielded()
+    {
         return getEntity().isShielded();
     }
 
     @Override
-    public String getIdleSound() {
+    public void setShielded(boolean flag)
+    {
+        getEntity().setShielded(flag);
+    }
+
+    @Override
+    public String getIdleSound()
+    {
         return "mob.wither.idle";
     }
 
     @Override
-    public String getDeathSound() {
+    public String getDeathSound()
+    {
         return "mob.wither.death";
     }
 
     @Override
-    public void onLive() {
+    public void onLive()
+    {
         super.onLive();
-        if (isShielded()) {
+        if (isShielded())
+        {
             // Keep it constant - wither health regenerates
             getBridgeEntity().setHealth(150F);
-        } else if (getBridgeEntity().getHealth() <= getBridgeEntity().getMaxHealth()) {
+        }
+        else if (getBridgeEntity().getHealth() <= getBridgeEntity().getMaxHealth())
+        {
             getBridgeEntity().setHealth(getBridgeEntity().getMaxHealth());
         }
     }

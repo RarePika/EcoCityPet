@@ -15,12 +15,12 @@
   ~ along with EchoPet.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>EchoPet-v1_7_R4</artifactId>
-    <name>EchoPet for v1_7_R4</name>
+    <artifactId>EcoCityPet-v1_9_R1</artifactId>
+    <name>EcoCityPet for 1.9 R1</name>
     <version>${plugin.version}</version>
     <packaging>jar</packaging>
 
@@ -30,7 +30,7 @@
 
     <parent>
         <groupId>com.dsh105</groupId>
-        <artifactId>EchoPet-Parent</artifactId>
+        <artifactId>EcoCityPet-Parent</artifactId>
         <version>v3</version>
         <relativePath>../../</relativePath>
     </parent>
@@ -55,7 +55,7 @@
         <!-- API Module -->
         <dependency>
             <groupId>com.dsh105</groupId>
-            <artifactId>EchoPet-API</artifactId>
+            <artifactId>EcoCityPet-API</artifactId>
             <version>${plugin.version}</version>
             <optional>true</optional>
             <exclusions>
@@ -64,6 +64,11 @@
                     <artifactId>craftbukkit</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.dsh105</groupId>
+            <artifactId>EcoCityPet-API</artifactId>
+            <version>3.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

@@ -24,7 +24,8 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface AttributeSetter {
+public @interface AttributeSetter
+{
 
     Attributes.Attribute value();
 }

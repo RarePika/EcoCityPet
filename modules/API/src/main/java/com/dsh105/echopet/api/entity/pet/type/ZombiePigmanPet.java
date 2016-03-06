@@ -27,6 +27,7 @@ import com.dsh105.echopet.bridge.entity.type.ZombiePigmanEntityBridge;
 
 @Traits(type = PetType.ZOMBIE_PIGMAN, hositility = Hostility.NEUTRAL, width = 0.6F, height = 1.8F, health = 20.0D, attackDamage = 6.0D)
 @Size(SizeCategory.REGULAR)
-public interface ZombiePigmanPet extends ZombiePet<ZombiePigmanEntityBridge, EntityZombiePigmanPet> {
+public interface ZombiePigmanPet extends ZombiePet<ZombiePigmanEntityBridge, EntityZombiePigmanPet>
+{
 
 }

@@ -30,7 +30,8 @@ import java.util.UUID;
 @Traits(type = PetType.HUMAN, hositility = Hostility.NEUTRAL, width = 0.6F, height = 1.8F, health = 20.0D, attackDamage = 6.0D)
 @Voice(idle = "random.breathe", death = "random.classic_hurt", step = "step.grass")
 @Size(SizeCategory.REGULAR)
-public interface HumanPet extends EquipablePet<HumanEntityBridge, EntityHumanPet> {
+public interface HumanPet extends EquipablePet<HumanEntityBridge, EntityHumanPet>
+{
 
     WrappedDataWatcher getDataWatcher();
 

@@ -20,15 +20,18 @@ package com.dsh105.echopet.util;
 import com.captainbern.minecraft.conversion.BukkitUnwrapper;
 import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 
-public class PetUtil {
+public class PetUtil
+{
 
     // TODO: this is temporary
 
-    public static boolean isPetEntity(Object entity) {
+    public static boolean isPetEntity(Object entity)
+    {
         return isPetEntity(entity, EntityPet.class);
     }
 
-    public static boolean isPetEntity(Object entity, Class<? extends EntityPet> petType) {
+    public static boolean isPetEntity(Object entity, Class<? extends EntityPet> petType)
+    {
         return petType.isAssignableFrom(BukkitUnwrapper.getInstance().unwrap(entity).getClass());
     }
 }

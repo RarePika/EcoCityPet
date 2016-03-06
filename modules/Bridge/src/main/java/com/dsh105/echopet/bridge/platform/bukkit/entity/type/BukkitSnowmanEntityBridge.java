@@ -21,6 +21,7 @@ import com.dsh105.echopet.bridge.entity.type.SnowmanEntityBridge;
 import com.dsh105.echopet.bridge.platform.bukkit.entity.BukkitRangedEntityBridge;
 import org.bukkit.entity.Snowman;
 
-public class BukkitSnowmanEntityBridge extends BukkitRangedEntityBridge<Snowman> implements SnowmanEntityBridge {
+public class BukkitSnowmanEntityBridge extends BukkitRangedEntityBridge<Snowman> implements SnowmanEntityBridge
+{
 
 }

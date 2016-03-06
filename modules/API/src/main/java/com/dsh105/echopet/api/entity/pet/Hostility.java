@@ -17,7 +17,8 @@
 
 package com.dsh105.echopet.api.entity.pet;
 
-public enum Hostility {
+public enum Hostility
+{
 
     PASSIVE,
     AGGRESSIVE,

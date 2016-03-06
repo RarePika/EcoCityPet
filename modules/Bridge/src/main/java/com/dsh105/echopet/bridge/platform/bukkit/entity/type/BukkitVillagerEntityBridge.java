@@ -21,6 +21,7 @@ import com.dsh105.echopet.bridge.entity.type.VillagerEntityBridge;
 import com.dsh105.echopet.bridge.platform.bukkit.entity.BukkitAgeableEntityBridge;
 import org.bukkit.entity.Villager;
 
-public class BukkitVillagerEntityBridge extends BukkitAgeableEntityBridge<Villager> implements VillagerEntityBridge {
+public class BukkitVillagerEntityBridge extends BukkitAgeableEntityBridge<Villager> implements VillagerEntityBridge
+{
 
 }

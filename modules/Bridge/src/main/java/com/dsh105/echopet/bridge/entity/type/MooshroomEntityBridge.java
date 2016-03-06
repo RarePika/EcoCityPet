@@ -17,6 +17,7 @@
 
 package com.dsh105.echopet.bridge.entity.type;
 
-public interface MooshroomEntityBridge extends CowEntityBridge {
+public interface MooshroomEntityBridge extends CowEntityBridge
+{
 
 }

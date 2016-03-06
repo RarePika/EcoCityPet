@@ -1,6 +1,7 @@
 package com.dsh105.echopet.api.entity.attribute;
 
-public interface EntityAttribute {
+public interface EntityAttribute
+{
 
     AttributeType getType();
 }

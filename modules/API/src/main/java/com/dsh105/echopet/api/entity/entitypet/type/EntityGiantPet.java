@@ -23,6 +23,7 @@ import com.dsh105.echopet.api.entity.entitypet.EntityPet;
 import com.dsh105.echopet.api.entity.pet.type.GiantPet;
 
 @Entity(PetType.GIANT)
-public interface EntityGiantPet extends EntityPet<GiantPet> {
+public interface EntityGiantPet extends EntityPet<GiantPet>
+{
 
 }

@@ -24,30 +24,31 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EventManager {
+public class EventManager
+{
 
     private final Map<Object, Map<Class<?>, Method>> listeners = new HashMap<>();
 
-    public void register(Object listener) {
+    public void register(Object listener)
+    {
         Map<Class<?>, Method> events = listeners.get(listener);
-        if (events == null) {
+        if (events == null)
+        {
             events = new HashMap<>();
         }
 
         // Only search for methods in the one class
         // Searching super classes/interfaces is not worth it for the use cases
-        for (Method method : listener.getClass().getMethods()) {
+        for (Method method : listener.getClass().getMethods())
+        {
             Listen listen = method.getAnnotation(Listen.class);
-            if (listen != null) {
-                for (Class<? extends org.bukkit.event.Event> bukkitEvent : listen.bukkit()) {
-                    if (!bukkitEvent.equals(NullBukkitEvent.class)) {
+            if (listen != null)
+            {
+                for (Class<? extends org.bukkit.event.Event> bukkitEvent : listen.bukkit())
+                {
+                    if (!bukkitEvent.equals(NullBukkitEvent.class))
+                    {
                         events.put(bukkitEvent, method);
-                    }
-                }
-
-                for (Class<? extends org.spongepowered.api.util.event.Event> spongeEvent : listen.sponge()) {
-                    if (!spongeEvent.equals(NullSpongeEvent.class)) {
-                        events.put(spongeEvent, method);
                     }
                 }
             }
@@ -56,18 +57,27 @@ public class EventManager {
         listeners.put(listener, events);
     }
 
-    public void post(EventContainer event) {
-        try {
-            for (Object listener : listeners.keySet()) {
-                for (Map.Entry<Class<?>, Method> entry : listeners.get(listener).entrySet()) {
-                    if (entry.getKey().isAssignableFrom(event.getEvent().getClass())) {
+    public void post(EventContainer event)
+    {
+        try
+        {
+            for (Object listener : listeners.keySet())
+            {
+                for (Map.Entry<Class<?>, Method> entry : listeners.get(listener).entrySet())
+                {
+                    if (entry.getKey().isAssignableFrom(event.getEvent().getClass()))
+                    {
                         entry.getValue().invoke(listener, event);
                     }
                 }
             }
-        } catch (InvocationTargetException | IllegalAccessException e) {
+        }
+        catch (InvocationTargetException | IllegalAccessException e)
+        {
             throw new IllegalStateException("Failed to access event listener", e);
-        } finally {
+        }
+        finally
+        {
             // Clear all contextual values provided by the container
             event.clear();
         }

@@ -24,7 +24,6 @@ import com.dsh105.echopet.api.event.Listen;
 import com.dsh105.echopet.api.event.NullSpongeEvent;
 import com.dsh105.echopet.api.hook.WorldGuardDependency;
 import com.dsh105.echopet.api.plugin.EchoPet;
-import com.dsh105.echopet.bridge.Ident;
 import com.dsh105.echopet.bridge.PlayerBridge;
 import com.dsh105.echopet.bridge.container.EventContainer;
 import org.kitteh.vanish.event.VanishStatusChangeEvent;
@@ -32,13 +31,17 @@ import org.kitteh.vanish.event.VanishStatusChangeEvent;
 import java.util.List;
 import java.util.UUID;
 
-public class DependencyListener {
+public class DependencyListener
+{
 
     @Listen(bukkit = VanishStatusChangeEvent.class, sponge = NullSpongeEvent.class)
-    public void onVanish(EventContainer event) {
+    public void onVanish(EventContainer event)
+    {
         List<Pet> pets = EchoPet.getManager().getPetsFor(event.get(PlayerBridge.class).getUID());
-        if (!pets.isEmpty()) {
-            for (Pet pet : pets) {
+        if (!pets.isEmpty())
+        {
+            for (Pet pet : pets)
+            {
                 boolean vanishing = event.get(boolean.class);
                 pet.setShouldVanish(vanishing);
                 pet.getModifier().setInvisible(vanishing);
@@ -47,12 +50,15 @@ public class DependencyListener {
     }
 
     @Listen(bukkit = org.bukkit.event.player.PlayerMoveEvent.class, sponge = org.spongepowered.api.event.player.PlayerMoveEvent.class)
-    public void onPlayerMove(EventContainer event) {
+    public void onPlayerMove(EventContainer event)
+    {
         PlayerBridge player = event.get(PlayerBridge.class);
         UUID playerUID = player.getUID();
         List<Pet> pets = EchoPet.getManager().getPetsFor(playerUID);
-        if (!pets.isEmpty()) {
-            if (!EchoPet.getDependency(WorldGuardDependency.class).allowPets(event.get(PositionContainer.class))) {
+        if (!pets.isEmpty())
+        {
+            if (!EchoPet.getDependency(WorldGuardDependency.class).allowPets(event.get(PositionContainer.class)))
+            {
                 EchoPet.getManager().removePets(playerUID);
                 Lang.ENTER_PET_DISABLED_REGION.send(player);
             }
