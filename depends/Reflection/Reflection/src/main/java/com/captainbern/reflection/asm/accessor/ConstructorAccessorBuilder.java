@@ -1,0 +1,29 @@
+package com.captainbern.reflection.asm.accessor;
+
+import org.objectweb.asm.ClassWriter;
+
+public class ConstructorAccessorBuilder extends AccessorBuilder<ConstructorAccessor>
+{
+
+    protected ConstructorAccessorBuilder(Class<?> target)
+    {
+        super(target, AccessorType.CONSTRUCTOR);
+    }
+
+    protected static void injectGetSafeConstructor(ClassWriter classWriter)
+    {
+
+    }
+
+    protected static void injectInvoke(ClassWriter classWriter)
+    {
+
+    }
+
+    @Override
+    public ConstructorAccessor build(ClassLoader classLoader)
+    {
+        injectEmptyConstructor(this.getClassWriter());
+        return null;
+    }
+}

@@ -21,7 +21,7 @@
 
     <artifactId>EcoCityPet-v1_9_R1</artifactId>
     <name>EcoCityPet for 1.9 R1</name>
-    <version>${plugin.version}</version>
+    <version>1.9-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -37,6 +37,11 @@
 
     <dependencies>
         <!-- Bukkit -->
+        <dependency>
+            <groupId>com.dsh105</groupId>
+            <artifactId>Commodus</artifactId>
+            <version>2.0.0-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
@@ -56,19 +61,23 @@
         <dependency>
             <groupId>com.dsh105</groupId>
             <artifactId>EcoCityPet-API</artifactId>
-            <version>${plugin.version}</version>
-            <optional>true</optional>
+            <version>1.9-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dsh105</groupId>
+            <artifactId>interact</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>craftbukkit</artifactId>
+                    <artifactId>com.dsh105</artifactId>
+                    <groupId>Commodus</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.dsh105</groupId>
-            <artifactId>EcoCityPet-API</artifactId>
-            <version>3.0.0-SNAPSHOT</version>
+            <groupId>com.captainbern</groupId>
+            <artifactId>Minecraft-Reflection</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 

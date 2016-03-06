@@ -4,7 +4,6 @@ import com.dsh105.commodus.Affirm;
 import com.dsh105.echopet.bridge.MessageBridge;
 import com.dsh105.echopet.bridge.PlayerBridge;
 import com.dsh105.echopet.util.AffirmationException;
-import com.dsh105.powermessage.core.PowerMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.conversations.Conversable;
@@ -66,6 +65,6 @@ public class BukkitMessageBridge implements MessageBridge
     public void sendSender(Object commandSender, String prefix, String message)
     {
         Affirm.checkInstanceOf(CommandSender.class, commandSender);
-        new PowerMessage(prefix + translateChatColours(message)).send((CommandSender) commandSender);
+        ((CommandSender) commandSender).sendMessage(prefix + translateChatColours(message));
     }
 }

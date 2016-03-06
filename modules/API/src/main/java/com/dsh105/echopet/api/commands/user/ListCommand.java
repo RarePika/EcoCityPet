@@ -32,7 +32,7 @@ import com.dsh105.influx.annotation.Authorize;
 import com.dsh105.influx.annotation.Bind;
 import com.dsh105.influx.annotation.Command;
 import com.dsh105.influx.annotation.Default;
-import com.dsh105.powermessage.core.PowerMessage;
+
 import org.bukkit.ChatColor;
 
 import java.util.ArrayList;
@@ -53,17 +53,15 @@ public class ListCommand implements CommandListener
         {
             inline = true;
         }
-
-        PowerMessage message = new PowerMessage()
-                .then(EchoPet.getCommandManager().getResponder().getResponsePrefix())
-                .then(EchoPet.getCommandManager().getResponder().format("{c1}Valid pet types: "));
+        String message = EchoPet.getCommandManager().getResponder().format(
+                EchoPet.getCommandManager().getResponder().getResponsePrefix() + " Valid pet types:");
 
         for (PetType type : PetType.values())
         {
             boolean access = event.sender().asBukkit().hasPermission(Perm.TYPE.replace("<type>", type.storageName()));
             ChatColor format = access ? ChatColor.DARK_GREEN : ChatColor.DARK_RED;
             ChatColor highlight = access ? ChatColor.GREEN : ChatColor.RED;
-            message.then(highlight + type.humanName());
+            message += (highlight + type.humanName());
 
             List<EntityAttribute> registeredData = AttributeManager.getModifier(type).getValidAttributes();
             List<String> registeredStringData = new ArrayList<>();
@@ -91,20 +89,20 @@ public class ListCommand implements CommandListener
 
             if (registeredStringData.size() <= 0)
             {
-                message.tooltip(format + "No valid data types.");
+                message += (format + "No valid data types.");
             }
             else
             {
                 String data = dataBuilder.substring(0, dataBuilder.length() - 2);
-                message.tooltip(data);
+                message += data;
                 if (inline)
                 {
-                    message.then(" (" + StringUtil.combine(", ", registeredStringData) + ")").colour(format);
+                    message += (" (" + StringUtil.combine(", ", registeredStringData) + ")");
                 }
             }
-            message.then(format + ", " + highlight);
+            message += (format + ", " + highlight);
         }
-        message.send(event.sender().asBukkit());
+        event.sender().asBukkit().sendMessage(message);
         event.respond(Lang.HOVER_TIP.getValue());
         return true;
     }

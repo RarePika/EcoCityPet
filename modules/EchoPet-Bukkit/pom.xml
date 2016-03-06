@@ -21,7 +21,7 @@
 
     <artifactId>EcoCityPet-Bukkit</artifactId>
     <name>EcoCityPet</name>
-    <version>${plugin.version}</version>
+    <version>1.9-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -38,18 +38,11 @@
     </parent>
 
     <dependencies>
-        <!-- API Module -->
-        <dependency>
-            <groupId>com.dsh105</groupId>
-            <artifactId>EcoCityPet-API</artifactId>
-            <version>${plugin.version}</version>
-        </dependency>
-
         <!-- v1_9_R1 NMS Module -->
         <dependency>
             <groupId>com.dsh105</groupId>
             <artifactId>EcoCityPet-v1_9_R1</artifactId>
-            <version>${plugin.version}</version>
+            <version>1.9-SNAPSHOT</version>
             <optional>true</optional>
             <exclusions>
                 <exclusion>
@@ -65,7 +58,28 @@
         <dependency>
             <groupId>com.dsh105</groupId>
             <artifactId>EcoCityPet-API</artifactId>
-            <version>${plugin.version}</version>
+            <version>1.9-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dsh105</groupId>
+            <artifactId>Commodus</artifactId>
+            <version>2.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dsh105</groupId>
+            <artifactId>interact</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>com.dsh105</artifactId>
+                    <groupId>Commodus</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.captainbern</groupId>
+            <artifactId>Minecraft-Reflection</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 
@@ -128,7 +142,6 @@
                             <artifactSet>
                                 <includes>
                                     <artifact>com.dsh105:EchoPet*</artifact>
-                                    <artifact>com.dsh105:Influx</artifact>
                                     <artifact>com.dsh105:MenuAPI</artifact>
                                     <artifact>com.dsh105:Commodus</artifact>
                                     <artifact>com.dsh105:PowerMessage</artifact>
@@ -153,18 +166,6 @@
                                 </relocation>
                                 <relocation>
                                     <pattern>com.dsh105.commodus</pattern>
-                                    <shadedPattern>com.dsh105.echopet.libs</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>com.dsh105.influx</pattern>
-                                    <shadedPattern>com.dsh105.echopet.libs</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>com.dsh105.menuapi</pattern>
-                                    <shadedPattern>com.dsh105.echopet.libs</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>com.dsh105.powermessage</pattern>
                                     <shadedPattern>com.dsh105.echopet.libs</shadedPattern>
                                 </relocation>
                             </relocations>

@@ -21,14 +21,12 @@ import com.dsh105.echopet.api.commands.PetConverters;
 import com.dsh105.echopet.api.commands.influx.EchoPetCommandEvent;
 import com.dsh105.echopet.api.configuration.Lang;
 import com.dsh105.echopet.api.entity.pet.Pet;
-import com.dsh105.echopet.api.inventory.ViewMenu;
 import com.dsh105.echopet.bridge.container.PlayerCommandSourceContainer;
 import com.dsh105.echopet.util.Perm;
 import com.dsh105.influx.CommandListener;
 import com.dsh105.influx.annotation.Authorize;
 import com.dsh105.influx.annotation.Command;
 import com.dsh105.influx.annotation.Convert;
-import com.dsh105.powermessage.core.PowerMessage;
 import org.bukkit.ChatColor;
 
 public class InfoCommand implements CommandListener
@@ -48,9 +46,10 @@ public class InfoCommand implements CommandListener
         }
 
         // TODO
-        new PowerMessage(ChatColor.WHITE + "• {c1}" + pet.getType().humanName() + " ({c2}" + pet.getName() + "{c1})")
-                .tooltip(ViewMenu.getHoverInfo(pet))
-                .send(event.sender().asBukkit());
+        event.sender().asBukkit().sendMessage(ChatColor.WHITE + "• " + pet.getType().humanName() + " (" + pet.getName() + ")");
+        // new PowerMessage(ChatColor.WHITE + "• {c1}" + pet.getType().humanName() + " ({c2}" + pet.getName() + "{c1})")
+        //        .tooltip(ViewMenu.getHoverInfo(pet))
+        //.send(event.sender().asBukkit());
         event.respond(Lang.HOVER_TIP.getValue());
         return true;
     }

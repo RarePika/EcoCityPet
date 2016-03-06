@@ -35,6 +35,9 @@
         <module>modules/API</module>
         <module>modules/v1_9_R1</module>
         <module>modules/EchoPet-Bukkit</module>
+        <module>depends/Commodus</module>
+        <module>depends/Reflection</module>
+        <module>depends/Interact</module>
     </modules>
 
     <dependencies>
@@ -45,76 +48,6 @@
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
             <version>1.9-SNAPSHOT</version>
-        </dependency>
-
-        <!-- Reflection -->
-        <dependency>
-            <groupId>com.captainbern</groupId>
-            <artifactId>Minecraft-Reflection</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
-        <!-- Commodus - utilities -->
-        <dependency>
-            <groupId>com.dsh105</groupId>
-            <artifactId>Commodus</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-        </dependency>
-
-        <!-- Interact - inventory menu API -->
-        <dependency>
-            <groupId>com.dsh105</groupId>
-            <artifactId>interact</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>com.dsh105</artifactId>
-                    <groupId>Commodus</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <!-- MenuAPI -->
-        <dependency>
-            <groupId>com.dsh105</groupId>
-            <artifactId>MenuAPI</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>com.dsh105</artifactId>
-                    <groupId>Commodus</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <!-- PowerMessage - fancy messages for Bukkit -->
-        <dependency>
-            <groupId>com.dsh105</groupId>
-            <artifactId>PowerMessage</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>com.dsh105</artifactId>
-                    <groupId>Commodus</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <!-- Influx - command manager -->
-        <dependency>
-            <groupId>com.dsh105</groupId>
-            <artifactId>Influx</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>com.dsh105</artifactId>
-                    <groupId>Commodus</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>com.dsh105</artifactId>
-                    <groupId>PowerMessage</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <!-- VanishNoPacket -->
