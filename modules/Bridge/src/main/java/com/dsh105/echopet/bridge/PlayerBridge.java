@@ -11,10 +11,14 @@ public abstract class PlayerBridge extends PlayerContainer implements PlatformBr
 {
 
     private static final Map<UUID, PlayerBridge> PLAYER_BRIDGES = new HashMap<>();
+    private PlayerContainer container = null;
+    private UUID uuid;
+
 
     public PlayerBridge(UUID playerUID)
     {
         super(playerUID);
+        this.uuid = playerUID;
     }
 
     public static PlayerBridge of(UUID playerUID)
@@ -31,6 +35,11 @@ public abstract class PlayerBridge extends PlayerContainer implements PlatformBr
     public static PlayerBridge of(org.bukkit.entity.Player playerUID)
     {
         return of(Ident.get().getUID(playerUID));
+    }
+
+    public UUID getUuid()
+    {
+        return uuid;
     }
 
     public void sendMessage(String message)
@@ -68,4 +77,5 @@ public abstract class PlayerBridge extends PlayerContainer implements PlatformBr
     public abstract boolean isOnline();
 
     public abstract boolean isDead();
+
 }

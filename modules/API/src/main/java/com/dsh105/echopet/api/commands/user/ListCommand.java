@@ -47,9 +47,9 @@ public class ListCommand implements CommandListener
             help = "If [inline] is specified as \"true\", data types will be shown in the following format (as well as in hover information): \"<type> (<data>, <data>)\""
     )
     @Authorize(Perm.LIST)
-    public boolean list(EchoPetCommandEvent event, @Bind("inline") @Default("") boolean inline)
+    public boolean list(EchoPetCommandEvent<PlayerCommandSourceContainer> event, @Bind("inline") @Default("") boolean inline)
     {
-        if (!(event.sender() instanceof PlayerCommandSourceContainer) && event.var("inline").isEmpty())
+        if (event.sender() == null && event.var("inline").isEmpty())
         {
             inline = true;
         }
@@ -60,7 +60,7 @@ public class ListCommand implements CommandListener
 
         for (PetType type : PetType.values())
         {
-            boolean access = event.sender().hasPermission(Perm.TYPE.replace("<type>", type.storageName()));
+            boolean access = event.sender().asBukkit().hasPermission(Perm.TYPE.replace("<type>", type.storageName()));
             ChatColor format = access ? ChatColor.DARK_GREEN : ChatColor.DARK_RED;
             ChatColor highlight = access ? ChatColor.GREEN : ChatColor.RED;
             message.then(highlight + type.humanName());
@@ -75,7 +75,7 @@ public class ListCommand implements CommandListener
             {
                 StringForm form = StringForm.create(attribute);
                 String name = form.getCaptalisedName();
-                boolean dataAccess = event.sender().hasPermission(Perm.DATA.replace("<type>", type.storageName()).replace("<data>", form.getConfigName()));
+                boolean dataAccess = event.sender().asBukkit().hasPermission(Perm.DATA.replace("<type>", type.storageName()).replace("<data>", form.getConfigName()));
                 if (dataAccess)
                 {
                     registeredStringData.add(name);
@@ -104,7 +104,7 @@ public class ListCommand implements CommandListener
             }
             message.then(format + ", " + highlight);
         }
-        message.send(event.sender());
+        message.send(event.sender().asBukkit());
         event.respond(Lang.HOVER_TIP.getValue());
         return true;
     }

@@ -122,8 +122,7 @@ public class PetCommand implements CommandListener
             event.respond(Lang.NO_PETS_FOUND.getValue());
             return true;
         }
-        //ViewMenu.getInventory(pets).show(event.sender());
-        ViewMenu.getInventory(pets).show(event.sender().);
+        ViewMenu.getInventory(pets).show(event.sender().get().);
         return true;
     }
 
