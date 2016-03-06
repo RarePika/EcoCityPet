@@ -18,65 +18,72 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.dsh105</groupId>
-    <artifactId>EcoCityPet-Parent</artifactId>
-    <name>EcoCityPet Parent</name>
+    <artifactId>EchoPet-Parent</artifactId>
+    <name>EchoPet Parent</name>
     <packaging>pom</packaging>
-    <version>v3</version>
+    <version>v2</version>
+    <url>http://github.com/DSH105/EchoPet</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <plugin.version>3.0.0-SNAPSHOT</plugin.version>
     </properties>
 
     <modules>
-        <module>modules/Bridge</module>
         <module>modules/API</module>
-        <module>modules/v1_9_R1</module>
-        <module>modules/EchoPet-Bukkit</module>
-        <module>depends/Commodus</module>
-        <module>depends/Reflection</module>
-        <module>depends/Interact</module>
+        <module>modules/v1_8_R3</module>
+        <module>modules/EchoPet</module>
     </modules>
 
     <dependencies>
-        <!-- Either Bukkit OR Sponge is required -->
-
-        <!-- Bukkit -->
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.9-SNAPSHOT</version>
+            <version>1.8.4-R0.1-SNAPSHOT</version>
         </dependency>
-
-        <!-- VanishNoPacket -->
+        <dependency>
+            <groupId>com.dsh105</groupId>
+            <artifactId>Commodus</artifactId>
+            <version>1.0.3-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.captainbern</groupId>
+                    <artifactId>Minecraft-Reflection</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.dsh105</groupId>
+            <artifactId>PowerMessage</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.dsh105</groupId>
+                    <artifactId>Commodus</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.captainbern</groupId>
+            <artifactId>Minecraft-Reflection</artifactId>
+            <version>1.0.0</version>
+        </dependency>
         <dependency>
             <groupId>org.kitteh</groupId>
             <artifactId>VanishNoPacket</artifactId>
-            <version>3.19.1</version>
+            <version>3.18.7</version>
             <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>bukkit</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
-
-        <!-- Vault -->
         <dependency>
             <groupId>net.milkbowl.vault</groupId>
             <artifactId>Vault</artifactId>
-            <version>1.5.6</version>
+            <version>1.2.32</version>
             <scope>provided</scope>
         </dependency>
-
-        <!-- WorldEdit -->
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldedit</artifactId>
-            <version>5.5.8</version>
+            <version>6.0.0-SNAPSHOT</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -85,8 +92,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
-        <!-- WorldGuard -->
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>
@@ -99,7 +104,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-jdk14</artifactId>
@@ -110,6 +114,16 @@
             <artifactId>bonecp</artifactId>
             <version>0.8.0-rc3</version>
         </dependency>
+        <dependency>
+            <groupId>com.comphenix.protocol</groupId>
+            <artifactId>ProtocolLib-v1_7_R4</artifactId>
+            <version>3.6.4-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.comphenix.packetwrapper</groupId>
+            <artifactId>PacketWrapper</artifactId>
+            <version>1.7.2-R0.5</version>
+        </dependency>
     </dependencies>
 
     <repositories>
@@ -117,40 +131,45 @@
             <id>sinndev-repo</id>
             <url>http://repo.sinndev.com/content/groups/public/</url>
         </repository>
-        <!-- Bukkit -->
+        <repository>
+            <id>spigot-hub</id>
+            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
+        </repository>
         <repository>
             <id>bukkit-repo</id>
             <url>http://repo.bukkit.org/content/groups/public/</url>
         </repository>
-
-        <!-- Spigot Hub -->
         <repository>
-            <id>spigot-bukkit-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
+            <id>spigot-repo</id>
+            <url>http://repo.md-5.net/content/groups/public/</url>
         </repository>
-
-        <!-- Hawk repo -->
         <repository>
             <id>hawk-repo</id>
             <url>http://ci.hawkfalcon.com/plugin/repository/everything/</url>
         </repository>
-
-        <!-- sk89q repo -->
         <repository>
             <id>sk89q-repo</id>
             <url>http://maven.sk89q.com/repo/</url>
         </repository>
-
-        <!-- mbax repo - VanishNoPacket -->
         <repository>
             <id>kitteh-repo</id>
             <url>http://repo.kitteh.org/content/groups/public</url>
         </repository>
-
-        <!-- Vault -->
         <repository>
             <id>vault-repo</id>
             <url>http://nexus.theyeticave.net/content/repositories/pub_releases</url>
+        </repository>
+        <repository>
+            <id>elmakers-repo</id>
+            <url>http://maven.elmakers.com/repository/</url>
+        </repository>
+        <repository>
+            <id>dmulloy2-repo</id>
+            <url>http://repo.dmulloy2.net/content/repositories/snapshots/</url>
+        </repository>
+        <repository>
+            <id>yawkat-repo</id>
+            <url>http://mvn.yawk.at/</url>
         </repository>
     </repositories>
 
@@ -158,7 +177,6 @@
         <defaultGoal>clean package install</defaultGoal>
         <finalName>${project.name}</finalName>
         <sourceDirectory>src/main/java</sourceDirectory>
-
         <resources>
             <resource>
                 <targetPath>.</targetPath>
@@ -169,18 +187,39 @@
                 </includes>
             </resource>
         </resources>
-
         <plugins>
-            <!-- Compiler -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.6</source>
+                    <target>1.6</target>
                 </configuration>
             </plugin>
         </plugins>
+
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ftp</artifactId>
+                <version>2.6</version>
+            </extension>
+        </extensions>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>dsh105-ftp</id>
+            <url>ftp://repo.dsh105.com/</url>
+        </repository>
+    </distributionManagement>
 </project>
