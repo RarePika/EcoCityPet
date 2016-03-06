@@ -57,7 +57,7 @@ public class PlayerListener
             Lang.UPDATE_AVAILABLE.send(player);
         }
 
-        Inventory inventory = player.getInventory();
+        Inventory inventory = player.asBukkit().getInventory();
 
         if (MenuSettings.SELECTOR_ONJOIN_CLEAR.getValue())
         {
